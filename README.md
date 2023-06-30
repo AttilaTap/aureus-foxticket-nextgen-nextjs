@@ -55,11 +55,15 @@ Edit eslintrc.json. Add the following for eslint-plugin-jest-dom.
 ['plugin:testing-library/react']
 ```
 
+(https://testing-library.com/docs/ecosystem-eslint-plugin-testing-library/)
+
 Edit eslintrc.json. Add the following for eslint-plugin-testing-library.
 
 ```bash
 ['plugin:jest-dom/recommended']
 ```
+
+(https://testing-library.com/docs/ecosystem-eslint-plugin-jest-dom/)
 
 Our .eslintrc.json file should look like this:
 
@@ -93,7 +97,7 @@ So it should look like this:
 
 ```
 
-## Bonus info: Easiest setup with jest, if Next.js app is not created yet.
+## Bonus info: Easiest setup with jest, if Next.js app is not created yet. All files will be created.
 
 ```bash
 npx create-next-app --example with-jest with-jest-app
