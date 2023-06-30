@@ -49,6 +49,31 @@ eslint-plugin-testing-library is a plugin for ESLint, a popular static code anal
 
 eslint-plugin-testing-library is to enforce best practices and consistent usage of Testing Library within your codebase. It helps to find violations in your test files, such as using forbidden queries, awaiting non-async queries, or not following the recommended async utility usage.
 
+Edit eslintrc.json. Add the following for eslint-plugin-jest-dom.
+
+```bash
+['plugin:testing-library/react']
+```
+
+Edit eslintrc.json. Add the following for eslint-plugin-testing-library.
+
+```bash
+['plugin:jest-dom/recommended']
+```
+
+Our .eslintrc.json file should look like this:
+
+```bash
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
+  ]
+}
+
+```
+
 ## If parsing error occurs
 
 If this error occurs: Parsing error: Cannot find module 'next/babel' Require stack: \*insert paths here.
