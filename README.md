@@ -93,6 +93,14 @@ So it should look like this:
 
 ```
 
+## Bonus info: Easiest setup with jest, if Next.js app is not created yet.
+
+```bash
+npx create-next-app --example with-jest with-jest-app
+```
+
+(https://github.com/vercel/next.js/tree/canary/examples/with-jest)
+
 ## Have fun testing!
 
 Peter Fedorov. All Rights Reserved
