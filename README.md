@@ -1,34 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## How to setup unit test and the environment in our project
 
-## Getting Started
+In this documentation I will try to show you the easiest way to setup a Jest testing environment for our Next.js app.
 
-First, run the development server:
+## 1. step
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+npm i -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Installs the packages that follow and saves them to your package.json file as development dependencies.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+jest-environment-jsdom is a Jest environment that simulates a browser environment by providing a DOM (Document Object Model) implementation. This is needed when your tests involve browser-like behavior, such as DOM manipulation.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+@testing-library/react is a library for testing React components. It provides utility functions for rendering components, querying the DOM, simulating events, and more.
 
-## Learn More
+@testing-library/jest-dom is a companion library to @testing-library/react that provides custom Jest matchers for testing the state of the DOM. For example, it provides matchers like toBeVisible or toContainElement that make your tests more expressive and easier to understand.
 
-To learn more about Next.js, take a look at the following resources:
+## 2.step
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create the following files.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+jest.config.mjs
+# and
+jest.setup.js
+```
 
-## Deploy on Vercel
+refer to: (https://nextjs.org/docs/pages/building-your-application/optimizing/testing#jest-and-react-testing-library)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 3. Step
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Add to package.json file in the scripts section.
+
+```bash
+"test": "jest",
+"test-watch": "jest --watchAll"
+```
+
+## 4. step (optional)
+
+Add these plugins to .eslintrc.json
+
+```bash
+npm i -D eslint-plugin-testing-library eslint-plugin-jest-dom
+```
+
+eslint-plugin-testing-library is a plugin for ESLint, a popular static code analysis tool used to find problematic patterns or code that doesn’t adhere to certain style guidelines. This plugin provides specific linting rules related to using Testing Library, a set of libraries used for testing JavaScript and TypeScript applications.
+
+eslint-plugin-testing-library is to enforce best practices and consistent usage of Testing Library within your codebase. It helps to find violations in your test files, such as using forbidden queries, awaiting non-async queries, or not following the recommended async utility usage.
+
+## If parsing error occurs
+
+If this error occurs: Parsing error: Cannot find module 'next/babel' Require stack: \*insert paths here.
+
+Edit .eslintrc.json. Add the
+
+```bash
+"next/babel"
+```
+
+So it should look like this:
+
+```bash
+{
+  "extends": ["next/babel","next/core-web-vitals"]
+}
+
+```
+
+## Have fun testing!
+
+Peter Fedorov. All Rights Reserved
