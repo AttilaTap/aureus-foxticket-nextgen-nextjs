@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Gochi_Hand } from "next/font/google";
 import { Fragment, useState } from "react";
 import Login from "./login";
+import Registration from "./registration";
 const gochi = Gochi_Hand({
   weight: ["400"],
   style: ["normal"],
@@ -14,6 +15,7 @@ const gochi = Gochi_Hand({
 
 export default function Header() {
   const [showLogin, setShowLogin] = useState(false);
+  const [showRegistration, setShowRegistration] = useState(false);
   return (
     <Fragment>
       <div className="flex flex-col  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center ">
@@ -60,7 +62,16 @@ export default function Header() {
           </h1>
         </div>
       </div>{" "}
-      <Login isVisible={showLogin} onClose={() => setShowLogin(false)} />
+      <Login
+        isVisible={showLogin}
+        onCloseLog={() => setShowLogin(false)}
+        openReg={() => setShowRegistration(true)}
+      />
+      <Registration
+        isVisible={showRegistration}
+        onCloseReg={() => setShowRegistration(false)}
+        openLog={() => setShowLogin(true)}
+      />
     </Fragment>
   );
 }

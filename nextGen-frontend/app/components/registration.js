@@ -1,24 +1,23 @@
 import Link from "next/link";
 import React from "react";
-import Registration from "./registration";
 
-const Login = ({ isVisible, onCloseLog, openReg }) => {
+const Registration = ({ isVisible, onCloseReg, openLog }) => {
   if (!isVisible) return null;
-  function handleClose(e) {
+  function handleCloseReg(e) {
     if (e.target.id === "wrapper") {
-      onCloseLog();
+      onCloseReg();
     }
   }
   return (
     <div
       className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-10"
       id="wrapper"
-      onClick={handleClose}
+      onClick={handleCloseReg}
     >
       <div className="w-[600px] h-[400px] relative flex justify-center items-center rounded-lg bg-stone-400">
         <button
           className="absolute top-4 right-4 font-stone-100"
-          onClick={onCloseLog}
+          onClick={onCloseReg}
         >
           <svg
             viewBox="0 0 800 1000"
@@ -33,7 +32,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         <div className="w-full h-auto">
           <div className="justify-center">
             <h2 className="px-8 text-2xl font-bold text-center">
-              Log in and find your NEXTicket
+              Register NOW!!!
             </h2>
           </div>
           <form className="bg-bone rounded px-8 pt-6 pb-8 mb-1">
@@ -44,6 +43,18 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
               >
                 E-mail
               </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-4 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                id="username"
+                type="email"
+                placeholder="example@gmail.com"
+              />
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-4 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                id="username"
+                type="email"
+                placeholder="example@gmail.com"
+              />
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-4 leading-tight focus:outline-blue-500 focus:shadow-outline"
                 id="username"
@@ -74,20 +85,14 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
               </button>
               <div className="flex-col items-end justify-end ">
                 <Link
-                  className="block font-bold text-sm mb-2 text-blue-500 hover:text-blue-800 cursor-pointer"
-                  href=""
-                >
-                  Forgot Password?
-                </Link>
-                <Link
                   className="block font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
                   href=""
                   onClick={() => {
-                    openReg();
-                    onCloseLog();
+                    openLog();
+                    onCloseReg();
                   }}
                 >
-                  Not a member yet? Register Here!
+                  Signup Here!
                 </Link>
               </div>
             </div>
@@ -97,4 +102,4 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
     </div>
   );
 };
-export default Login;
+export default Registration;
