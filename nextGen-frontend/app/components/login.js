@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Login = ({ isVisible, onClose }) => {
@@ -13,7 +14,7 @@ const Login = ({ isVisible, onClose }) => {
       id="wrapper"
       onClick={handleClose}
     >
-      <div className="w-[1000px] h-[400px] relative flex justify-center items-center rounded-lg bg-slate-400">
+      <div className="w-[600px] h-[400px] relative flex justify-center items-center rounded-lg bg-stone-400">
         <button
           className="absolute top-4 right-4 font-stone-100"
           onClick={onClose}
@@ -38,21 +39,21 @@ const Login = ({ isVisible, onClose }) => {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="username"
+                htmlFor="username"
               >
-                Username
+                E-mail
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-4 leading-tight focus:outline-blue-500 focus:shadow-outline"
                 id="username"
-                type="text"
-                placeholder="Username"
+                type="email"
+                placeholder="example@gmail.com"
               />
             </div>
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="password"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -65,24 +66,24 @@ const Login = ({ isVisible, onClose }) => {
             </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-500 hover:bg-blue-700 text-stone-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
               >
                 Sign In
               </button>
               <div className="flex-col items-end justify-end ">
-                <a
+                <Link
                   className="block font-bold text-sm mb-2 text-blue-500 hover:text-blue-800 cursor-pointer"
-                  onClick=""
+                  href=""
                 >
                   Forgot Password?
-                </a>
-                <a
+                </Link>
+                <Link
                   className="block font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
-                  onClick=""
+                  href=""
                 >
                   Not a member yet? Register Here!
-                </a>
+                </Link>
               </div>
             </div>
           </form>
