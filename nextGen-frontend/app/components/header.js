@@ -1,17 +1,17 @@
 import Image from "next/image";
-import logo from "../../public/logo_2_bigger_transparent.svg";
+import logo from "../../public/logo_white_transp_version_1.svg";
 import Link from "next/link";
 
 export default function Header() {
   return (
     <div className="flex justify-between  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center ">
-      <Image priority src={logo} height={120} alt="Nexticket logo" className="mt-6 h-16" />
+      <Image priority src={logo} height={120} width={300} alt="Nexticket logo" className="mt-6 ml-6  h-16" />
       <div className="flex justify-center mr-6 mt-6">
         <button type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5" onClick={""}>
           Login
         </button>
         <Link href="">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mt-1">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="w-6 h-6 mt-1">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
