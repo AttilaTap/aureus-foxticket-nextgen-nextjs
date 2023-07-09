@@ -1,10 +1,10 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
   if (!isVisible) return null;
   function handleCloseReg(e) {
-    if (e.target.id === "wrapper") {
+    if (e.target.id === 'wrapper') {
       onCloseReg();
     }
   }
@@ -31,7 +31,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
 
         <div className="w-full h-auto">
           <div className="justify-center">
-            <h2 className="px-8 text-2xl font-bold text-center">
+            <h2 className="px-8 text-2xl font-bold text-center ">
               Register NOW!!!
             </h2>
           </div>
