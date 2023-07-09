@@ -31,8 +31,8 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
 
         <div className="w-full h-auto">
           <div className="justify-center">
-            <h2 className="px-8 text-2xl font-bold text-center ">
-              Register NOW!!!
+            <h2 className="px-8 text-2xl font-bold text-center mt-10">
+              Registration
             </h2>
           </div>
           <form className="bg-bone rounded px-8 pt-6 pb-8 mb-1">
@@ -43,18 +43,6 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
               >
                 E-mail
               </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-4 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                id="username"
-                type="email"
-                placeholder="example@gmail.com"
-              />
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-4 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                id="username"
-                type="email"
-                placeholder="example@gmail.com"
-              />
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-4 leading-tight focus:outline-blue-500 focus:shadow-outline"
                 id="username"
@@ -75,6 +63,18 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
                 type="password"
                 placeholder="******************"
               />
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="password"
+              >
+                Confirm password
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                id="password-confirm"
+                type="password"
+                placeholder="******************"
+              />
             </div>
             <div className="flex items-center justify-between">
               <button
@@ -92,7 +92,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
                     onCloseReg();
                   }}
                 >
-                  Signup Here!
+                  Have already registered? Please login here.
                 </Link>
               </div>
             </div>
