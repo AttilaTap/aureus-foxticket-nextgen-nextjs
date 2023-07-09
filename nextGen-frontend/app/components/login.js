@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import Registration from "./registration";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
   if (!isVisible) return null;
