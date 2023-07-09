@@ -1,10 +1,10 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
 const Login = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
   function handleClose(e) {
-    if (e.target.id === "wrapper") {
+    if (e.target.id === 'wrapper') {
       onClose();
     }
   }
@@ -80,7 +80,8 @@ const Login = ({ isVisible, onClose }) => {
                 </Link>
                 <Link
                   className="block font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
-                  href=""
+                  href="/registration"
+                  onClick={onClose}
                 >
                   Not a member yet? Register Here!
                 </Link>
