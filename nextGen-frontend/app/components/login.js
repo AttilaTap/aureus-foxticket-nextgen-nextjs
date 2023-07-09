@@ -80,7 +80,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
                   Forgot Password?
                 </Link>
                 <Link
-                  className="block font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
+                  className="block font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer "
                   href=""
                   onClick={() => {
                     openReg();
