@@ -12,12 +12,12 @@ const gochi = Gochi_Hand({
 
 export default function Header() {
   return (
-    <div className="flex flex-col  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center ">
+    <div className="flex flex-col  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center">
       <div className="flex justify-between ">
         <Image priority src={logo} height={120} width={300} alt="Nexticket logo" className="mt-6 ml-6  h-16" />
 
         <div className="flex justify-center mr-6 mt-6">
-          <button type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5" onClick={""}>
+          <button type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5">
             Login
           </button>
           <Link href="">
