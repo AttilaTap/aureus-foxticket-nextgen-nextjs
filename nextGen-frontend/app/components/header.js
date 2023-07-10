@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "../../public/logo_white_transp_version_1.svg";
+import logo from "../../public/logo_white_transp.svg";
 import Link from "next/link";
 import { Gochi_Hand } from "next/font/google";
 import { Fragment, useState } from "react";
