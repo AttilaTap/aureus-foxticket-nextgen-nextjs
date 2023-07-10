@@ -2,7 +2,9 @@ import Link from 'next/link';
 import React from 'react';
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
-  if (!isVisible) return null;
+  if (!isVisible) {
+    return null;
+  }
   function handleCloseReg(e) {
     if (e.target.id === 'wrapper') {
       onCloseReg();
