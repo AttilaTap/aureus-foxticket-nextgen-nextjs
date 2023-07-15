@@ -28,7 +28,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
             id="username"
             type="email"
-            name=""
+            name="email"
             placeholder="example@gmail.com"
           />
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
@@ -38,6 +38,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
             id="password"
             type="password"
+            name="password"
             placeholder="******************"
           />
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
@@ -47,6 +48,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             className="rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline"
             id="password-confirm"
             type="password"
+            name="password"
             placeholder="******************"
           />
           <div className="flex items-center justify-between gap-2 mt-8">
