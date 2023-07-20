@@ -1,23 +1,31 @@
-const mysql = require('mysql2'); // to use mysql12
-import dotenv from 'dotenv'; // to use env
+export {}
+
+import mysql from 'mysql2';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 let connection;
 
-const getConnection = () => {
-  if (!connection) {
-    connection = mysql.createConnection({
-      host: process.env.DB_HOST,  // to use the env template
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-    }).catch(err => {
-      console.log("Failed to create a connection: ", err); // check error while create the database
-    });
+export default function getConnection() {
+  try{
+    if (!connection) {
+      connection = mysql.createConnection({
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD
+      });
+    }
+
+    console.log("Successfully connected");
+
+    return connection;
   }
-
-  return connection;
+  catch(error)
+  {
+    console.log("Error while connecting to db");
+    throw error;
+  }
 };
-
-export default getConnection;
