@@ -1,8 +1,6 @@
--- USE name_of_db;
+CREATE DATABASE IF NOT EXISTS nextticket;
 
--- DROP TABLE usersDb;
-
-USE name_of_db;
+USE nextticket;
 
 CREATE TABLE IF NOT EXISTS usersDb (
         user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
