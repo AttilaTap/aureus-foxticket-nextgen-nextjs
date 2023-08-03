@@ -1,5 +1,6 @@
 import Image from "next/image";
 import EventCard from "./components/eventCard";
+import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-w-fit w-6/12">
@@ -23,8 +24,9 @@ export default function Home() {
           />
         </svg>
       </div>
-      <EventCard />
-      <EventCard />
+      <Link href={"www.google.com"}>
+        <EventCard />
+      </Link>
     </div>
   );
 }
