@@ -1,21 +1,50 @@
-const EventCard = () => {
+const EventCard = ({
+  dateFromDb,
+  eventName,
+  eventLocation,
+  availableTickets,
+}) => {
   const destinationUrl = "https://tailwindcss.com/docs/padding";
-
+  //assuming in mySQL we use the DATETIME format to store date and time
+  const date = new Date(dateFromDb);
+  console.log(dateFromDb);
+  console.log(date);
+  // Functions for making the date usefull
+  const getDayOfWeek = () => {
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    return daysOfWeek[date.getDay()];
+  };
+  const formatDate = () => {
+    const day = date.getDay();
+    const month = date.getMonth();
+    return `${day}. ${month}`;
+  };
+  const formatTime = () => {
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
   return (
     <div className="card">
       <div className="w-24 flex flex-col justify-center items-center">
-        <span className="font-bold">Saturday</span>
-        <span className="font-bold">19.8</span>
-        <span className="block text-black-500 text-sm">18:00</span>
+        <span className="font-bold">{getDayOfWeek()}</span>
+        <span className="font-bold">{formatDate()}</span>
+        <span className="block text-black-500 text-sm">{formatTime()}</span>
       </div>
       <div className="m-4 w-full">
-        <span className="font-bold">Zustand Packages</span>
-        <span className="block text-black-500 text-sm">
-          Wasserschloss Klaffenbach, Chemnitz, Germany
-        </span>
+        <span className="font-bold">{eventName}</span>
+        <span className="block text-black-500 text-sm">{eventLocation}</span>
       </div>
       <div className="w-44 p-1 flex flex-row justify-end items-center">
-        <span className="pr-2">5</span>
+        <span className="pr-2">{availableTickets}</span>
         <svg
           className="hover:fill-amber-500"
           fill="#5dd9a7"
