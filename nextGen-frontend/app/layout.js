@@ -15,7 +15,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${nunito.className} flex flex-col h-full`}>
         <Header />
-        <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-stone-100">{children}</main>
+        <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-stone-100">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
