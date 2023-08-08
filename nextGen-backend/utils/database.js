@@ -1,16 +1,14 @@
-export {};
-
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
 
 let connection;
 
-export default function getConnection() {
+export default async function getConnection() {
   try {
     if (!connection) {
-      connection = mysql.createConnection({
+      connection = await mysql.createConnection({
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         user: process.env.DB_USER,

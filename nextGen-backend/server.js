@@ -1,71 +1,87 @@
 import express from 'express';
+import cors from 'cors';
 import getConnection from './utils/database.js';
 import bcrypt from 'bcrypt';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 
-try {
-  const app = express();
+const app = express();
 
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-  let conn = getConnection();
+app.post('/user/reg', async (req, res) => {
+  const { email, password } = req.body;
 
-  app.post('/user/reg', async (req, res) => {
-    const { email, password } = req.body;
-
+  try {
     // Check if email already exists
-    const connection = getConnection();
-    const [users] = await connection.execute(
-      'SELECT * FROM usersDb WHERE email = ?',
-      [email],
-    );
+    const connection = await getConnection();
+    let users;
+    try {
+      [users] = await connection.query(
+        'SELECT * FROM usersDb WHERE email = ?',
+        [email],
+      );
+    } catch (error) {
+      console.error('Database query error:', error);
+      throw error;
+    }
 
     if (users.length) {
       return res.status(400).json({ error: 'Email already exists' });
     }
 
     // Hash the password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    let hashedPassword;
+    try {
+      const saltRounds = 10;
+      hashedPassword = await bcrypt.hash(password, saltRounds);
+    } catch (error) {
+      console.error('Password hashing error:', error);
+      throw error;
+    }
 
     // Insert the user into the database
-    await connection.execute(
-      'INSERT INTO usersDb (email, password) VALUES (?, ?)',
-      [email, hashedPassword],
-    );
+    try {
+      await connection.execute(
+        'INSERT INTO usersDb (email, password) VALUES (?, ?)',
+        [email, hashedPassword],
+      );
+    } catch (error) {
+      console.error('Database insert error:', error);
+      throw error;
+    }
 
     // Send a success email
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL_USERNAME,
-      to: email,
-      subject: 'Registration Successful',
-      text: 'Congratulations on your successful registration!',
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    });
+    try {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to: email,
+        from: process.env.EMAIL_USERNAME,
+        subject: 'Registration Successful',
+        text: 'Congratulations on your successful registration!',
+      };
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log('Email sent');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error('Email sending error:', error);
+      throw error;
+    }
 
     res.json({ message: 'User registered successfully' });
-  });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
-  app.listen(9000, () => {
-    console.log("I'm running");
-  });
-} catch (error) {
-  console.log('Application crashed');
-  console.log(error);
-}
+const server = app.listen(9000, () => {
+  console.log("I'm running");
+});
+
+export { app, server };
