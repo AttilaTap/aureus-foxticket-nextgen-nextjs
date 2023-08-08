@@ -1,0 +1,25 @@
+{
+  "name": "aureus-foxticket-nextgen-nextjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.4.14",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "nodemailer": "^6.9.4",
+    "tailwindcss": "^3.3.3",
+    "zustand": "^4.4.1"
+  }
+}

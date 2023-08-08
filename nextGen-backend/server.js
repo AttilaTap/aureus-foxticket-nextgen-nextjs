@@ -1,5 +1,7 @@
 import express from 'express';
 import getConnection from './utils/database.js';
+import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
 
 try {
   const app = express();
@@ -9,18 +11,56 @@ try {
 
   let conn = getConnection();
 
-  // TODO(ANF-15) DUMMY db test and endpoint test. Delete later when there is valid code here.
-  // conn.query(
-  //     'INSERT INTO usersdb (email, password) VALUES ("joshka@freemail.hu", "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f");',
-  //     function(err, results, fields) {
-  //       console.log(results);
-  //       console.log(fields);
-  //     }
-  //   );
-  //
-  // app.get('/', (req, res) => {
-  //     res.send('Hello World, from express');
-  // });
+  app.post('/user/reg', async (req, res) => {
+    const { email, password } = req.body;
+
+    // Check if email already exists
+    const connection = getConnection();
+    const [users] = await connection.execute(
+      'SELECT * FROM usersDb WHERE email = ?',
+      [email],
+    );
+
+    if (users.length) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
+
+    // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Insert the user into the database
+    await connection.execute(
+      'INSERT INTO usersDb (email, password) VALUES (?, ?)',
+      [email, hashedPassword],
+    );
+
+    // Send a success email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USERNAME,
+      to: email,
+      subject: 'Registration Successful',
+      text: 'Congratulations on your successful registration!',
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    res.json({ message: 'User registered successfully' });
+  });
 
   app.listen(9000, () => {
     console.log("I'm running");
