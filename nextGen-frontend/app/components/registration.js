@@ -1,12 +1,26 @@
 import Link from 'next/link';
+import bcrypt from 'bcryptjs';
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
   if (!isVisible) {
     return null;
   }
+
   function handleCloseReg(e) {
     if (e.target.id === 'wrapper') {
       onCloseReg();
+    }
+  }
+
+  function hashPassword(password) {
+    const salt = bcrypt.genSaltSync(10);
+    const hashed = bcrypt.hashSync(password, salt);
+
+    if (bcrypt.compareSync(password, hashed)) {
+      console.log('Client-side hashing done');
+      return hashed;
+    } else {
+      throw new Error('Hashing failed');
     }
   }
 
@@ -22,12 +36,14 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
       return;
     }
 
-    const user = {
-      email: emailInput.value,
-      password: passwordInput.value,
-    };
-
     try {
+      const hashedPassword = hashPassword(passwordInput.value);
+
+      const user = {
+        email: emailInput.value,
+        password: hashedPassword,
+      };
+
       const response = await fetch('http://localhost:9000/user/reg', {
         method: 'POST',
         headers: {
@@ -36,13 +52,15 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         body: JSON.stringify(user),
       });
 
+      const responseData = await response.json();
+
       if (response.ok) {
         alert('Registration successful!');
       } else {
-        alert('Registration failed');
+        alert(responseData.error || 'Registration failed');
       }
     } catch (error) {
-      alert('An error occurred');
+      alert(error.message || 'An unexpected error occurred.');
     }
   }
 
