@@ -1,8 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import getConnection from './utils/database.js';
-import bcrypt from 'bcrypt';
-import sgMail from '@sendgrid/mail';
+import { readFileSync } from 'fs';
+import https from 'https';
+import {
+  checkEmailExists,
+  hashPassword,
+  registerUser,
+  sendSuccessEmail,
+} from './services/user.service.js';
 
 const app = express();
 
@@ -14,71 +19,32 @@ app.post('/user/reg', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if email already exists
-    const connection = await getConnection();
-    let users;
-    try {
-      [users] = await connection.query(
-        'SELECT * FROM usersDb WHERE email = ?',
-        [email],
-      );
-    } catch (error) {
-      console.error('Database query error:', error);
-      throw error;
-    }
-
-    if (users.length) {
+    if (await checkEmailExists(email)) {
       return res.status(400).json({ error: 'Email already exists' });
     }
 
-    // Hash the password
-    let hashedPassword;
-    try {
-      const saltRounds = 10;
-      hashedPassword = await bcrypt.hash(password, saltRounds);
-    } catch (error) {
-      console.error('Password hashing error:', error);
-      throw error;
-    }
+    const hashedPassword = await hashPassword(password);
+    await registerUser(email, hashedPassword);
 
-    // Insert the user into the database
-    try {
-      await connection.execute(
-        'INSERT INTO usersDb (email, password) VALUES (?, ?)',
-        [email, hashedPassword],
-      );
-    } catch (error) {
-      console.error('Database insert error:', error);
-      throw error;
-    }
-
-    // Send a success email
-    try {
-      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-      const msg = {
-        to: email,
-        from: process.env.EMAIL_USERNAME,
-        subject: 'Registration Successful',
-        text: 'Congratulations on your successful registration!',
-      };
-      sgMail
-        .send(msg)
-        .then(() => {
-          console.log('Email sent');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } catch (error) {
-      console.error('Email sending error:', error);
-      throw error;
-    }
+    await sendSuccessEmail(email);
 
     res.json({ message: 'User registered successfully' });
   } catch (error) {
+    console.error('Error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+//  INACTIVATED HTTPS option for the backend server
+// const httpsOptions = {
+//   key: readFileSync('./certs/key.pem'),
+//   cert: readFileSync('./certs/cert.pem'),
+//   passphrase: 'nextgen',
+// };
+
+// const server = https.createServer(httpsOptions, app).listen(9000, () => {
+//   console.log("I'm running on HTTPS");
+// });
 
 const server = app.listen(9000, () => {
   console.log("I'm running");
