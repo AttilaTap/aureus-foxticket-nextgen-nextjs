@@ -24,7 +24,7 @@ export default function Home() {
           />
         </svg>
       </div>
-      <Link href={"www.google.com"}>
+      <Link href="/event/">
         <EventCard
           dateFromDb="2023-08-05T18:00:00"
           eventName="The best Event in the History"
