@@ -7,7 +7,7 @@ import {
   hashPassword,
   registerUser,
   sendSuccessEmail,
-} from './services/user.service.js';
+} from './services/user-service.js';
 
 const app = express();
 
