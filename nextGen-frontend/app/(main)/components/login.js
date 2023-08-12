@@ -7,6 +7,41 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
       onCloseLog();
     }
   }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const emailInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+
+    try {
+      // const hashedPassword = hashPassword(passwordInput.value);
+
+      const user = {
+        email: emailInput.value,
+        password: passwordInput.value, //???? hashing
+      };
+
+      const response = await fetch("http://localhost:9000/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        alert("Login is successful!");
+      } else {
+        alert(responseData.error || "Login failed");
+      }
+    } catch (error) {
+      alert(error.message || "An unexpected error occurred.");
+    }
+  }
+
   return (
     <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-10" id="wrapper" onClick={handleClose}>
       <div className="flex flex-col justify-center items-center w-1/2 lg:w-1/3 sm:min-w-fit h-auto relative  rounded-lg bg-stone-400">
@@ -18,7 +53,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
 
         <h2 className="px-2 text-2xl font-bold text-center mt-5 xl:mt-2 mb-3 text-stone-950">Log in and find your NEXTicket</h2>
 
-        <form className="px-8 pt-6">
+        <form className="px-8 pt-6" onSubmit={handleSubmit}>
           <label className="text-stone-700 text-m font-bold" htmlFor="username">
             E-mail
           </label>
@@ -43,7 +78,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
           <div className="flex items-center justify-between gap-2 mt-8">
             <button
               className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-1 rounded-lg md:w-24 md:h-12 focus:outline-none focus:shadow-outline"
-              type="button"
+              type="submit"
             >
               Sign In
             </button>
