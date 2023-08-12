@@ -1,13 +1,8 @@
-import express from 'express';
-import cors from 'cors';
-import { readFileSync } from 'fs';
-import https from 'https';
-import {
-  checkEmailExists,
-  hashPassword,
-  registerUser,
-  sendSuccessEmail,
-} from './services/user-service.js';
+import express from "express";
+import cors from "cors";
+import { readFileSync } from "fs";
+import https from "https";
+import { checkEmailExists, hashPassword, registerUser, sendSuccessEmail } from "./services/user-service.js";
 
 const app = express();
 
@@ -15,12 +10,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/user/reg', async (req, res) => {
+app.post("/user/reg", async (req, res) => {
   const { email, password } = req.body;
 
   try {
     if (await checkEmailExists(email)) {
-      return res.status(400).json({ error: 'Email already exists' });
+      return res.status(400).json({ error: "Email already exists" });
     }
 
     const hashedPassword = await hashPassword(password);
@@ -28,10 +23,22 @@ app.post('/user/reg', async (req, res) => {
 
     await sendSuccessEmail(email);
 
-    res.json({ message: 'User registered successfully' });
+    res.json({ message: "User registered successfully" });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/user/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (await !checkEmailExists(email)) {
+      return res.status(400).json({ error: "Email not exists" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
