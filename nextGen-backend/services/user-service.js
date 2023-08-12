@@ -5,7 +5,7 @@ import sgMail from '@sendgrid/mail';
 export async function checkEmailExists(email) {
   const connection = await getConnection();
   const [users] = await connection.query(
-    'SELECT * FROM usersDb WHERE email = ?',
+    'SELECT * FROM users WHERE email = ?',
     [email],
   );
   return users.length > 0;
@@ -19,7 +19,7 @@ export async function hashPassword(password) {
 export async function registerUser(email, hashedPassword) {
   const connection = await getConnection();
   await connection.execute(
-    'INSERT INTO usersDb (email, password) VALUES (?, ?)',
+    'INSERT INTO users (email, password) VALUES (?, ?)',
     [email, hashedPassword],
   );
 }
