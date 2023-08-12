@@ -58,11 +58,7 @@ export default function Header() {
           </div>
         </div>
         <div className="flex justify-center">
-          <h1
-            className={`${gochi.className} text-white text-6xl font-bold mt-20`}
-          >
-            your nexTicket is here
-          </h1>
+          <h1 className={`${gochi.className} text-white text-6xl font-bold mt-20  drop-shadow-2xl`}>your nexTicket is here</h1>
         </div>
       </div>
       <Login
