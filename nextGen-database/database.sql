@@ -20,19 +20,20 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 CREATE TABLE IF NOT EXISTS tickets (
-    ticket_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	ticket_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     type ENUM('entrance','non-entrance'),
     name VARCHAR(50) NOT NULL,
     price DECIMAL(9,2) NOT NULL,
     currency ENUM('HUF','EU','$') NOT NULL,
     original_price DECIMAL(9,2) NOT NULL,
     original_currency ENUM('HUF','EU','$') NOT NULL,
-    date VARCHAR(50) NOT NULL,
+    start_date DATETIME NOT NULL,
+    end_date DATETIME,
     available ENUM ('YES','NO') NOT NULL,
     how_many INT NOT NULL,
     seat INT,
     section INT,
-    row_seating VARCHAR(4),
+    row_seating VARCHAR(10),
     comment TEXT,
     user_id INT NOT NULL,
     event_id INT NOT NULL,
