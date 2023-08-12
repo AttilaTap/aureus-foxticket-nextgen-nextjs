@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import logo from "../../../public/logo_white_transp.svg";
 import Link from "next/link";
 import { Gochi_Hand } from "next/font/google";
 import Login from "./login";
@@ -27,7 +26,7 @@ export default function Header() {
         <div className="flex justify-between ">
           <Image
             priority
-            src={logo}
+            src="/logo_white_transp.svg"
             height={120}
             width={300}
             alt="Nexticket logo"
