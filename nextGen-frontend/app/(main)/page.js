@@ -1,7 +1,7 @@
-import Image from "next/image";
 import EventCard from "./components/eventCard";
 import Link from "next/link";
-export default function Home() {
+
+export default function HomePage() {
   return (
     <div className="min-w-fit w-6/12">
       <div className="relative">
