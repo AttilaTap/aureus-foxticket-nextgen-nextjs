@@ -1,31 +1,53 @@
 import express from 'express';
-import getConnection from './utils/database.js';
+import cors from 'cors';
+import { readFileSync } from 'fs';
+import https from 'https';
+import {
+  checkEmailExists,
+  hashPassword,
+  registerUser,
+  sendSuccessEmail,
+} from './services/user-service.js';
 
-try {
-  const app = express();
+const app = express();
 
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-  let conn = getConnection();
+app.post('/user/reg', async (req, res) => {
+  const { email, password } = req.body;
 
-  // TODO(ANF-15) DUMMY db test and endpoint test. Delete later when there is valid code here.
-  // conn.query(
-  //     'INSERT INTO usersdb (email, password) VALUES ("joshka@freemail.hu", "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f");',
-  //     function(err, results, fields) {
-  //       console.log(results);
-  //       console.log(fields);
-  //     }
-  //   );
-  //
-  // app.get('/', (req, res) => {
-  //     res.send('Hello World, from express');
-  // });
+  try {
+    if (await checkEmailExists(email)) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
 
-  app.listen(9000, () => {
-    console.log("I'm running");
-  });
-} catch (error) {
-  console.log('Application crashed');
-  console.log(error);
-}
+    const hashedPassword = await hashPassword(password);
+    await registerUser(email, hashedPassword);
+
+    await sendSuccessEmail(email);
+
+    res.json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+//  INACTIVATED HTTPS option for the backend server
+// const httpsOptions = {
+//   key: readFileSync('./certs/key.pem'),
+//   cert: readFileSync('./certs/cert.pem'),
+//   passphrase: 'nextgen',
+// };
+
+// const server = https.createServer(httpsOptions, app).listen(9000, () => {
+//   console.log("I'm running on HTTPS");
+// });
+
+const server = app.listen(9000, () => {
+  console.log("I'm running");
+});
+
+export { app, server };
