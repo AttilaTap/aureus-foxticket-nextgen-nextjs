@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import useTicketStore from '@/store/store';
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
+  const setUser = useTicketStore((state) => state.setUser);
+
   if (!isVisible) return null;
   function handleClose(e) {
     if (e.target.id === 'wrapper') {
@@ -34,6 +37,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
 
       if (response.ok) {
         alert('Login is successful!');
+        setUser(responseData.login);
         onCloseLog();
       } else {
         alert(responseData.error || 'Login failed');
