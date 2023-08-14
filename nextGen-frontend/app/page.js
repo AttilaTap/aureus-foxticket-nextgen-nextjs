@@ -8,7 +8,11 @@ export default function Home() {
   const user = useTicketStore((state) => state.user);
   return (
     <div className="relative">
-      {user && <h1>Hello, {user}!</h1>}
+      {user && (
+        <h1 className="text-2xl font-semibold text-indigo-600 bg-white p-4 rounded-lg shadow-md mb-4">
+          Hello, {user}!
+        </h1>
+      )}
       <input
         type="text"
         placeholder="Search..."
