@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import GreetUser from './components/user-login';
 import useTicketStore from '@/store/store';
 
 export default function Home() {
