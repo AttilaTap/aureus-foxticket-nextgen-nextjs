@@ -10,7 +10,7 @@ export default function Home() {
     <div className="relative">
       {user && (
         <h1 className="text-2xl font-semibold text-indigo-600 bg-white p-4 rounded-lg shadow-md mb-4">
-          Hello, {user}!
+          Hello, {user}!👋
         </h1>
       )}
       <input
