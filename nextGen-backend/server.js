@@ -1,7 +1,5 @@
 import express from "express";
 import cors from "cors";
-import { readFileSync } from "fs";
-import https from "https";
 import { checkEmailExists, registerUser, sendSuccessEmail, verifyUser } from "./services/user-service.js";
 import { createToken } from "./services/jwt-service.js";
 
