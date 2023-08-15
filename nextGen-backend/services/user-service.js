@@ -1,13 +1,10 @@
-import getConnection from '../utils/database.js';
-import bcrypt from 'bcrypt';
-import sgMail from '@sendgrid/mail';
+import getConnection from "../utils/database.js";
+import bcrypt from "bcrypt";
+import sgMail from "@sendgrid/mail";
 
 export async function checkEmailExists(email) {
   const connection = await getConnection();
-  const [users] = await connection.query(
-    'SELECT * FROM users WHERE email = ?',
-    [email],
-  );
+  const [users] = await connection.query("SELECT * FROM users WHERE email = ?", [email]);
   return users.length > 0;
 }
 
@@ -18,10 +15,7 @@ export async function hashPassword(password) {
 
 export async function registerUser(email, hashedPassword) {
   const connection = await getConnection();
-  await connection.execute(
-    'INSERT INTO users (email, password) VALUES (?, ?)',
-    [email, hashedPassword],
-  );
+  await connection.execute("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword]);
 }
 
 export async function sendSuccessEmail(toEmail) {
@@ -30,8 +24,8 @@ export async function sendSuccessEmail(toEmail) {
   const msg = {
     to: toEmail,
     from: process.env.EMAIL_USERNAME,
-    subject: 'Registration Successful',
-    text: 'Congratulations on your successful registration!',
+    subject: "Registration Successful",
+    text: "Congratulations on your successful registration!",
     html: `
 <!DOCTYPE html>
 <html lang="en">
@@ -53,8 +47,19 @@ export async function sendSuccessEmail(toEmail) {
 
   try {
     await sgMail.send(msg);
-    console.log('Email sent successfully!');
+    console.log("Email sent successfully!");
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error("Error sending email:", error);
   }
+}
+
+export async function verifyUser(email, password) {
+  const connection = await getConnection();
+  const [users] = await connection.query("SELECT * FROM users WHERE email = ?", [email]);
+  if (users.length === 0) {
+    return null;
+  }
+  const user = users[0];
+  const match = await bcrypt.compare(password, user.password);
+  return match;
 }
