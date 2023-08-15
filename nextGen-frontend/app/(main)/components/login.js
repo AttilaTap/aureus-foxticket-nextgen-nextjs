@@ -36,7 +36,6 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
       const responseData = await response.json();
 
       if (response.ok) {
-        alert('Login is successful!');
         setUser(responseData.login);
         onCloseLog();
       } else {

@@ -1,10 +1,19 @@
+'use client';
+
 import EventCard from "./components/eventCard";
 import Link from "next/link";
+import useTicketStore from '@/store/store';
 
 export default function HomePage() {
+  const user = useTicketStore((state) => state.user);
   return (
     <div className="min-w-fit w-6/12">
       <div className="relative">
+        {user && (
+          <h1 className="text-2xl font-semibold text-indigo-600 bg-white p-4 rounded-lg shadow-md mb-4">
+            Hello, {user}!👋
+          </h1>
+        )}
         <input
           type="text"
           placeholder="Search..."
