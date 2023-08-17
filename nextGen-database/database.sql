@@ -40,15 +40,19 @@ CREATE TABLE IF NOT EXISTS tickets (
     FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
     ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Remove foreign key linking tickets to users. This is necessary to truncate the tables.
 ALTER TABLE tickets DROP FOREIGN KEY tickets_ibfk_1;
 ALTER TABLE tickets DROP FOREIGN KEY tickets_ibfk_2;
 
+-- Empty the tickets table first, then the events table, then the users table.
 TRUNCATE TABLE tickets;
 TRUNCATE TABLE events;
 TRUNCATE TABLE users;
 
 ALTER TABLE tickets
+-- Add foreign key from tickets to users, delete related tickets if user is deleted.
   ADD CONSTRAINT tickets_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+-- Add foreign key from tickets to events, delete related tickets if event is deleted.
   ADD CONSTRAINT tickets_ibfk_2 FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE;
 
 INSERT INTO users (email, password) VALUES
