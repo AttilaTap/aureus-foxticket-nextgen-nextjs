@@ -52,16 +52,16 @@ ALTER TABLE tickets
   ADD CONSTRAINT tickets_ibfk_2 FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE;
 
 INSERT INTO users (email, password) VALUES
-('admin@nextgen-nexticket.com', '$2a$10$XqEe7PumKfNuoPGEl.GJY.dMXHk5mBJpLifpShZVRDxvT5XwvMprO'), -- password: admin123
-('johndoe1234@notrealmail.com', '$2a$10$IHmPGe7vA6gH6.qFBqP9/.KYDXbygGrFdA6kntI13uvOzOrv6hHyO'), -- password: johndoe1234pass
-('janedoe5678@fakeinbox.com', '$2a$10$Dhmbak/8v7e0oY7RntKDY.h6v1rKrd7WplFyrs7OMrRYweXEDq7zG'), -- password: janedoe5678pass
-('bobbytables@noemailhere.com', '$2a$10$EvCKlTP7beF/qdb.L/nO9ezOJ3X8X0SjsE56SlUM3Oy49lD2g6uSy'), -- password: bobbytablespass
-('sallysue999@nonexistent.com', '$2a$10$EF9V3n.Hhs8Zhv9g4E84h.kiNZnpwwzK3MTVROCIkWvWz74/j38zK'), -- password: sallysue999pass
-('tomthumb4321@imaginarymail.com', '$2a$10$X/PyVbBhfHsyOePp8ej0EuiqVXJdPBhzyVui5v0HPShOJn8vaLB4K'), -- password: tomthumb4321pass
-('aliceinwonderland@unrealmail.com', '$2a$10$hu9rnftTW2OkLctyfEQRC.XVbsEqV7FzPfVf3B57LJvtfiIGX45Wu'), -- password: aliceinwonderlandpass
-('peterpan9090@fictitiousmail.com', '$2a$10$.u1f/NXrF2uEcIq/1eG6Iu6hIzbsHJL80.kiVUblZps3qkkb2d4Ue'), -- password: peterpan9090pass
-('snowwhite1010@madeupinbox.com', '$2a$10$G5EGm0qGj9p0hwQt4R.4X.N/yvkwze1tiRySvlf.JedAfuTkcsf1u'), -- password: snowwhite1010pass
-('jackandjill@inventedemail.com', '$2a$10$/9mYnq5Us74e8IS5eP/xtOKW/mICBbW8Rm3x9VQe4QdSbWsGoI4XK'), -- password: jackandjillpass
+('admin@nextgen-nexticket.com', '$2a$10$LZ4vq6ApY0NXwM47C.0JYOOTYdY8NyVG4JmjO/Y8w.55TEBLcrnUS'), -- password: admin123
+('johndoe1234@notrealmail.com', '$2a$10$QAKp5JETPqFO/YPmvHNOzu8xMinTY4.tq/uhQQJ7Jzid0qo9os48e'), -- password: johndoe1234pass
+('janedoe5678@fakeinbox.com', '$2a$10$p8J7WqT.oGdBHl8zvH1nhOPomBJgEXwFR8R8.peIK5SgS290vuDD.'), -- password: janedoe5678pass
+('bobbytables@noemailhere.com', '$2a$10$pNNNKy3E9OIwObrLx00JQ.emiXxLpCnbkH7VzNwvcqXCZFu9xY5ta'), -- password: bobbytablespass
+('sallysue999@nonexistent.com', '$2a$10$ewGTHT1U3Hk/Tadq0gb3..oEB5WYE6froGKaOS5j/NtT0TpG3CD6y'), -- password: sallysue999pass
+('tomthumb4321@imaginarymail.com', '$2a$10$OdWHTp2150RaMh/3Z5ADce34tvxFNyIb2Y9hdrc4L2jAmSoXWceu.'), -- password: tomthumb4321pass
+('aliceinwonderland@unrealmail.com', '$2a$10$vfdv5YquKBMVN5qoeDYyjO.mPLy6DnBIEQFfL05PqputbyfWW1GMi'), -- password: aliceinwonderlandpass
+('peterpan9090@fictitiousmail.com', '$2a$10$Hs/lZpleALhJk.wtCcK7Ou5J9EZu7Jfb0GDps05mSbZpkNrOSlQim'), -- password: peterpan9090pass
+('snowwhite1010@madeupinbox.com', '$2a$10$sMmZWdLta0a1twtK05lkQOWM5vOnQ9nBF9oCgFSgueeUjgmphsFEK'), -- password: snowwhite1010pass
+('jackandjill@inventedemail.com', '$2a$10$QGBm3JLXuImpj24H7BXIse280HrA/7GNtFB62.xB.o0k.mmYt5CU2'), -- password: jackandjillpass
 ('vearant@gmail.com', '$2a$10$RdWhtqlioUEjKgdbF2uEGegGW/d9AnjZK/S6ij38WSPZIbxCtsBFi');
 
 INSERT INTO events (name, location, start_time, description) VALUES
