@@ -33,7 +33,7 @@ app.post("/user/login", async (req, res) => {
   try {
     if (await verifyUser(email, password)) {
       const token = createToken({ email });
-      return res.status(200).json({ login: email });
+      return res.status(200).json({ login: email, token: token });
     } else {
       return res.status(400).json({ error: "There is an error." });
     }
