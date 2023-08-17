@@ -35,7 +35,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
 
       const responseData = await response.json();
       const token = responseData.token;
-      document.cookie = `cookie=${token}`;
+      document.cookie = `token = ${token}`;
       if (response.ok) {
         setUser(responseData.login);
         onCloseLog();
