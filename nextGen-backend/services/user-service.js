@@ -1,6 +1,6 @@
-import getConnection from "../utils/database.js";
-import bcrypt from "bcrypt";
-import sgMail from "@sendgrid/mail";
+import { getConnection } from '../utils/db-connection.js';
+import bcrypt from 'bcrypt';
+import sgMail from '@sendgrid/mail';
 
 export async function checkEmailExists(email) {
   const connection = await getConnection();

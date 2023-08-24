@@ -5,7 +5,7 @@ dotenv.config();
 
 let connection;
 
-export default async function getConnection() {
+export async function getConnection() {
   try {
     if (!connection) {
       connection = await mysql.createConnection({
@@ -25,3 +25,4 @@ export default async function getConnection() {
     throw error;
   }
 }
+
