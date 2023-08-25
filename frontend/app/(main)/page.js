@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import EventCard from "./components/eventCard";
+import EventCard from "../../components/eventCard";
 import Link from "next/link";
-import useTicketStore from '@/store/store';
+import useTicketStore from "@/store/store";
 
 export default function HomePage() {
   const user = useTicketStore((state) => state.user);
