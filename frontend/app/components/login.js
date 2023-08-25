@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import useTicketStore from "@/store/store";
+import { signIn } from "next-auth/react";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
   const setUser = useTicketStore((state) => state.setUser);
@@ -66,12 +68,13 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         </button>
 
         <h2 className="px-2 text-2xl font-bold text-center mt-5 xl:mt-2 mb-3 text-stone-950">Log in and find your NEXTicket</h2>
+
         <form className="px-8 pt-6" onSubmit={handleSubmit}>
           <label className="text-stone-700 text-m font-bold" htmlFor="username">
             E-mail
           </label>
           <input
-            className="rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline"
+            className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
             id="username"
             type="email"
             name="email"
@@ -83,7 +86,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
             Password
           </label>
           <input
-            className="rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline"
+            className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
             id="password"
             type="password"
             name="password"
@@ -92,11 +95,18 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
             placeholder="******************"
           />
 
-          <div className="flex items-center justify-between gap-2 mt-8">
-            <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-1 rounded-lg md:w-24 md:h-12 focus:outline-none focus:shadow-outline" type="submit">
+          <div className="flex items-center justify-between gap-2 mt-4 ">
+            <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-24 md:h-15 focus:outline-none focus:shadow-outline" type="submit">
               Sign In
             </button>
-            <div className="flex-wrap flex-col mb-3 items-end">
+
+            <div>
+              <button onClick={() => signIn("google")} className="flex items-center gap-2 bg-white shadow-xl rounded-lg pl-3 ml-4 mr-4 md:w-38 md:h-15">
+                <Image src="/img/google-logo.png" height={20} width={20} />
+                <span className="bg-sky-700 text-stone-100 font-bold rounded-lg p-4 md:w-52 md:h-15">Continue with Google</span>
+              </button>
+            </div>
+            <div className="flex-wrap flex-col mb-4 items-end">
               <Link className="font-bold text-m text-sky-700 hover:text-sky-800 cursor-pointer" href="">
                 Forgot Password?
               </Link>

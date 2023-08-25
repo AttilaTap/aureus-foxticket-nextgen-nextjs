@@ -17,25 +17,12 @@ const gochi = Gochi_Hand({
 export default function Header() {
   const { status, data: session } = useSession();
 
-  const [showLogin, setShowLogin, showRegistration, setShowRegistration] =
-    useTicketStore((state) => [
-      state.showLog,
-      state.setShowLog,
-      state.showReg,
-      state.setShowReg,
-    ]);
+  const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
       <div className="flex flex-col  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center ">
         <div className="flex justify-between ">
-          <Image
-            priority
-            src="/logo_white_transp.svg"
-            height={120}
-            width={300}
-            alt="Nexticket logo"
-            className="mt-6 ml-6  h-16"
-          />
+          <Image priority src="/logo_white_transp.svg" height={120} width={300} alt="Nexticket logo" className="mt-6 ml-6  h-16" />
           <div className="flex justify-center mr-6 mt-6">
             {status === "authenticated" ? (
               <div className="flex items-center pr-3 mb-8 mr-2">
@@ -43,31 +30,17 @@ export default function Header() {
                   <span className="text-stone-100">Welcome back </span>
                   {session?.user?.name}
                 </div>
-                <button
-                  onClick={() => signOut()}
-                  className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100"
-                  type="submit"
-                >
+                <button onClick={() => signOut()} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
                   Log out
                 </button>
               </div>
             ) : (
-              <button
-                type="submit"
-                className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5"
-                onClick={setShowLogin}
-              >
+              <button type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5" onClick={setShowLogin}>
                 Log in
               </button>
             )}
             <Link href="">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                className="w-6 h-6 mt-1 stroke-stone-100"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-6 h-6 mt-1 stroke-stone-100">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -78,23 +51,11 @@ export default function Header() {
           </div>
         </div>
         <div className="flex justify-center">
-          <h1
-            className={`${gochi.className} text-white text-6xl font-bold mt-20  drop-shadow-2xl`}
-          >
-            your nexTicket is here
-          </h1>
+          <h1 className={`${gochi.className} text-white text-6xl font-bold mt-20  drop-shadow-2xl`}>your nexTicket is here</h1>
         </div>
       </div>
-      <Login
-        isVisible={showLogin}
-        onCloseLog={setShowLogin}
-        openReg={setShowRegistration}
-      />
-      <Registration
-        isVisible={showRegistration}
-        onCloseReg={setShowRegistration}
-        openLog={setShowLogin}
-      />
+      <Login isVisible={showLogin} onCloseLog={setShowLogin} openReg={setShowRegistration} />
+      <Registration isVisible={showRegistration} onCloseReg={setShowRegistration} openLog={setShowLogin} />
     </>
   );
 }
