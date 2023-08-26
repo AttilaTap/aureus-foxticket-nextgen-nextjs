@@ -1,4 +1,4 @@
-import EventView from "../../../components/eventView";
+import EventView from "../../components/eventView";
 
 export default function EventPage() {
   return (

@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import Provider from "@/components/providers";
+import Provider from "./components/providers";
 import { Nunito } from "next/font/google";
 
 const nunito = Nunito({ subsets: ["latin"], display: "swap" });
