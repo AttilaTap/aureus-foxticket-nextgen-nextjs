@@ -4,7 +4,6 @@ import useTicketStore from "@/store/store";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
   const setUser = useTicketStore((state) => state.setUser);
-  const setToken = useTicketStore((state) => state.setToken);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,12 +37,11 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         body: JSON.stringify(user),
       });
 
-      const responseData = await response.json();
-      const token = responseData.token;
-      document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME} = ${token}`;
       if (response.ok) {
+        const responseData = await response.json();
+        const token = responseData.token;
+        document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME} = ${token}`;
         setUser(user.email);
-        setToken(responseData.token);
         onCloseLog();
       } else {
         alert(responseData.error || "Login failed");
