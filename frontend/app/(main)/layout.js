@@ -1,7 +1,7 @@
 import "../../styles/globals.css";
+import Header from "../components/header";
+import Footer from "../components/footer";
 import { Nunito } from "next/font/google";
-import Header from "../(main)/components/header";
-import Footer from "../(main)/components/footer";
 
 const nunito = Nunito({ subsets: ["latin"], display: "swap" });
 
@@ -14,9 +14,7 @@ export default function MainLayout({ children }) {
   return (
     <>
       <Header />
-      <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-stone-100">
-        {children}
-      </main>
+      <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-stone-100">{children}</main>
       <Footer />
     </>
   );

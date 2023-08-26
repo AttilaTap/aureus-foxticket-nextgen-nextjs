@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import Provider from "./components/providers";
 import { Nunito } from "next/font/google";
 
 const nunito = Nunito({ subsets: ["latin"], display: "swap" });
@@ -12,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${nunito.className} flex flex-col h-full`}>
-        {children}
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
