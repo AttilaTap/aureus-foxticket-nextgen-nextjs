@@ -1,11 +1,11 @@
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
+import mysql from "mysql2/promise";
+import dotenv from "dotenv";
 
 dotenv.config();
 
 let connection;
 
-export default async function getConnection() {
+export async function getConnection() {
   try {
     if (!connection) {
       connection = await mysql.createConnection({
@@ -17,11 +17,11 @@ export default async function getConnection() {
       });
     }
 
-    console.log('Successfully connected');
+    console.log("Successfully connected");
 
     return connection;
   } catch (error) {
-    console.log('Error while connecting to db');
+    console.log("Error while connecting to db");
     throw error;
   }
 }

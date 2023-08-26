@@ -44,7 +44,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         password: hashedPassword,
       };
 
-      const response = await fetch('http://localhost:9000/user/reg', {
+      const response = await fetch('http://localhost:9000/user/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,10 +1,17 @@
+import React, { useState } from "react";
 import Link from "next/link";
 import useTicketStore from "@/store/store";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
   const setUser = useTicketStore((state) => state.setUser);
 
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
   if (!isVisible) return null;
+
   function handleClose(e) {
     if (e.target.id === "wrapper") {
       onCloseLog();
@@ -14,15 +21,12 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const emailInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
+    const { email, password } = formData;
 
     try {
-      // const hashedPassword = hashPassword(passwordInput.value);
-
       const user = {
-        email: emailInput.value,
-        password: passwordInput.value,
+        email,
+        password,
       };
 
       const response = await fetch("http://localhost:9000/user/login", {
@@ -33,11 +37,11 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         body: JSON.stringify(user),
       });
 
-      const responseData = await response.json();
-      const token = responseData.token;
-      document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME} = ${token}`;
       if (response.ok) {
-        setUser(responseData.login);
+        const responseData = await response.json();
+        const token = responseData.token;
+        document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME} = ${token}`;
+        setUser(user.email);
         onCloseLog();
       } else {
         alert(responseData.error || "Login failed");
@@ -45,6 +49,11 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
     } catch (error) {
       alert(error.message || "An unexpected error occurred.");
     }
+  }
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   }
 
   return (
@@ -57,34 +66,34 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         </button>
 
         <h2 className="px-2 text-2xl font-bold text-center mt-5 xl:mt-2 mb-3 text-stone-950">Log in and find your NEXTicket</h2>
-
         <form className="px-8 pt-6" onSubmit={handleSubmit}>
           <label className="text-stone-700 text-m font-bold" htmlFor="username">
             E-mail
           </label>
           <input
-            className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
+            className="rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline"
             id="username"
             type="email"
             name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="example@gmail.com"
           />
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Password
           </label>
           <input
-            className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
+            className="rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline"
             id="password"
             type="password"
             name="password"
+            value={formData.password}
+            onChange={handleChange}
             placeholder="******************"
           />
 
           <div className="flex items-center justify-between gap-2 mt-8">
-            <button
-              className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-1 rounded-lg md:w-24 md:h-12 focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
+            <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-1 rounded-lg md:w-24 md:h-12 focus:outline-none focus:shadow-outline" type="submit">
               Sign In
             </button>
             <div className="flex-wrap flex-col mb-3 items-end">

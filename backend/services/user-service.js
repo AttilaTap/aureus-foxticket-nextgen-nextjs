@@ -1,4 +1,4 @@
-import getConnection from "../utils/database.js";
+import { getConnection } from "../utils/db-connection.js";
 import bcrypt from "bcrypt";
 import sgMail from "@sendgrid/mail";
 
