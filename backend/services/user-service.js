@@ -8,11 +8,6 @@ export async function checkEmailExists(email) {
   return users.length > 0;
 }
 
-export async function hashPassword(password) {
-  const saltRounds = 10;
-  return bcrypt.hash(password, saltRounds);
-}
-
 export async function registerUser(email, hashedPassword) {
   const connection = await getConnection();
   await connection.execute("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword]);
@@ -61,5 +56,6 @@ export async function verifyUser(email, password) {
   }
   const user = users[0];
   const match = await bcrypt.compare(password, user.password);
+  console.log(`Does it really match: ${match}`);
   return match;
 }

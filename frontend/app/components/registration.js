@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import bcrypt from "bcryptjs";
 import { signIn } from "next-auth/react";
+import { hashPassword } from "./utils/hashing";
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
   if (!isVisible) {
@@ -11,18 +11,6 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
   function handleCloseReg(e) {
     if (e.target.id === "wrapper") {
       onCloseReg();
-    }
-  }
-
-  function hashPassword(password) {
-    const salt = bcrypt.genSaltSync(10);
-    const hashed = bcrypt.hashSync(password, salt);
-
-    if (bcrypt.compareSync(password, hashed)) {
-      console.log("Client-side hashing done");
-      return hashed;
-    } else {
-      throw new Error("Hashing failed");
     }
   }
 
@@ -46,7 +34,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         password: hashedPassword,
       };
 
-      const response = await fetch("http://localhost:9000/user/reg", {
+      const response = await fetch("http://localhost:9000/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,29 +55,15 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
   }
 
   return (
-    <div
-      className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-10"
-      id="wrapper"
-      onClick={handleCloseReg}
-    >
+    <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-10" id="wrapper" onClick={handleCloseReg}>
       <div className="flex flex-col justify-center items-center w-1/3 min-w-min h-auto relative rounded-lg bg-stone-400">
-        <button
-          className="absolute top-4 right-4 font-stone-100"
-          onClick={onCloseReg}
-        >
-          <svg
-            viewBox="0 0 800 1000"
-            fill="currentColor"
-            height="1em"
-            width="1em"
-          >
+        <button className="absolute top-4 right-4 font-stone-100" onClick={onCloseReg}>
+          <svg viewBox="0 0 800 1000" fill="currentColor" height="1em" width="1em">
             <path d="M700 100c28 0 51.667 9.667 71 29s29 43 29 71v600c0 26.667-9.667 50-29 70s-43 30-71 30H100c-26.667 0-50-10-70-30S0 826.667 0 800V200c0-28 10-51.667 30-71s43.333-29 70-29h600M554 738l86-86-154-152 154-154-86-86-154 152-152-152-88 86 154 154-154 152 88 86 152-152 154 152" />
           </svg>
         </button>
 
-        <h2 className="px-2 text-2xl font-bold text-center mt-4 text-stone-950">
-          Registration
-        </h2>
+        <h2 className="px-2 text-2xl font-bold text-center mt-4 text-stone-950">Registration</h2>
 
         <form className="px-8 pt-6" onSubmit={handleSubmit}>
           <label className="text-stone-700 text-m font-bold" htmlFor="username">
@@ -102,10 +76,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             name="email"
             placeholder="example@gmail.com"
           />
-          <label
-            className=" text-stone-700 text-m font-bold"
-            htmlFor="password"
-          >
+          <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Password
           </label>
           <input
@@ -115,10 +86,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             name="password"
             placeholder="******************"
           />
-          <label
-            className=" text-stone-700 text-m font-bold"
-            htmlFor="password"
-          >
+          <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Confirm password
           </label>
           <input
@@ -129,27 +97,17 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             placeholder="******************"
           />
           <div className="flex items-center justify-between gap-6 mt-7 mb-3">
-            <button
-              className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
+            <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline" type="submit">
               Register
             </button>
             <div>
-              <button
-                onClick={() => signIn("google")}
-                className="flex items-center gap-2 bg-white shadow-xl rounded-lg pl-3"
-              >
-                <Image src="/img/google-logo.png" height={20} width={20} />
-                <span className="flex flex-row justify-center items-center bg-sky-700 text-stone-100 font-bold rounded-lg p-4 md:w-56 md:h-15">
-                  Register with Google
-                </span>
+              <button onClick={() => signIn("google")} className="flex items-center gap-2 bg-white shadow-xl rounded-lg pl-3">
+                <Image src="/img/google-logo.png" height={20} width={20} alt="Google logo" />
+                <span className="flex flex-row justify-center items-center bg-sky-700 text-stone-100 font-bold rounded-lg p-4 md:w-56 md:h-15">Register with Google</span>
               </button>
             </div>
             <div className="flex-wrap flex-col items-end mb-4">
-              <p className="font-bold text-m text-stone-700 whitespace-nowrap">
-                Have already registered?
-              </p>
+              <p className="font-bold text-m text-stone-700 whitespace-nowrap">Have already registered?</p>
               <Link
                 className="font-bold text-m text-sky-700 hover:text-sky-800 cursor-pointer"
                 href=""

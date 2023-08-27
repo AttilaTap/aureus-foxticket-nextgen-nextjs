@@ -10,8 +10,7 @@ export const register = async (req, res, next) => {
       return res.status(400).json({ error: "Email already exists" });
     }
 
-    const hashedPassword = await userService.hashPassword(password);
-    await userService.registerUser(email, hashedPassword);
+    await userService.registerUser(email, password);
 
     await userService.sendSuccessEmail(email);
 
