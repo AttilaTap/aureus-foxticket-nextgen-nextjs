@@ -19,4 +19,16 @@ describe("Login Component", () => {
     fireEvent.click(closeButton);
     expect(onCloseLogMock).toHaveBeenCalled();
   });
+
+  it('navigates to registration modal when "Register Here!" is clicked', () => {
+    const onCloseLogMock = jest.fn();
+    const openRegMock = jest.fn();
+    render(<Login isVisible={true} onCloseLog={onCloseLogMock} openReg={openRegMock} />);
+
+    const registerLink = screen.getByText("Register Here!");
+    fireEvent.click(registerLink);
+
+    expect(openRegMock).toHaveBeenCalled();
+    expect(onCloseLogMock).toHaveBeenCalled();
+  });
 });
