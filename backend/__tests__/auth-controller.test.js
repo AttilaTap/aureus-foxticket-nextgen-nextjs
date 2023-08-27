@@ -23,4 +23,17 @@ describe("Controller Tests", () => {
     // Clear all mocks after each test
     jest.clearAllMocks();
   });
+
+  describe("register", () => {
+    it("should return 400 if email already exists", async () => {
+      userService.checkEmailExists.mockResolvedValue(true);
+
+      const req = mockRequest({ email: "test@example.com", password: "password" });
+      const res = mockResponse();
+
+      await register(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ error: "Email already exists" });
+    });
+  });
 });
