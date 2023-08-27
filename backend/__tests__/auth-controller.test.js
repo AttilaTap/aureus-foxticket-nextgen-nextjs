@@ -37,3 +37,16 @@ describe("Controller Tests", () => {
     });
   });
 });
+
+describe("login", () => {
+  it("should return 401 if email or password is incorrect", async () => {
+    userService.verifyUser.mockResolvedValue(false);
+
+    const req = mockRequest({ email: "test@example.com", password: "wrongPassword" });
+    const res = mockResponse();
+
+    await login(req, res);
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ error: "Invalid email or password" });
+  });
+});
