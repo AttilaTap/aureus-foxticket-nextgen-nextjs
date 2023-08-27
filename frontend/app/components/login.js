@@ -38,16 +38,15 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         },
         body: JSON.stringify(user),
       });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const token = responseData.token;
-        document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME} = ${token}`;
-        setUser(user.email);
-        onCloseLog();
-      } else {
-        alert(responseData.error || "Login failed");
+      if (!response.ok) {
+        throw new Error("Network error while login");
       }
+
+      const responseData = await response.json();
+      const token = responseData.token;
+      document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME} = ${token}`;
+      setUser(user.email);
+      onCloseLog();
     } catch (error) {
       alert(error.message || "An unexpected error occurred.");
     }
@@ -102,7 +101,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
 
             <div>
               <button onClick={() => signIn("google")} className="flex items-center gap-2 bg-white shadow-xl rounded-lg pl-3 ml-4 mr-4 md:w-38 md:h-15">
-                <Image src="/img/google-logo.png" height={20} width={20} />
+                <Image src="/img/google-logo.png" height={20} width={20} alt="Google logo" />
                 <span className="bg-sky-700 text-stone-100 font-bold rounded-lg p-4 md:w-52 md:h-15">Continue with Google</span>
               </button>
             </div>
