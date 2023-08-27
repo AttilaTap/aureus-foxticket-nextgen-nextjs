@@ -36,6 +36,18 @@ describe("Controller Tests", () => {
       expect(res.json).toHaveBeenCalledWith({ error: "Email already exists" });
     });
   });
+  it("should register user and send success email if email is not taken", async () => {
+    userService.checkEmailExists.mockResolvedValue(false);
+
+    const req = mockRequest({ email: "test@example.com", password: "password" });
+    const res = mockResponse();
+
+    await register(req, res);
+    expect(userService.registerUser).toHaveBeenCalledWith("test@example.com", "password");
+    expect(userService.sendSuccessEmail).toHaveBeenCalledWith("test@example.com");
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({ message: "Registration successful" });
+  });
 });
 
 describe("login", () => {
