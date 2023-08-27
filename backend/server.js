@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth-routes.js";
 import testRoutes from "./routes/test-routes.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
@@ -12,8 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", authRoutes);
 app.use("/", testRoutes);
 
-const server = app.listen(9000, () => {
-  console.log("I'm running");
+const defaultPort = 9000;
+const envPort = process.env.PORT;
+const portToUse = envPort === undefined ? defaultPort : envPort;
+const server = app.listen(portToUse, () => {
+  console.log(`I'm running on : ${portToUse}`);
 });
 
 export { app, server };
