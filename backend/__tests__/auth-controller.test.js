@@ -49,4 +49,17 @@ describe("login", () => {
     expect(res.status).toHaveBeenCalledWith(401);
     expect(res.json).toHaveBeenCalledWith({ error: "Invalid email or password" });
   });
+
+  it("should return 200 and a token if login is successful", async () => {
+    userService.verifyUser.mockResolvedValue(true);
+    jwtService.createToken.mockReturnValue("sampleToken");
+
+    const req = mockRequest({ email: "test@example.com", password: "password" });
+    const res = mockResponse();
+
+    await login(req, res);
+    expect(jwtService.createToken).toHaveBeenCalledWith({ email: "test@example.com" });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ token: "sampleToken", login: "test@example.com" });
+  });
 });
