@@ -31,4 +31,38 @@ describe("Login Component", () => {
     expect(openRegMock).toHaveBeenCalled();
     expect(onCloseLogMock).toHaveBeenCalled();
   });
+
+  it("makes a fetch call with correct parameters on form submission", async () => {
+    // Mock the fetch API and simulate a successful response
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ token: "sample_token" }),
+    });
+
+    render(<Login isVisible={true} onCloseLog={() => {}} openReg={() => {}} />);
+
+    // Fill in email and password fields
+    fireEvent.change(screen.getByPlaceholderText("example@gmail.com"), {
+      target: { value: "test@example.com" },
+    });
+
+    fireEvent.change(screen.getByPlaceholderText("******************"), {
+      target: { value: "testPassword" },
+    });
+
+    // Simulate form submission
+    fireEvent.click(screen.getByText("Sign In"));
+
+    // Ensure fetch was called with the correct parameters
+    expect(global.fetch).toHaveBeenCalledWith("http://localhost:9000/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: "test@example.com",
+        password: "testPassword",
+      }),
+    });
+  });
 });
