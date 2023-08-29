@@ -9,11 +9,8 @@ export async function checkEmailExists(email) {
   return users.length > 0;
 }
 export async function findUserId(email) {
-  console.log(email);
   const connection = await getConnection();
   const [rows] = await connection.execute("SELECT user_id FROM users WHERE email = ?", email);
-  // chechk querries again
-  console.log(rows);
   if (rows.length === 0) {
     throw new Error("User not Found");
   }
@@ -55,4 +52,3 @@ export async function verifyUser(email, password) {
   console.log(`Does it really match: ${match}`);
   return match;
 }
-//user serv

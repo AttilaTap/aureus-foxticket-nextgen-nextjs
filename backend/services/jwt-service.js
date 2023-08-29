@@ -4,7 +4,6 @@ import { findUserId } from "./user-service.js";
 
 export async function createToken(payload) {
   const user_id = await findUserId([payload.email]);
-  console.log(user_id);
   const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: process.env.TOKEN_AGE });
   const decodedToken = verifyToken(token);
   const expiryDate = new Date(decodedToken.exp * 1000);
@@ -18,17 +17,12 @@ export async function createToken(payload) {
 export function verifyToken(token) {
   return jwt.verify(token, process.env.SECRET_KEY);
 }
+
 export function checkExpirationOnToken(token) {
   try {
     const decodedToken = verifyToken(token);
-    if (Date.now() >= decodedToken.exp * 1000) {
-      return res.status(401).json({ message: "Token has expired" });
-    }
+    return Date.now() >= decodedToken.exp * 1000;
   } catch (err) {
-    return res.status(401).json({ message: "Invalid token" });
+    return false;
   }
-
-  return res.status(401).json({ message: "Token has expired" });
 }
-
-// jwtservices

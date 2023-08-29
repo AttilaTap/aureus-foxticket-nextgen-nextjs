@@ -2,7 +2,7 @@ const EventCard = ({ dateFromDb, eventName, eventLocation, eventDescription, ava
   const destinationUrl = "https://tailwindcss.com/docs/padding";
 
   const date = new Date(dateFromDb);
-
+  // Functions for making the date usefull
   const getDayOfWeek = () => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return daysOfWeek[date.getDay()];
