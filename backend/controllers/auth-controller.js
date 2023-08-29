@@ -1,5 +1,6 @@
 import * as jwtService from "../services/jwt-service.js";
 import * as userService from "../services/user-service.js";
+import { verifyToken } from "../services/jwt-service.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -17,6 +18,16 @@ export const register = async (req, res, next) => {
     return res.status(201).json({ message: "Registration successful" });
   } catch (error) {
     next(error);
+  }
+};
+
+export const authorizationJWT = async (req, res, next) => {
+  const token = req.header("Authorization");
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+  if (!checkExpirationOnToken(token)) {
+    return res.status(401).json({ message: "Token is not valid" });
   }
 };
 
