@@ -1,6 +1,6 @@
 import * as jwtService from "../services/jwt-service.js";
 import * as userService from "../services/user-service.js";
-import { checkExpirationOnToken } from "../services/jwt-service.js";
+import { checkExpirationOnToken, tokenInDatabase } from "../services/jwt-service.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -20,14 +20,17 @@ export const register = async (req, res, next) => {
     next(error);
   }
 };
-
-export const securePlace = async (req, res, next) => {
+//authentication for Secure Endpoints
+export const secureEndpoint = async (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) {
     return res.status(401).json({ message: "No token provided" });
   }
   if (!checkExpirationOnToken(token)) {
     return res.status(401).json({ message: "Token expired" });
+  }
+  if (await tokenInDatabase(token)) {
+    return res.status(401).json({ message: "Not the latest version of the Token" });
   }
   next();
 };

@@ -8,6 +8,7 @@ export async function checkEmailExists(email) {
   const [users] = await connection.query("SELECT * FROM users WHERE email = ?", [email]);
   return users.length > 0;
 }
+//function for looking up users by their email
 export async function findUserId(email) {
   const connection = await getConnection();
   const [rows] = await connection.execute("SELECT user_id FROM users WHERE email = ?", email);

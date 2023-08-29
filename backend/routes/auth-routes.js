@@ -6,7 +6,10 @@ const router = express.Router();
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
-router.post("/securePlace", authController.securePlace);
+//mock secure endpoint
+router.post("/securePlace", authController.secureEndpoint, (req, res) => {
+  return res.status(200).json({ message: "Secure endpoint accessed successfully" });
+});
 
 router.get("/isAvailable", testController.isAvailable);
 

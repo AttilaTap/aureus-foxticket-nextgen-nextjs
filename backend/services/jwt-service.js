@@ -13,11 +13,16 @@ export async function createToken(payload) {
 
   return token;
 }
-
 export function verifyToken(token) {
   return jwt.verify(token, process.env.SECRET_KEY);
 }
-
+// Function for finding if there is a token in the db
+export async function tokenInDatabase(token) {
+  const connection = await getConnection();
+  const [rows] = await connection.execute("SELECT FROM users Where authToken = ?,", [token]);
+  return rows.length > 0 ? true : false;
+}
+// checking whether the token is expired and valid withou contacting the db
 export function checkExpirationOnToken(token) {
   try {
     const decodedToken = verifyToken(token);
