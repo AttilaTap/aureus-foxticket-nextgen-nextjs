@@ -9,7 +9,7 @@ on:
 jobs:
   # Build job
   # Adding linTest
-  linTest:
+  lintTest:
     name: Lint
     runs-on: ubuntu-latest
 
@@ -49,7 +49,7 @@ jobs:
   #Adding build
   build:
     runs-on: ubuntu-latest
-    needs: [linTest, securityCheck]
+    needs: [lintTest, securityCheck]
     defaults:
       run:
         working-directory: ./frontend
