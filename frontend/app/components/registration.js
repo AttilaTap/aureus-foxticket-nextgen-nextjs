@@ -2,8 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { hashPassword } from "./utils/hashing";
+import { useState } from "react";
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [error, setError] = useState("");
+
   if (!isVisible) {
     return null;
   }
@@ -17,20 +23,16 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const emailInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const passwordConfirmInput = document.getElementById("password-confirm");
-
-    if (passwordInput.value !== passwordConfirmInput.value) {
-      alert("Passwords do not match");
+    if (password !== passwordConfirm) {
+      setError("Passwords do not match");
       return;
     }
 
     try {
-      const hashedPassword = hashPassword(passwordInput.value);
+      const hashedPassword = hashPassword(password);
 
       const user = {
-        email: emailInput.value,
+        email: email,
         password: hashedPassword,
       };
 
@@ -45,18 +47,20 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
       const responseData = await response.json();
 
       if (response.ok) {
+        setError("");
         alert("Registration successful!");
+        onCloseReg();
       } else {
-        alert(responseData.error || "Registration failed");
+        setError(responseData.error || "Registration failed");
       }
     } catch (error) {
-      alert(error.message || "An unexpected error occurred.");
+      setError(error.message || "An unexpected error occurred.");
     }
   }
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-10" id="wrapper" onClick={handleCloseReg}>
-      <div className="flex flex-col justify-center items-center w-1/3 min-w-min h-auto relative rounded-lg bg-stone-400">
+      <div className="flex flex-col justify-center items-center w-1/3 min-w-min h-auto relative rounded-lg bg-modern-gray">
         <button className="absolute top-4 right-4 font-stone-100" onClick={onCloseReg}>
           <svg viewBox="0 0 800 1000" fill="currentColor" height="1em" width="1em">
             <path d="M700 100c28 0 51.667 9.667 71 29s29 43 29 71v600c0 26.667-9.667 50-29 70s-43 30-71 30H100c-26.667 0-50-10-70-30S0 826.667 0 800V200c0-28 10-51.667 30-71s43.333-29 70-29h600M554 738l86-86-154-152 154-154-86-86-154 152-152-152-88 86 154 154-154 152 88 86 152-152 154 152" />
@@ -66,6 +70,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         <h2 className="px-2 text-2xl font-bold text-center mt-4 text-stone-950">Registration</h2>
 
         <form className="px-8 pt-6" onSubmit={handleSubmit}>
+          {error && <div className="text-red-500 mb-4 font-bold">{error}</div>}
           <label className="text-stone-700 text-m font-bold" htmlFor="username">
             E-mail
           </label>
@@ -75,6 +80,8 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             type="email"
             name="email"
             placeholder="example@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Password
@@ -85,6 +92,8 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             type="password"
             name="password"
             placeholder="******************"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Confirm password
@@ -95,6 +104,8 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             type="password"
             name="password"
             placeholder="******************"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
           />
           <div className="flex items-center justify-between gap-6 mt-7 mb-3">
             <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline" type="submit">
