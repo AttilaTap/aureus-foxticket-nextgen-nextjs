@@ -143,5 +143,5 @@ Status 200: Success
 - [[tomsam26]](https://github.com/tomsam26)
 - [[PanFiluta7]](https://github.com/PanFiluta7)
 - [[peterfdrv]](https://github.com/peterfdrv)
-- [Olivér GIT?](#) <!-- Replace # with actual URL if available -->
+- [[VRDLVR]](https://github.com/VRDLVR)
 - [[AttilaTap]](https://github.com/AttilaTap)
