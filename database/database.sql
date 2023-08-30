@@ -81,13 +81,13 @@ INSERT INTO events (name, location, start_time, description) VALUES
 ('Stargazing Soiree', 'Griffith Observatory, Los Angeles', '2023-09-26 22:00:00', 'Discover the wonders of the night sky with guided stargazing sessions at the Griffith Observatory.');
 
 INSERT INTO tickets (type, name, price, currency, original_price, original_currency, start_date, end_date, available, how_many, seat, section, row_seating, comment, user_id, event_id) VALUES
-('entrance', 'Rock Festival Early Bird', 60000, 'HUF', 80000, 'HUF', '2023-09-01 09:00:00', NULL, 'YES', 27, 1, 1, 'A', 'Early bird discount', 1, 1),
-('entrance', 'Jazz Night VIP', 225, 'EUR', 270, 'EUR', '2023-09-07 09:00:00', '2023-09-13 20:00:00', 'NO', 53, 2, 5, 'B', 'VIP Access and seating', 2, 2),
-('non-entrance', 'Comedy Show Regular', 14000, 'HUF', 16000, 'HUF', '2023-09-10 09:00:00', NULL, 'YES', 41, 3, 3, 'C', 'Regular seating area', 3, 3),
-('entrance', 'Symphony Orchestra Balcony', 32000, 'HUF', 36000, 'HUF', '2023-09-14 09:00:00', NULL, 'YES', 12, 4, 4, 'D', 'Balcony seating', 4, 4),
-('non-entrance', 'Stand-Up Comedy Gold', 54, 'EUR', 63, 'EUR', '2023-09-16 09:00:00', '2023-09-20 20:00:00', 'NO', 6, 5, 5, 'E', 'Gold seating area', 5, 5),
-('entrance', 'Circus Extravaganza Family Pack', 80000, 'HUF', 88000, 'HUF', '2023-09-20 09:00:00', NULL, 'YES', 58, 6, 6, 'F', 'Family package for 4', 6, 6),
-('non-entrance', 'Pop Concert Platinum', 270, 'EUR', 315, 'EUR', '2023-09-23 09:00:00', '2023-09-27 20:00:00', 'NO', 99, 7, 7, 'G', 'Platinum seating area', 7, 7),
-('entrance', 'Art Exhibit Early Access', 45, 'EUR', 54, 'EUR', '2023-09-25 09:00:00', NULL, 'YES', 84, 8, 8, 'H', 'Access before public opening', 8, 8),
-('non-entrance', 'Musical Theatre Premium', 108, 'EUR', 117, 'EUR', '2023-09-28 09:00:00', '2023-10-01 20:00:00', 'NO', 48, 9, 9, 'I', 'Premium seating area', 9, 9),
-('entrance', 'Food Festival Family Pass', 300, 'USD', 340, 'USD', '2023-09-30 09:00:00', NULL, 'YES', 44, 10, 10, 'J', 'Pass for 4 family members', 10, 10);
+('entrance', 'Rock Festival Early Bird', 60000, 'HUF', 80000, 'HUF', '2023-09-17 18:00:00', NULL, 'YES', 27, 1, 1, 'A', 'Early bird discount', 1, 1),
+('entrance', 'Jazz Night VIP', 225, 'EUR', 270, 'EUR', '2023-09-18 19:00:00', NULL, 'NO', 53, 2, 5, 'B', 'VIP Access and seating', 2, 2),
+('non-entrance', 'Comedy Show Regular', 14000, 'HUF', 16000, 'HUF', '2023-09-21 21:00:00', NULL, 'YES', 41, 3, 3, 'C', 'Regular seating area', 3, 3),
+('entrance', 'Symphony Orchestra Balcony', 32000, 'HUF', 36000, 'HUF', '2023-09-24 20:00:00', NULL, 'YES', 12, 4, 4, 'D', 'Balcony seating', 4, 4),
+('non-entrance', 'Stand-Up Comedy Gold', 54, 'EUR', 63, 'EUR', '2023-09-21 21:00:00', NULL, 'NO', 6, 5, 5, 'E', 'Gold seating area', 5, 5),
+('entrance', 'Circus Extravaganza Family Pack', 80000, 'HUF', 88000, 'HUF', '2023-09-20 12:00:00', NULL, 'YES', 58, 6, 6, 'F', 'Family package for 4', 6, 6),
+('non-entrance', 'Pop Concert Platinum', 270, 'EUR', 315, 'EUR', '2023-09-23 15:00:00', '2023-09-24 20:00:00', 'NO', 99, 7, 7, 'G', 'Platinum seating area', 7, 7),
+('entrance', 'Art Exhibit Early Access', 45, 'EUR', 54, 'EUR', '2023-09-23 15:00:00', NULL, 'YES', 84, 8, 8, 'H', 'Access before public opening', 8, 8),
+('non-entrance', 'Musical Theatre Premium', 108, 'EUR', 117, 'EUR', '2023-09-19 20:00:00', '2023-09-26 20:00:00', 'NO', 48, 9, 9, 'I', 'Premium seating area', 9, 9),
+('entrance', 'Food Festival Family Pass', 300, 'USD', 340, 'USD', '2023-09-20 12:00:00', NULL, 'YES', 44, 10, 10, 'J', 'Pass for 4 family members', 10, 10);
