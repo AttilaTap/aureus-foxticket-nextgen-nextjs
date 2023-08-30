@@ -1,4 +1,4 @@
-name: Backend CD
+name: Frontend CD
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./backend
+        working-directory: ./frontend
 
     steps:
       - name: Checkout
