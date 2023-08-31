@@ -55,24 +55,10 @@ Welcome to **NextTicket**, your one-stop solution for ticketing needs. This proj
 
 ### Frontend
 
-- Node.js (v14.x or above recommended)
+- Next.js (v13.x or above recommended)
 - npm (v6.x or above recommended)
 
 ## :cd: Installation
-
-# How to install
-
-```bash
-npm install
-```
-
-## :arrow_forward: Usage
-
-# How to run
-
-```bash
-npm start
-```
 
 ## :link: API Endpoints
 
