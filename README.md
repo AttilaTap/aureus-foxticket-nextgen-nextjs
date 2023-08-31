@@ -37,7 +37,7 @@ Welcome to **NextTicket**, your one-stop solution for ticketing needs. This proj
 
 - :wrench: **RESTful API:** The application provides a RESTful API for developers to use.
 - :arrows_counterclockwise: **Scalability:** The application is built with scalability in mind.
-- :puzzle_piece: **Modular Design:** The application is built with a modular design, making it easy to add new features.
+- :game_die: **Modular Design:** The application is built with a modular design, making it easy to add new features.
 - :bar_chart: **Test Coverage:** The application has high test coverage.
 
 ## :hammer_and_wrench: Technologies
