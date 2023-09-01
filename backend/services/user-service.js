@@ -19,10 +19,10 @@ export async function sendSuccessEmail(toEmail) {
 
   const msg = {
     to: toEmail,
-    from: process.env.EMAIL_USERNAME,
+    from: process.env.NEXTICKET_COMPANY_EMAIL,
     subject: "Registration Successful",
     text: "Congratulations on your successful registration!",
-    html: emailTemplate("Registration Successful", "Congratulations on your successful registration!"),
+    html: emailTemplate(subject, text),
   };
 
   try {

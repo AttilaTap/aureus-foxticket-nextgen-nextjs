@@ -18,15 +18,17 @@ export default function HomePage() {
         const res = await fetch(fetchUrl);
         if (res.ok) {
           let data = await res.json();
-
           data = data.map((event) => {
             if (event.start_time) {
               const dateString = event.start_time;
-              const [datePart, timePart] = dateString.split(" ");
+              const [datePart, timePart] = dateString.split("T");
               const [year, month, day] = datePart.split("-");
-              const [hour, minute, second] = timePart.split(":");
 
-              const date = new Date(year, month - 1, day, hour, minute, second);
+              const [hour, minute, second] = timePart.split(":");
+              const [realSec, garbage] = second.split(".");
+
+              const date = new Date(year, month - 1, day, hour, minute, realSec);
+              console.log(date);
               return { ...event, start_time: date };
             }
             return event;
