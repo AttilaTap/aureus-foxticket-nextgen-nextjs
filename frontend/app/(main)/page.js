@@ -28,7 +28,6 @@ export default function HomePage() {
               const [realSec, garbage] = second.split(".");
 
               const date = new Date(year, month - 1, day, hour, minute, realSec);
-              console.log(date);
               return { ...event, start_time: date };
             }
             return event;
