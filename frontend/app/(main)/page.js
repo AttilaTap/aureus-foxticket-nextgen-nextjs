@@ -62,7 +62,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-w-fit w-6/12">
+    <div className="min-w-fit w-6/12" id="wrapper">
       <div className="relative">
         <Welcome />
         <input type="text" placeholder="Search..." className="w-full rounded-full p-2 border border-solid border-stone-200"></input>

@@ -1,0 +1,57 @@
+name: Frontend CI
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  # Build job
+  # Adding linTest
+  lintTest:
+    name: Lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v3
+        # its not mandatory to install the dependencies, just with Docker container
+      - name: Install dependencies
+        # run commands, for multiple commands use |
+        run: |
+          echo "Running Installing Dependencies..."
+          npm install
+      - name: Run Linting
+        run: |
+          echo "Running linting tests..."
+          npm run lint
+        # for running lint test the CI should be true.
+        env:
+          CI: true
+
+  #Adding build
+  build:
+    runs-on: ubuntu-latest
+    needs: [lintTest]
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
