@@ -19,19 +19,9 @@ const EventView = ({
   priceOfSoldTicket,
 }) => {
   const date = new Date(dateFromDb);
-  console.log(dateFromDb);
-  console.log(date);
   // Functions for making the date usefull
   const getDayOfWeek = () => {
-    const daysOfWeek = [
-      "Sunday ",
-      "Monday ",
-      "Tuesday ",
-      "Wednesday ",
-      "Thursday ",
-      "Friday ",
-      "Saturday ",
-    ];
+    const daysOfWeek = ["Sunday ", "Monday ", "Tuesday ", "Wednesday ", "Thursday ", "Friday ", "Saturday "];
     return daysOfWeek[date.getDay()];
   };
   const formatDate = () => {
@@ -58,31 +48,14 @@ const EventView = ({
     <div className="w-2/3">
       <div>
         <div className="flex justify-center -mt-20">
-          <Image
-            src={eventImage}
-            width={500}
-            height={500}
-            className="rounded-md"
-            alt="Picture of the event"
-          />
+          <Image src={eventImage} width={500} height={500} className="rounded-md" alt="Picture of the event" />
         </div>
         <div className="w-full justify-center">
           <h1 className="text-4xl font-bold pt-9 text-center">{eventName}</h1>
           <div className="flex flex-row space-x-1 justify-center pt-3">
-            <svg
-              width="22px"
-              height="22px"
-              viewBox="-5 2 28.80 28.80"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              stroke=""
-            >
+            <svg width="22px" height="22px" viewBox="-5 2 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="">
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></g>
+              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
                 <path
@@ -91,49 +64,14 @@ const EventView = ({
                   strokeWidth="2"
                   strokeLinecap="round"
                 ></path>{" "}
-                <rect
-                  x="6"
-                  y="12"
-                  width="3"
-                  height="3"
-                  rx="0.5"
-                  fill="#5dd9a7"
-                ></rect>{" "}
-                <rect
-                  x="10.5"
-                  y="12"
-                  width="3"
-                  height="3"
-                  rx="0.5"
-                  fill="#5dd9a7"
-                ></rect>{" "}
-                <rect
-                  x="15"
-                  y="12"
-                  width="3"
-                  height="3"
-                  rx="0.5"
-                  fill="#5dd9a7"
-                ></rect>{" "}
+                <rect x="6" y="12" width="3" height="3" rx="0.5" fill="#5dd9a7"></rect> <rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#5dd9a7"></rect>{" "}
+                <rect x="15" y="12" width="3" height="3" rx="0.5" fill="#5dd9a7"></rect>{" "}
               </g>
             </svg>
-            <span className="text-xs text-emerald-400 font-bold pr-3">
-              {[getDayOfWeek(), formatDate(), formatTime()]}
-            </span>
-            <svg
-              width="18px"
-              height="18px"
-              viewBox="-2 2 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              stroke="#"
-            >
+            <span className="text-xs text-emerald-400 font-bold pr-3">{[getDayOfWeek(), formatDate(), formatTime()]}</span>
+            <svg width="18px" height="18px" viewBox="-2 2 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#">
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></g>
+              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
                 <path
@@ -152,29 +90,15 @@ const EventView = ({
                 ></path>{" "}
               </g>
             </svg>
-            <span className="text-xs text-emerald-400 font-bold pr-3">
-              {eventLocation}
-            </span>
-            <svg
-              fill="#5dd9a7"
-              width="15px"
-              height="15px"
-              viewBox="1 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <span className="text-xs text-emerald-400 font-bold pr-3">{eventLocation}</span>
+            <svg fill="#5dd9a7" width="15px" height="15px" viewBox="1 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></g>
+              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
                 <path d="M22,11H19V2a1,1,0,0,0-1-1H6A1,1,0,0,0,5,2V7H2A1,1,0,0,0,1,8V22a1,1,0,0,0,1,1H22a1,1,0,0,0,1-1V12A1,1,0,0,0,22,11Zm-9,1v9H3V9H13Zm1-5H7V3H17v8H15V8A1,1,0,0,0,14,7Zm7,14H19V19a1,1,0,0,0-2,0v2H15V13h6ZM4,10H6v2H4Zm4,0h4v2H8ZM4,14H6v2H4Zm4,0h4v2H8ZM4,18H6v2H4Zm4,0h4v2H8Z"></path>
               </g>
             </svg>
-            <span className="text-xs text-emerald-400 font-bold">
-              {eventCity}
-            </span>
+            <span className="text-xs text-emerald-400 font-bold">{eventCity}</span>
           </div>
         </div>
       </div>
@@ -190,55 +114,25 @@ const EventView = ({
           </button>
         </div>
         <div className="flex flex-row space-x-2 pb-10">
-          <span className="text-base text-emerald-400 font-bold">
-            {availableTickets} available
-          </span>
-          <svg
-            fill="#000000"
-            width="15px"
-            height="15px"
-            viewBox="-10 -8 32 32"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <span className="text-base text-emerald-400 font-bold">{availableTickets} available</span>
+          <svg fill="#000000" width="15px" height="15px" viewBox="-10 -8 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></g>
+            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
-              <title>next</title>{" "}
-              <path d="M0 24.781v-17.594l15.281 8.813z"></path>{" "}
+              <title>next</title> <path d="M0 24.781v-17.594l15.281 8.813z"></path>{" "}
             </g>
           </svg>
-          <span className="text-base text-emerald-400 font-bold">
-            {soldTickets} sold
-          </span>
-          <svg
-            fill="#000000"
-            width="15px"
-            height="15px"
-            viewBox="-10 -8 32 32"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <span className="text-base text-emerald-400 font-bold">{soldTickets} sold</span>
+          <svg fill="#000000" width="15px" height="15px" viewBox="-10 -8 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></g>
+            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
-              <title>next</title>{" "}
-              <path d="M0 24.781v-17.594l15.281 8.813z"></path>{" "}
+              <title>next</title> <path d="M0 24.781v-17.594l15.281 8.813z"></path>{" "}
             </g>
           </svg>
-          <span className="text-base text-emerald-400 font-bold">
-            {wantedTickets} wanted
-          </span>
+          <span className="text-base text-emerald-400 font-bold">{wantedTickets} wanted</span>
         </div>
       </div>
 
@@ -247,17 +141,11 @@ const EventView = ({
         <div className="card">
           <div className="flex flex-col w-full m-1 pl-3">
             <span className="font-bold">{numOfAvailTickets} tickets</span>
-            <span className="block text-black-500 text-sm">
-              {typeOfAvailTicket}
-            </span>
-            <span className="block text-black-500 text-sm pt-2">
-              {descriptionOfAvailTicket}
-            </span>
+            <span className="block text-black-500 text-sm">{typeOfAvailTicket}</span>
+            <span className="block text-black-500 text-sm pt-2">{descriptionOfAvailTicket}</span>
           </div>
           <div className="w-44 p-1 flex flex-row justify-end items-center">
-            <span className="font-bold pr-3">
-              {getPriceForAvailable()} / ticket
-            </span>
+            <span className="font-bold pr-3">{getPriceForAvailable()} / ticket</span>
           </div>
         </div>
       </div>
@@ -266,12 +154,8 @@ const EventView = ({
         <div className="card">
           <div className="flex flex-col w-full m-1 pl-3">
             <span className="font-bold">{numOfSoldTickets} tickets</span>
-            <span className="block text-black-500 text-sm">
-              {typeOfSoldTicket}
-            </span>
-            <span className="block text-black-500 text-sm pt-2">
-              {descriptionOfSoldTicket}
-            </span>
+            <span className="block text-black-500 text-sm">{typeOfSoldTicket}</span>
+            <span className="block text-black-500 text-sm pt-2">{descriptionOfSoldTicket}</span>
           </div>
           <div className="w-44 p-1 flex flex-row justify-end items-center">
             <span className="font-bold pr-3">{getPriceForSold()} / ticket</span>

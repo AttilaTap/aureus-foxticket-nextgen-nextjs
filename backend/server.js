@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth-routes.js";
 import testRoutes from "./routes/test-routes.js";
+import eventRoutes from "./routes/event-routes.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/user", authRoutes);
 app.use("/", testRoutes);
+app.use("/", eventRoutes);
 
 const defaultPort = 9000;
 const envPort = process.env.PORT;

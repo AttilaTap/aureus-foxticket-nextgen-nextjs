@@ -1,6 +1,7 @@
 import { getConnection } from "../utils/db-connection.js";
 import bcrypt from "bcrypt";
 import sgMail from "@sendgrid/mail";
+import { emailTemplate } from "../utils/templates/email-templates.js";
 
 export async function checkEmailExists(email) {
   const connection = await getConnection();
@@ -18,26 +19,10 @@ export async function sendSuccessEmail(toEmail) {
 
   const msg = {
     to: toEmail,
-    from: process.env.EMAIL_USERNAME,
+    from: process.env.NEXTICKET_COMPANY_EMAIL,
     subject: "Registration Successful",
     text: "Congratulations on your successful registration!",
-    html: `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="font-family: 'Arial', sans-serif; background-color: #f3f4f6; padding: 20px;">
-    <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 0.5rem;">
-        <div style="text-align: center;">
-            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Registration Successful</h2>
-            <p style="font-size: 1rem; color: #4b5563;">Congratulations on your successful registration!</p>
-        </div>
-    </div>
-</body>
-</html>
-`,
+    html: emailTemplate(subject, text),
   };
 
   try {

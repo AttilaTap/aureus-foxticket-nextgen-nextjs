@@ -10,6 +10,9 @@ module.exports = {
       backgroundImage: {
         "header-bg": "url('/public/background-img/bg-image-one.jpg')",
       },
+      backgroundColor: {
+        'modern-gray': '#E0E2E6',
+      },
     },
   },
   plugins: [],
