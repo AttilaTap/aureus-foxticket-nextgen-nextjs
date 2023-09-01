@@ -6,9 +6,27 @@ import Registration from "./registration";
 import logo from "../../public/logo_black_transp.svg";
 import useTicketStore from "@/store/store";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { parseJwt } from "./utils/auth-token-handling";
 
 export default function Navbar() {
   const { status, data: session } = useSession();
+  const [userName, setUserName] = useState(null); // Use useState to manage userName
+  const [jwtToken, setJwtToken] = useState(null); // Use useState to manage jwtToken
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const token = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${process.env.NEXT_PUBLIC_COOKIE_NAME}\\s*=\\s*([^;]*).*$)|^.*$`), "$1");
+
+      setJwtToken(token);
+
+      if (token) {
+        const decodedToken = parseJwt(token);
+        console.log(decodedToken);
+        setUserName(decodedToken.email);
+      }
+    }
+  }, []); // Run this effect only once, on component mount
 
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
@@ -16,11 +34,11 @@ export default function Navbar() {
       <div className="flex justify-between bg-stone-100">
         <Image priority src={logo} height={120} width={300} alt="Nexticket logo" className="mt-6 mb-6 ml-6  h-16" />
         <div className="flex justify-center mr-6 mt-6">
-          {status === "authenticated" ? (
+          {userName ? (
             <div className="flex items-center pr-3 mb-14 mr-2">
               <div className="text-emerald-400 font-bold mr-5">
                 <span className="text-stone-600">Welcome back </span>
-                {session?.user?.name}
+                {userName}
               </div>
               <button onClick={() => signOut()} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
                 Log out

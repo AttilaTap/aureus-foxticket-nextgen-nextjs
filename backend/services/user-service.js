@@ -3,14 +3,22 @@ import bcrypt from "bcrypt";
 import sgMail from "@sendgrid/mail";
 import { emailTemplate } from "../utils/templates/email-templates.js";
 
-export async function checkEmailExists(email) {
-  const connection = await getConnection();
+export const USER_NOT_FOUND = "User not Found";
+
+export async function checkEmailExists(connection, email) {
   const [users] = await connection.query("SELECT * FROM users WHERE email = ?", [email]);
   return users.length > 0;
 }
-
-export async function registerUser(email, hashedPassword) {
-  const connection = await getConnection();
+//function for looking up users by their email
+export async function findUserId(connection, email) {
+  const [rows] = await connection.execute("SELECT user_id FROM users WHERE email = ?", email);
+  if (rows.length === 0) {
+    throw new Error(USER_NOT_FOUND);
+  }
+  const user_id = rows[0].user_id;
+  return user_id;
+}
+export async function registerUser(connection, email, hashedPassword) {
   await connection.execute("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword]);
 }
 
@@ -33,8 +41,7 @@ export async function sendSuccessEmail(toEmail) {
   }
 }
 
-export async function verifyUser(email, password) {
-  const connection = await getConnection();
+export async function verifyUser(connection, email, password) {
   const [users] = await connection.query("SELECT * FROM users WHERE email = ?", [email]);
   if (users.length === 0) {
     return null;
