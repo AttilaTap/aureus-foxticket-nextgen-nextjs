@@ -1,6 +1,6 @@
 # NextTicket :ticket:
 
-> :rocket: **A project by nextGen**
+:rocket: **A project by nextGen**
 
 ## :bookmark_tabs: Table of Contents
 
@@ -10,14 +10,10 @@
   - [Developer Features](#developer-features)
 - [Technologies](#technologies)
 - [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
 - [Deployment](#deployment)
-- [Test Commands](#test-commands)
 - [Contributors](#contributors)
 
-## :mega: Introduction
+## Introduction
 
 Welcome to **NextTicket**, your one-stop solution for ticketing needs. This project, brought to you by **nextGen**, aims to simplify the ticketing experience for everyone. Whether you're looking to attend a concert, sports event, or a conference, NextTicket offers a seamless and user-friendly way to secure your spot.
 
@@ -25,7 +21,7 @@ Welcome to **NextTicket**, your one-stop solution for ticketing needs. This proj
 
 :handshake: Join us on our mission to make event discovery and ticket purchasing an effortless experience.
 
-## :sparkles: Features
+## Features
 
 ### User Features
 
@@ -40,12 +36,13 @@ Welcome to **NextTicket**, your one-stop solution for ticketing needs. This proj
 - :game_die: **Modular Design:** The application is built with a modular design, making it easy to add new features.
 - :bar_chart: **Test Coverage:** The application has high test coverage.
 
-## :hammer_and_wrench: Technologies
+## Technologies
 
 - **Backend:** Node.js, Express.js, MySQL
-- **Frontend:** Next.js (React.js), Tailwind CSS
+- **Frontend:** Next.js (React.js), Tailwind CSS, Zustand
+- **Common:** Bycript, Jest
 
-## :clipboard: Prerequisites
+## Prerequisites
 
 ### Backend
 
@@ -58,71 +55,11 @@ Welcome to **NextTicket**, your one-stop solution for ticketing needs. This proj
 - Next.js (v13.x or above recommended)
 - npm (v6.x or above recommended)
 
-## :cd: Installation
+## Deployment
 
-## :link: API Endpoints
+- Application deployed to Railway.app
 
-### User Authentication
-
-#### `POST /user/register`
-
-Registers a new user.
-
-##### Request Payload
-
-```json
-{
-  "email": "your_email@example.com",
-  "password": "your_password"
-}
-```
-
-##### Response Codes
-
-```
-Status 201: Registration successful
-Status 400: Email already exists
-```
-
-#### `POST /user/login`
-
-Logs in an existing user.
-
-##### Request Payload
-
-```json
-{
-  "email": "your_email@example.com",
-  "password": "your_password"
-}
-```
-
-##### Response Codes
-
-```
-Status 200: Successful login along with a token
-Status 401: Invalid email or password
-```
-
-#### `GET /isAvailable`
-
-Checks if the service is available.
-
-##### Response Codes
-
-```
-Status 200: Success
-```
-
-## :rocket: Deployment
-
-# How to deploy
-
-## :white_check_mark: Test Commands
-
-# How to test
-
-## :busts_in_silhouette: Contributors
+## Contributors
 
 - [[attilakrupl]](https://github.com/attilakrupl) - Mentor
 - [[katigirl]](https://github.com/katigirl)
