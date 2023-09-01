@@ -36,7 +36,7 @@ jobs:
   #Adding build
   build:
     runs-on: ubuntu-latest
-    needs: [lintTest, securityCheck]
+    needs: [lintTest]
     defaults:
       run:
         working-directory: ./frontend
