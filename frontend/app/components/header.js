@@ -72,7 +72,7 @@ export default function Navbar(props) {
                 Log in
               </button>
             )}
-            <Link className="flex items-center justify-end ml-6" href="">
+            <Link className="flex items-center justify-end ml-6" href="/cart">
               <Image priority src={props.isMain ? cartLight : cartDark} alt="Follow us on Twitter" />
             </Link>
           </div>
