@@ -32,7 +32,9 @@ export default function Navbar() {
   return (
     <>
       <div className="flex justify-between bg-stone-100">
-        <Image priority src={logo} height={120} width={300} alt="Nexticket logo" className="mt-6 mb-6 ml-6  h-16" />
+        <Link href="/">
+          <Image priority src={logo} height={120} width={300} alt="Nexticket logo" className="mt-6 mb-6 ml-6  h-16" />
+        </Link>
         <div className="flex justify-center mr-6 mt-6">
           {userName ? (
             <div className="flex items-center pr-3 mb-14 mr-2">
@@ -40,7 +42,14 @@ export default function Navbar() {
                 <span className="text-stone-600">Welcome back </span>
                 {userName}
               </div>
-              <button onClick={() => signOut()} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
+              <button
+                onClick={async () => {
+                  await signOut();
+                  localStorage.removeItem("userEmail");
+                }}
+                className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100"
+                type="submit"
+              >
                 Log out
               </button>
             </div>
