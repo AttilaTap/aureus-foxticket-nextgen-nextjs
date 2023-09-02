@@ -16,13 +16,15 @@ FROM node:18-alpine AS builder
 
 ENV NODE_ENV=production
 
-# COPY --from=deps /app/node_modules ./node_modules
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
 
 COPY . .
 
 RUN npm run build
 
-RUN npm run start
+CMD ["npm"] ["start"]
 
 #Production image, copy all the files and run next
 #FROM node:18-alpine AS runner
