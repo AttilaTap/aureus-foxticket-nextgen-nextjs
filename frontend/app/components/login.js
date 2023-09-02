@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import useTicketStore from "@/store/store";
 import { signIn } from "next-auth/react";
+import getBackendUrl from "./utils/environment";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
   const setUser = useTicketStore((state) => state.setUser);
@@ -33,7 +34,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         password,
       };
 
-      const response = await fetch("http://localhost:9000/user/login", {
+      const response = await fetch(`${getBackendUrl()}user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
