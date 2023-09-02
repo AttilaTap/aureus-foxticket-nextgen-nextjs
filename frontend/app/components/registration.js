@@ -3,6 +3,7 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { hashPassword } from "./utils/hashing";
 import { useState } from "react";
+import getBackendUrl from "./utils/environment";
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
   const [email, setEmail] = useState("");
@@ -36,7 +37,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         password: hashedPassword,
       };
 
-      const response = await fetch("http://localhost:9000/user/register", {
+      const response = await fetch(`${getBackendUrl()}user/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

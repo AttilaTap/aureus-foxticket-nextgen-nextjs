@@ -6,6 +6,7 @@ import Registration from "./registration";
 import useTicketStore from "@/store/store";
 import { Gochi_Hand } from "next/font/google";
 import { signOut, useSession } from "next-auth/react";
+import getBackendUrl from "./utils/environment";
 
 const gochi = Gochi_Hand({
   weight: ["400"],

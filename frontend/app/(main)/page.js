@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import EventCard from "../components/eventCard";
 import Welcome from "../components/welcome";
 import Link from "next/link";
+import getBackendUrl from "../components/utils/environment";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -12,7 +13,7 @@ export default function HomePage() {
 
   useEffect(() => {
     async function fetchData() {
-      const fetchUrl = "http://localhost:9000/events";
+      const fetchUrl = `${getBackendUrl()}events`;
 
       try {
         const res = await fetch(fetchUrl);

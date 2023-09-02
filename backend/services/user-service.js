@@ -23,17 +23,18 @@ export async function registerUser(connection, email, hashedPassword) {
 }
 
 export async function sendSuccessEmail(toEmail) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-  const msg = {
-    to: toEmail,
-    from: process.env.NEXTICKET_COMPANY_EMAIL,
-    subject: "Registration Successful",
-    text: "Congratulations on your successful registration!",
-    html: emailTemplate(subject, text),
-  };
-
   try {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+    const emailSubject = "Registration Successful";
+    const emailText = "Congratulations on your successful registration!";
+    const msg = {
+      to: toEmail,
+      from: process.env.NEXTICKET_COMPANY_EMAIL,
+      subject: emailSubject,
+      text: emailText,
+      html: emailTemplate(emailSubject, emailText),
+    };
     await sgMail.send(msg);
     console.log("Email sent successfully!");
   } catch (error) {
