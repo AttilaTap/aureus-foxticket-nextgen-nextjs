@@ -50,6 +50,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         setUser(email);
         setError("");
         onCloseLog();
+        localStorage.setItem("userEmail", email);
       } else {
         setError(responseData.error || "Login failed");
       }
