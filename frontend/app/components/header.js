@@ -40,7 +40,7 @@ export default function Header() {
                 Log in
               </button>
             )}
-            <Link href="">
+            <Link href="/cart">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-6 h-6 mt-1 stroke-stone-100">
                 <path
                   strokeLinecap="round"
