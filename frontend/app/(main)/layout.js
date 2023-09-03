@@ -1,9 +1,6 @@
 import "../../styles/globals.css";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import { Nunito } from "next/font/google";
-
-const nunito = Nunito({ subsets: ["latin"], display: "swap" });
 
 export const metadata = {
   title: "NexTicket",
@@ -13,7 +10,9 @@ export const metadata = {
 export default function MainLayout({ children }) {
   return (
     <>
-      <Header />
+      <div className="flex flex-col  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center ">
+        <Header isMain="1"></Header>
+      </div>
       <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-stone-100">{children}</main>
       <Footer />
     </>

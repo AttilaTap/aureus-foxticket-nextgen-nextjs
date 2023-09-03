@@ -49,8 +49,8 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
 
       if (response.ok) {
         setError("");
-        alert("Registration successful!");
         onCloseReg();
+        openLog();
       } else {
         setError(responseData.error || "Registration failed");
       }
