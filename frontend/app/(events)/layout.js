@@ -1,10 +1,6 @@
 import "../../styles/globals.css";
-import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-import { Nunito } from "next/font/google";
-import Header from "../components/Header";
-
-const nunito = Nunito({ subsets: ["latin"], display: "swap" });
+import Header from "../components/header";
 
 export const metadata = {
   title: "NexTicket",

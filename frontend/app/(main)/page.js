@@ -3,7 +3,7 @@
 // HomePage.js
 import Welcome from "../components/welcome";
 import EventShow from "../components/eventShow";
-import UHeader from "../components/navbar";
+import UHeader from "../components/header";
 
 export default function HomePage() {
   return (

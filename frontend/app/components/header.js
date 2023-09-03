@@ -1,23 +1,89 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
 import Login from "./login";
 import Registration from "./registration";
 import useTicketStore from "@/store/store";
-import Navbar from "./navbar";
+import logoDark from "@/public/logo_black_transp.svg";
+import logoLight from "@/public/logo_white_transp.svg";
+import cartLight from "@/public/cart-light.svg";
+import cartDark from "@/public/cart-dark.svg";
+import React, { useEffect } from "react";
 
-export default function Header(isMain = "0") {
+import { Gochi_Hand } from "next/font/google";
+import { parseJwt } from "./utils/auth-token-handling";
+
+const gochi = Gochi_Hand({
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export default function Navbar(props) {
+  const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
+  console.log(`Navbar props: ${JSON.stringify(props)}`);
+  function isLoggedIn() {
+    console.log(props.isMain ? "it is a main page" : "it is not a main page");
+    return userEmailFromLocalStorage;
+  }
+
+  function getUserName() {
+    return userEmailFromLocalStorage;
+  }
+
+  async function logout() {
+    if (userEmailFromLocalStorage) {
+      console.log("Erasing shit");
+      localStorage.clear();
+      setUserEmailFromLocalStorage(null);
+    }
+  }
+
+  useEffect(() => {
+    let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
+    let parsedToken = parseJwt(token);
+    setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
+  }, []);
+
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
-      {isMain === "1" ? (
-        <>
-          <div className="flex flex-col  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center ">
-            <Navbar isMain="1"></Navbar>
+      <div className="flex justify-between ">
+        <div className="mt-2 ml-6">
+          <Link href="/">
+            <Image priority src={props.isMain ? logoLight : logoDark} height={120} width={300} alt="Nexticket logo" className="h-16" />
+          </Link>
+        </div>
+        <div className="flex justify-center mr-6 mt-6">
+          <div className="flex items-center pr-3 mb-8 mr-2">
+            {isLoggedIn() ? (
+              <div className="flex items-center">
+                <div className="text-emerald-400 font-bold mr-5">
+                  <span className={props.isMain ? "text-stone-100" : "text-stone-600"}>Welcome back </span>
+                  {getUserName()}
+                </div>
+                <button onClick={logout} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
+                  Log out
+                </button>
+              </div>
+            ) : (
+              <button onClick={setShowLogin} type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5">
+                Log in
+              </button>
+            )}
+            <Link className="flex items-center justify-end ml-6" href="">
+              <Image priority src={props.isMain ? cartLight : cartDark} alt="Follow us on Twitter" />
+            </Link>
           </div>
-        </>
+        </div>
+      </div>
+      {props.isMain ? (
+        <div className="flex justify-center">
+          <h1 className={`${gochi.className} text-white text-6xl font-bold mt-20  drop-shadow-2xl`}>your nexTicket is here</h1>
+        </div>
       ) : (
-        <>
-          <Navbar />
-        </>
+        <div />
       )}
       <Login isVisible={showLogin} onCloseLog={setShowLogin} openReg={setShowRegistration} />
       <Registration isVisible={showRegistration} onCloseReg={setShowRegistration} openLog={setShowLogin} />
