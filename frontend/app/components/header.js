@@ -44,7 +44,7 @@ export default function Navbar(props) {
     let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
     let parsedToken = parseJwt(token);
     setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
-  }, []);
+  }, [setUserEmailFromLocalStorage]);
 
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
