@@ -3,72 +3,89 @@ import Image from "next/image";
 import Link from "next/link";
 import Login from "./login";
 import Registration from "./registration";
-import logo from "../../public/logo_black_transp.svg";
 import useTicketStore from "@/store/store";
-import { signOut, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import logoDark from "@/public/logo_black_transp.svg";
+import logoLight from "@/public/logo_white_transp.svg";
+import cartLight from "@/public/cart-light.svg";
+import cartDark from "@/public/cart-dark.svg";
+import { useSession } from "next-auth/react";
+import React, { useEffect } from "react";
+
+import { Gochi_Hand } from "next/font/google";
 import { parseJwt } from "./utils/auth-token-handling";
 
-export default function Navbar() {
+const gochi = Gochi_Hand({
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export default function Navbar({ isMain = "0" }) {
   const { status, data: session } = useSession();
-  const [userName, setUserName] = useState(null); // Use useState to manage userName
-  const [jwtToken, setJwtToken] = useState(null); // Use useState to manage jwtToken
+  const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
+
+  function isLoggedIn() {
+    return userEmailFromLocalStorage;
+  }
+
+  function getUserName() {
+    return userEmailFromLocalStorage;
+  }
+
+  async function logout() {
+    if (userEmailFromLocalStorage) {
+      console.log("Erasing shit");
+      localStorage.clear();
+      setUserEmailFromLocalStorage(null);
+    }
+  }
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      const token = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${process.env.NEXT_PUBLIC_COOKIE_NAME}\\s*=\\s*([^;]*).*$)|^.*$`), "$1");
-
-      setJwtToken(token);
-
-      if (token) {
-        const decodedToken = parseJwt(token);
-        console.log(decodedToken);
-        setUserName(decodedToken.email);
-      }
-    }
-  }, []); // Run this effect only once, on component mount
+    let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
+    let parsedToken = parseJwt(token);
+    setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
+  }, []);
 
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
-      <div className="flex justify-between bg-stone-100">
-        <Link href="/">
-          <Image priority src={logo} height={120} width={300} alt="Nexticket logo" className="mt-6 mb-6 ml-6  h-16" />
-        </Link>
-        <div className="flex justify-center mr-6 mt-6">
-          {userName ? (
-            <div className="flex items-center pr-3 mb-14 mr-2">
-              <div className="text-emerald-400 font-bold mr-5">
-                <span className="text-stone-600">Welcome back </span>
-                {userName}
-              </div>
-              <button
-                onClick={async () => {
-                  await signOut();
-                  localStorage.removeItem("userEmail");
-                }}
-                className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100"
-                type="submit"
-              >
-                Log out
-              </button>
-            </div>
-          ) : (
-            <button type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5" onClick={setShowLogin}>
-              Log in
-            </button>
-          )}
-          <Link href="">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-6 h-6 mt-1 stroke-stone-600">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-              />
-            </svg>
+      <div className="flex justify-between ">
+        <div className="mt-2 ml-6">
+          <Link href="/">
+            <Image priority src={isMain === "1" ? logoLight : logoDark} height={120} width={300} alt="Nexticket logo" className="h-16" />
           </Link>
         </div>
+        <div className="flex justify-center mr-6 mt-6">
+          <div className="flex items-center pr-3 mb-8 mr-2">
+            {isLoggedIn() ? (
+              <div className="flex items-center">
+                <div className="text-emerald-400 font-bold mr-5">
+                  <span className={isMain === "1" ? "text-stone-100" : "text-stone-600"}>Welcome back </span>
+                  {getUserName()}
+                </div>
+                <button onClick={logout} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
+                  Log out
+                </button>
+              </div>
+            ) : (
+              <button onClick={setShowLogin} type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5">
+                Log in
+              </button>
+            )}
+            <Link className="flex items-center justify-end ml-6" href="">
+              <Image priority src={isMain === "1" ? cartLight : cartDark} alt="Follow us on Twitter" />
+            </Link>
+          </div>
+        </div>
       </div>
+      {isMain === "1" ? (
+        <div className="flex justify-center">
+          <h1 className={`${gochi.className} text-white text-6xl font-bold mt-20  drop-shadow-2xl`}>your nexTicket is here</h1>
+        </div>
+      ) : (
+        <div />
+      )}
       <Login isVisible={showLogin} onCloseLog={setShowLogin} openReg={setShowRegistration} />
       <Registration isVisible={showRegistration} onCloseReg={setShowRegistration} openLog={setShowLogin} />
     </>

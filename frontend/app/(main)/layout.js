@@ -1,5 +1,5 @@
 import "../../styles/globals.css";
-import Header from "../components/header";
+import Header from "../components/Header";
 import Footer from "../components/footer";
 import { Nunito } from "next/font/google";
 
@@ -13,7 +13,7 @@ export const metadata = {
 export default function MainLayout({ children }) {
   return (
     <>
-      <Header />
+      <Header isMain="1" />
       <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-stone-100">{children}</main>
       <Footer />
     </>
