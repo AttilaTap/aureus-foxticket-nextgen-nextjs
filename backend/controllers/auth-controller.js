@@ -19,7 +19,7 @@ export const register = async (req, res, next) => {
 
     return res.status(201).json({ message: "Registration successful" });
   } catch (error) {
-    next(error);
+    return res.status(402).json({ message: `Unexpected registration error: ${error.message}` });
   }
 };
 //authentication for Secure Endpoints
@@ -52,7 +52,6 @@ export const login = async (req, res, next) => {
       login: email,
     });
   } catch (error) {
-    console.error("Error in login:", error);
-    next(error);
+    return res.status(402).json({ message: `Unexpected login error: ${error.message}` });
   }
 };

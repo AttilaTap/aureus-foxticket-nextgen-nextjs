@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import useTicketStore from "@/store/store";
-import { signIn } from "next-auth/react";
 import getBackendUrl from "./utils/environment";
+import { parseJwt } from "./utils/auth-token-handling";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
-  const setUser = useTicketStore((state) => state.setUser);
+  const setUserEmailFromLocalStorage = useTicketStore((state) => state.setUserEmailFromLocalStorage);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -46,8 +46,9 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
 
       if (response.ok) {
         const token = responseData.token;
-        document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME} = ${token}`;
-        setUser(email);
+        localStorage.setItem(process.env.NEXT_PUBLIC_COOKIE_NAME, token);
+        let parsedToken = parseJwt(token);
+        setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
         setError("");
         onCloseLog();
       } else {
@@ -107,7 +108,8 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
             </button>
 
             <div>
-              <button onClick={() => signIn("google")} className="flex items-center gap-2 bg-white shadow-xl rounded-lg pl-3 ml-4 mr-4 md:w-38 md:h-15">
+              {/* <button onClick={() => signIn("google")} className="flex items-center gap-2 bg-white shadow-xl rounded-lg pl-3 ml-4 mr-4 md:w-38 md:h-15"> */}
+              <button onClick={() => alert("Function coming soon")} className="flex items-center gap-2 bg-white shadow-xl rounded-lg pl-3 ml-4 mr-4 md:w-38 md:h-15">
                 <Image src="/img/google-logo.png" height={20} width={20} alt="Google logo" />
                 <span className="bg-sky-700 text-stone-100 font-bold rounded-lg p-4 md:w-52 md:h-15">Continue with Google</span>
               </button>

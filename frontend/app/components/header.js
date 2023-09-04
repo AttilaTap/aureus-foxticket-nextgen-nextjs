@@ -4,9 +4,14 @@ import Link from "next/link";
 import Login from "./login";
 import Registration from "./registration";
 import useTicketStore from "@/store/store";
+import logoDark from "@/public/logo_black_transp.svg";
+import logoLight from "@/public/logo_white_transp.svg";
+import cartLight from "@/public/cart-light.svg";
+import cartDark from "@/public/cart-dark.svg";
+import React, { useEffect } from "react";
+
 import { Gochi_Hand } from "next/font/google";
-import { signOut, useSession } from "next-auth/react";
-import getBackendUrl from "./utils/environment";
+import { parseJwt } from "./utils/auth-token-handling";
 
 const gochi = Gochi_Hand({
   weight: ["400"],
@@ -15,46 +20,71 @@ const gochi = Gochi_Hand({
   display: "swap",
 });
 
-export default function Header() {
-  const { status, data: session } = useSession();
+export default function Navbar(props) {
+  const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
+  console.log(`Navbar props: ${JSON.stringify(props)}`);
+  function isLoggedIn() {
+    console.log(props.isMain ? "it is a main page" : "it is not a main page");
+    return userEmailFromLocalStorage;
+  }
+
+  function getUserName() {
+    return userEmailFromLocalStorage;
+  }
+
+  async function logout() {
+    if (userEmailFromLocalStorage) {
+      console.log("Erasing shit");
+      localStorage.clear();
+      setUserEmailFromLocalStorage(null);
+    }
+  }
+
+  useEffect(() => {
+    let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
+    let parsedToken = parseJwt(token);
+    setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
+  }, [setUserEmailFromLocalStorage]);
 
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
-      <div className="flex flex-col  h-80 bg-[url('../public/background-img/bg-image-one.jpg')] bg-cover bg-center ">
-        <div className="flex justify-between ">
-          <Image priority src="/logo_white_transp.svg" height={120} width={300} alt="Nexticket logo" className="mt-6 ml-6  h-16" />
-          <div className="flex justify-center mr-6 mt-6">
-            {status === "authenticated" ? (
-              <div className="flex items-center pr-3 mb-8 mr-2">
+      <div className="flex justify-between ">
+        <div className="mt-2 ml-6">
+          <Link href="/">
+            <Image priority src={props.isMain ? logoLight : logoDark} height={120} width={300} alt="Nexticket logo" className="h-16" />
+          </Link>
+        </div>
+        <div className="flex justify-center mr-6 mt-6">
+          <div className="flex items-center pr-3 mb-8 mr-2">
+            {isLoggedIn() ? (
+              <div className="flex items-center">
                 <div className="text-emerald-400 font-bold mr-5">
-                  <span className="text-stone-100">Welcome back </span>
-                  {session?.user?.name}
+                  <span className={props.isMain ? "text-stone-100" : "text-stone-600"}>Welcome back </span>
+                  {getUserName()}
                 </div>
-                <button onClick={() => signOut()} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
+                <button onClick={logout} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
                   Log out
                 </button>
               </div>
             ) : (
-              <button type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5" onClick={setShowLogin}>
+              <button onClick={setShowLogin} type="submit" className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100 mr-5">
                 Log in
               </button>
             )}
-            <Link href="/cart">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-6 h-6 mt-1 stroke-stone-100">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                />
-              </svg>
+            <Link className="flex items-center justify-end ml-6" href="/cart">
+              <Image priority src={props.isMain ? cartLight : cartDark} alt="Follow us on Twitter" />
             </Link>
           </div>
         </div>
+      </div>
+      {props.isMain ? (
         <div className="flex justify-center">
           <h1 className={`${gochi.className} text-white text-6xl font-bold mt-20  drop-shadow-2xl`}>your nexTicket is here</h1>
         </div>
-      </div>
+      ) : (
+        <div />
+      )}
       <Login isVisible={showLogin} onCloseLog={setShowLogin} openReg={setShowRegistration} />
       <Registration isVisible={showRegistration} onCloseReg={setShowRegistration} openLog={setShowLogin} />
     </>
