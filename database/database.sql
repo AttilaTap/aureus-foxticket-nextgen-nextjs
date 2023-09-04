@@ -14,34 +14,38 @@ CREATE TABLE IF NOT EXISTS users (
     );
 
 CREATE TABLE IF NOT EXISTS events (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,  
-    name VARCHAR(50) NOT NULL,  
-    location VARCHAR(100) NOT NULL,  
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    location VARCHAR(100) NOT NULL,
+    city VARCHAR(50),
+    country VARCHAR(50),
     start_time DATETIME NOT NULL,
-    description TEXT
+    end_time DATETIME NOT NULL,
+    description TEXT,
+    is_festival BOOLEAN NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tickets (
-	ticket_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    type ENUM('entrance','non-entrance'),
+    ticket_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    type ENUM('entrance', 'non-entrance') NOT NULL,
     name VARCHAR(50) NOT NULL,
-    price DECIMAL(9,2) NOT NULL,
-    currency ENUM('HUF','EUR','USD') NOT NULL,
-    original_price DECIMAL(9,2) NOT NULL,
-    original_currency ENUM('HUF','EUR','USD') NOT NULL,
-    start_date DATETIME NOT NULL,
-    end_date DATETIME,
-    available ENUM ('YES','NO') NOT NULL,
+    price DECIMAL(9, 2) NOT NULL,
+    currency ENUM('HUF', 'EUR', 'USD') NOT NULL,
+    original_price DECIMAL(9, 2) NOT NULL,
+    original_currency ENUM('HUF', 'EUR', 'USD') NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME,
+    available ENUM('YES', 'NO') NOT NULL,
     how_many INT NOT NULL,
     seat VARCHAR(20),
     section VARCHAR(20),
     row_seating VARCHAR(20),
-    comment TEXT,
     user_id INT NOT NULL,
     event_id INT NOT NULL,
+    category VARCHAR(50) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
-    ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Remove foreign key linking tickets to users. This is necessary to truncate the tables.
 ALTER TABLE tickets DROP FOREIGN KEY tickets_ibfk_1;
@@ -71,26 +75,63 @@ INSERT INTO users (email, password) VALUES
 ('jackandjill@inventedemail.com', '$2a$10$QGBm3JLXuImpj24H7BXIse280HrA/7GNtFB62.xB.o0k.mmYt5CU2'), -- password: jackandjillpass
 ('vearant@gmail.com', '$2a$10$RdWhtqlioUEjKgdbF2uEGegGW/d9AnjZK/S6ij38WSPZIbxCtsBFi');
 
-INSERT INTO events (name, location, start_time, description) VALUES
-('Rock Fest 2023', 'Madison Square Garden, New York', '2023-09-17 18:00:00', 'Join us for the biggest rock music festival of the year! Featuring top rock bands and solo artists.'),
-('Jazz Night Out', 'Apollo Theater, Harlem', '2023-09-18 19:00:00', 'Experience a night of soulful jazz music with renowned artists at the historic Apollo Theater.'),
-('Broadway Bash', 'Times Square, New York', '2023-09-19 20:00:00', 'Celebrate the magic of Broadway with live performances from your favorite musicals.'),
-('Food Truck Fiesta', 'Brooklyn Bridge Park, Brooklyn', '2023-09-20 12:00:00', 'Satisfy your taste buds with a variety of gourmet food from local food trucks at Brooklyn Bridge Park.'),
-('Comedy Central Live', 'The Comedy Store, Los Angeles', '2023-09-21 21:00:00', 'Get ready to laugh your heart out with stand-up performances by the funniest comedians in the industry.'),
-('Classical Concert', 'Carnegie Hall, New York', '2023-09-22 19:30:00', 'Immerse yourself in the beauty of classical music performed by world-class musicians at Carnegie Hall.'),
-('Art and Wine Festival', 'Union Square, San Francisco', '2023-09-23 15:00:00', 'Enjoy a curated selection of artwork from local artists paired with fine wine from the best vineyards.'),
-('Cinematic Symphony', 'Walt Disney Concert Hall, Los Angeles', '2023-09-24 20:00:00', 'Relive iconic movie moments through orchestral performances of famous film scores.'),
-('Beach Volleyball Showdown', 'Santa Monica Beach, Los Angeles', '2023-09-25 14:00:00', 'Watch teams compete for the title of Beach Volleyball Champion in this action-packed event.'),
-('Stargazing Soiree', 'Griffith Observatory, Los Angeles', '2023-09-26 22:00:00', 'Discover the wonders of the night sky with guided stargazing sessions at the Griffith Observatory.');
+INSERT INTO events (name, location, city, country, start_time, end_time, description, is_festival) VALUES
+('Eiffel Tower Jazz Fest', 'Eiffel Tower', 'Paris', 'France', '2023-10-13 18:00:00', '2023-10-16 23:59:59', 'A 3-day jazz festival at the iconic Eiffel Tower', True),
+('Tokyo Tech Summit', 'Tokyo Dome', 'Tokyo', 'Japan', '2024-06-23 09:00:00', '2024-06-23 18:00:00', 'A one-day event for tech enthusiasts', False),
+('Sydney Opera Night', 'Sydney Opera House', 'Sydney', 'Australia', '2024-02-18 19:00:00', '2024-02-18 23:00:00', 'Enjoy a night of classic opera performances', False),
+('Oktoberfest', 'Theresienwiese', 'Munich', 'Germany', '2023-10-01 10:00:00', '2023-10-07 23:59:59', 'The world''s largest Volksfest', True),
+('Dubai Airshow', 'Al Maktoum Airport', 'Dubai', 'UAE', '2023-11-17 09:00:00', '2023-11-21 18:00:00', 'One of the largest and most successful airshows', True),
+('Moscow Ballet', 'Bolshoi Theatre', 'Moscow', 'Russia', '2023-12-11 19:00:00', '2023-12-11 22:00:00', 'A stunning ballet performance', False),
+('Vancouver Food Fest', 'Stanley Park', 'Vancouver', 'Canada', '2024-08-12 11:00:00', '2024-08-16 20:00:00', '5 days of delicious local and international foods', True),
+('Sao Paulo Art Expo', 'Ibirapuera Park', 'Sao Paulo', 'Brazil', '2024-01-22 10:00:00', '2024-01-25 19:00:00', 'A global art fair in Brazil''s largest city', True),
+('Nairobi Music Festival', 'KICC', 'Nairobi', 'Kenya', '2024-03-12 15:00:00', '2024-03-15 23:59:59', 'Enjoy 4 days of musical acts from around Africa', True),
+('New York Comic Con', 'Javits Center', 'New York', 'USA', '2024-10-03 10:00:00', '2024-10-06 18:00:00', 'A 4-day event for comic book and movie fans', True),
+('Beijing Olympics', 'Olympic Park', 'Beijing', 'China', '2024-07-15 09:00:00', '2024-07-20 23:59:59', 'A multi-sport event in Beijing', True),
+('Delhi Literature Fest', 'Central Park', 'Delhi', 'India', '2023-11-05 10:00:00', '2023-11-08 19:00:00', 'A 3-day festival celebrating literature', True),
+('Rome Film Festival', 'Auditorium Parco', 'Rome', 'Italy', '2024-04-10 09:00:00', '2024-04-10 23:00:00', 'A classic film festival', False),
+('Buenos Aires Tango Night', 'Teatro Colón', 'Buenos Aires', 'Argentina', '2024-09-09 20:00:00', '2024-09-09 23:59:59', 'A night dedicated to tango music and dance', False),
+('Cape Town Jazz Concert', 'Artscape Theatre', 'Cape Town', 'South Africa', '2024-12-12 18:00:00', '2024-12-12 23:00:00', 'A one-day jazz concert in Cape Town', False);
 
-INSERT INTO tickets (type, name, price, currency, original_price, original_currency, start_date, end_date, available, how_many, seat, section, row_seating, comment, user_id, event_id) VALUES
-('entrance', 'Rock Festival Early Bird', 60000, 'HUF', 80000, 'HUF', '2023-09-17 18:00:00', NULL, 'YES', 27, 1, 1, 'A', 'Early bird discount', 1, 1),
-('entrance', 'Jazz Night VIP', 225, 'EUR', 270, 'EUR', '2023-09-18 19:00:00', NULL, 'NO', 53, 2, 5, 'B', 'VIP Access and seating', 2, 2),
-('non-entrance', 'Comedy Show Regular', 14000, 'HUF', 16000, 'HUF', '2023-09-21 21:00:00', NULL, 'YES', 41, 3, 3, 'C', 'Regular seating area', 3, 3),
-('entrance', 'Symphony Orchestra Balcony', 32000, 'HUF', 36000, 'HUF', '2023-09-24 20:00:00', NULL, 'YES', 12, 4, 4, 'D', 'Balcony seating', 4, 4),
-('non-entrance', 'Stand-Up Comedy Gold', 54, 'EUR', 63, 'EUR', '2023-09-21 21:00:00', NULL, 'NO', 6, 5, 5, 'E', 'Gold seating area', 5, 5),
-('entrance', 'Circus Extravaganza Family Pack', 80000, 'HUF', 88000, 'HUF', '2023-09-20 12:00:00', NULL, 'YES', 58, 6, 6, 'F', 'Family package for 4', 6, 6),
-('non-entrance', 'Pop Concert Platinum', 270, 'EUR', 315, 'EUR', '2023-09-23 15:00:00', '2023-09-24 20:00:00', 'NO', 99, 7, 7, 'G', 'Platinum seating area', 7, 7),
-('entrance', 'Art Exhibit Early Access', 45, 'EUR', 54, 'EUR', '2023-09-23 15:00:00', NULL, 'YES', 84, 8, 8, 'H', 'Access before public opening', 8, 8),
-('non-entrance', 'Musical Theatre Premium', 108, 'EUR', 117, 'EUR', '2023-09-19 20:00:00', '2023-09-26 20:00:00', 'NO', 48, 9, 9, 'I', 'Premium seating area', 9, 9),
-('entrance', 'Food Festival Family Pass', 300, 'USD', 340, 'USD', '2023-09-20 12:00:00', NULL, 'YES', 44, 10, 10, 'J', 'Pass for 4 family members', 10, 10);
+INSERT INTO tickets 
+(type, name, price, currency, original_price, original_currency, start_time, end_time, available, how_many, seat, section, row_seating, user_id, event_id, category)
+VALUES
+('entrance', 'Eiffel Tower Jazz Fest 3-Day Pass', 180, 'EUR', 200, 'EUR', '2023-10-13 18:00:00', '2023-10-14 23:59:59', 'YES', 8, 1, 1, 'A', 2, 1, '2-Day Pass'),
+('entrance', 'Eiffel Tower Jazz Fest VIP Experience', 400, 'EUR', 450, 'EUR', '2023-10-13 18:00:00', NULL, 'YES', 3, 1, 1, 'B', 7, 1, 'VIP'),
+('entrance', 'Eiffel Tower Jazz Fest Single-Day Ticket', 100, 'EUR', 120, 'EUR', '2023-10-16 08:00:00', '2023-10-16 23:59:59', 'YES', 15, 1, 1, 'C', 8, 1, 'Single-Day Ticket'),
+('entrance', 'Tokyo Tech Summit VIP', 25000, 'HUF', 28000, 'HUF', '2024-06-23 09:00:00', NULL, 'YES', 9, 2, 2, 'A', 3, 2, 'VIP'),
+('entrance', 'Tokyo Tech Summit Regular', 15000, 'HUF', 18000, 'HUF', '2024-06-23 09:00:00', NULL, 'YES', 19, 2, 2, 'B', 7, 2, 'Regular'),
+('entrance', 'Sydney Opera Night VIP', 200, 'EUR', 250, 'EUR', '2024-02-18 19:00:00', NULL, 'YES', 22, 3, 3, 'A', 1, 3, 'VIP'),
+('entrance', 'Sydney Opera Night Regular', 150, 'EUR', 180, 'EUR', '2024-02-18 19:00:00', NULL, 'YES', 4, 3, 3, 'B', 4, 3, 'Regular'),
+('entrance', 'Oktoberfest 7-Day Pass', 250, 'EUR', 280, 'EUR', '2023-10-01 10:00:00', '2023-10-07 23:59:59', 'YES', 2, 4, 4, 'A', 9, 4, 'Week Pass'),
+('entrance', 'Oktoberfest Single-Day Ticket', 60, 'EUR', 65, 'EUR', '2023-10-03 08:00:00', '2023-10-03 23:59:59', 'YES', 6, 4, 4, 'B', 2, 4, 'Single-Day Ticket'),
+('entrance', 'Oktoberfest VIP Experience', 350, 'EUR', 400, 'EUR', '2023-10-01 10:00:00', '2023-10-07 23:59:59', 'YES', 1, 4, 4, 'C', 5, 4, 'VIP Experience'),
+('entrance', 'Dubai Airshow Early Bird', 400, 'EUR', 500, 'EUR', '2023-11-17 09:00:00', '2023-11-21 18:00:00', 'YES', 17, 5, 5, 'A', 8, 5, 'Early Bird'),
+('entrance', 'Dubai Airshow Regular', 500, 'EUR', 600, 'EUR', '2023-11-17 09:00:00', '2023-11-21 18:00:00', 'YES', 3, 5, 5, 'B', 4, 5, 'Regular'),
+('entrance', 'Dubai Airshow VIP', 700, 'EUR', 800, 'EUR', '2023-11-17 09:00:00', '2023-11-21 18:00:00', 'YES', 2, 5, 5, 'C', 9, 5, 'VIP'),
+('entrance', 'Moscow Ballet Regular', 160000, 'HUF', 180000, 'HUF', '2023-12-11 19:00:00', NULL, 'YES', 10, 6, 6, 'A', 6, 6, 'Regular'),
+('entrance', 'Moscow Ballet VIP', 240000, 'HUF', 260000, 'HUF', '2023-12-11 19:00:00', NULL, 'YES', 19, 6, 6, 'B', 10, 6, 'VIP'),
+('entrance', 'Vancouver Food Fest Early Bird', 180, 'EUR', 200, 'EUR', '2024-08-12 11:00:00', '2024-08-16 20:00:00', 'YES', 8, 7, 7, 'A', 3, 7, 'Early Bird'),
+('entrance', 'Vancouver Food Fest Single Day - Regular', 120, 'EUR', 130, 'EUR', '2024-08-12 11:00:00', '2024-08-12 22:00:00', 'YES', 27, 7, 7, 'E', 6, 7, 'Single Day - Regular'),
+('entrance', 'Vancouver Food Fest Single Day - VIP', 220, 'EUR', 240, 'EUR', '2024-08-12 11:00:00', '2024-08-12 22:00:00', 'YES', 9, 7, 7, 'F', 1, 7, 'Single Day - VIP'),
+('entrance', 'Sao Paulo Art Expo Early Bird', 160000, 'HUF', 180000, 'HUF', '2024-01-22 10:00:00', '2024-01-25 19:00:00', 'YES', 15, 8, 8, 'A', 2, 8, 'Early Bird'),
+('entrance', 'Sao Paulo Art Expo Regular', 200000, 'HUF', 220000, 'HUF', '2024-01-22 10:00:00', '2024-01-25 19:00:00', 'YES', 21, 8, 8, 'B', 5, 8, 'Regular'),
+('entrance', 'Sao Paulo Art Expo VIP Experience', 280000, 'HUF', 300000, 'HUF', '2024-01-22 10:00:00', '2024-01-25 19:00:00', 'YES', 1, 8, 8, 'C', 10, 8, 'VIP Experience'),
+('entrance', 'Nairobi Music Early Bird', 160, 'EUR', 180, 'EUR', '2024-03-12 15:00:00', '2024-03-15 23:59:59', 'YES', 18, 9, 9, 'A', 8, 9, 'Early Bird'),
+('entrance', 'Nairobi Music Regular', 200, 'EUR', 220, 'EUR', '2024-03-12 15:00:00', '2024-03-15 23:59:59', 'YES', 3, 9, 9, 'B', 3, 9, 'Regular'),
+('entrance', 'Nairobi Music VIP Single-Day Ticket', 300, 'EUR', 320, 'EUR', '2024-03-15 08:00:00', '2024-03-15 23:59:59', 'YES', 9, 9, 9, 'C', 6, 9, 'Single Day - VIP'),
+('entrance', 'New York Comic Con Early Bird', 120000, 'HUF', 130000, 'HUF', '2024-10-03 10:00:00', '2024-10-06 18:00:00', 'YES', 5, 10, 10, 'A', 9, 10, 'Early Bird'),
+('entrance', 'New York Comic Con Regular', 160000, 'HUF', 170000, 'HUF', '2024-10-03 10:00:00', '2024-10-06 18:00:00', 'YES', 13, 10, 10, 'B', 1, 10, 'Regular'),
+('entrance', 'New York Comic Con VIP', 240000, 'HUF', 250000, 'HUF', '2024-10-03 10:00:00', '2024-10-06 18:00:00', 'YES', 4, 10, 10, 'C', 4, 10, 'VIP'),
+('entrance', 'Beijing Olympics Early Bird', 350, 'EUR', 400, 'EUR', '2024-07-15 09:00:00', '2024-07-20 23:59:59', 'YES', 15, 11, 11, 'A', 7, 11, 'Early Bird'),
+('entrance', 'Beijing Olympics Regular', 500, 'EUR', 550, 'EUR', '2024-07-15 09:00:00', '2024-07-20 23:59:59', 'YES', 7, 11, 11, 'B', 5, 11, 'Regular'),
+('entrance', 'Beijing Olympics VIP', 1200, 'EUR', 1300, 'EUR', '2024-07-15 09:00:00', '2024-07-20 23:59:59', 'YES', 29, 11, 11, 'C', 10, 11, 'VIP'),
+('entrance', 'Delhi Literature Fest 3-Day Pass', 180000, 'HUF', 200000, 'HUF', '2023-11-05 10:00:00', '2023-11-08 19:00:00', 'YES', 24, 12, 12, 'A', 2, 12, '3-Day Pass'),
+('entrance', 'Delhi Literature Fest Single-Day Ticket', 70000, 'HUF', 75000, 'HUF', '2023-11-05 10:00:00', '2023-11-05 22:00:00', 'YES', 16, 12, 12, 'B', 6, 12, 'Single-Day Ticket'),
+('entrance', 'Delhi Literature Fest VIP Experience', 300000, 'HUF', 330000, 'HUF', '2023-11-05 10:00:00', '2023-11-08 19:00:00', 'YES', 7, 12, 12, 'C', 9, 12, 'VIP Experience'),
+('entrance', 'Rome Film Festival Early Bird', 120, 'EUR', 130, 'EUR', '2024-04-10 09:00:00', NULL, 'YES', 13, 13, 13, 'A', 1, 13, 'Early Bird'),
+('entrance', 'Rome Film Festival Regular', 160, 'EUR', 170, 'EUR', '2024-04-10 09:00:00', NULL, 'YES', 15, 13, 13, 'B', 4, 13, 'Regular'),
+('entrance', 'Rome Film Festival VIP', 240, 'EUR', 250, 'EUR', '2024-04-10 09:00:00', NULL, 'YES', 10, 13, 13, 'C', 7, 13, 'VIP'),
+('entrance', 'Buenos Aires Tango Night Early Bird', 40000, 'HUF', 42000, 'HUF', '2024-09-09 20:00:00', NULL, 'YES', 9, 14, 14, 'A', 3, 14, 'Early Bird'),
+('entrance', 'Buenos Aires Tango Night Regular', 52000, 'HUF', 54000, 'HUF', '2024-09-09 20:00:00', NULL, 'YES', 21, 14, 14, 'B', 8, 14, 'Regular'),
+('entrance', 'Cape Town Jazz Concert Early Bird', 160, 'EUR', 170, 'EUR', '2024-12-12 18:00:00', NULL, 'YES', 33, 15, 15, 'A', 5, 15, 'Early Bird'),
+('entrance', 'Cape Town Jazz Concert Regular', 200, 'EUR', 210, 'EUR', '2024-12-12 18:00:00', NULL, 'YES', 25, 15, 15, 'B', 2, 15, 'Regular');
