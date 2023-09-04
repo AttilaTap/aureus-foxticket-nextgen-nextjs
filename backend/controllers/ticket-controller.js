@@ -26,3 +26,14 @@ export const tickets = async (req, res) => {
     res.status(400).json({ error: error });
   }
 };
+
+export default async function getAvailableTickets(req, res) {
+  const { eventId } = req.params;
+
+  try {
+    const { availableTickets, tickets } = await fetchAvailableTickets(eventId);
+    res.json({ availableTickets, tickets });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
