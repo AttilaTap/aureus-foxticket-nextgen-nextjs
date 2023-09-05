@@ -1,6 +1,15 @@
 import Image from "next/image";
 import trash from "@/public/trash-can.svg";
+import getBackendUrl from "./utils/environment";
+import useTicketStore from "@/store/store";
 
+//const [ticketToBuy, setTicketToBuy] = useTicketStore((state) => [state.ticketToBuy, state.setTicketToBuy]);
+const id = "1";
+const res = await fetch(`${getBackendUrl()}tickets/${id}`);
+const ticketById = await res.json();
+console.log(ticketById);
+//setTicketToBuy(ticketById);
+//console.log(ticketToBuy);
 const TicketsToBuy = [
   {
     name: "Esti Kornél Ráadásnap",
@@ -21,13 +30,13 @@ const TicketsToBuy = [
 ];
 
 export default function TicketToBuy() {
-  return TicketsToBuy.map((tickets) => {
+  return TicketsToBuy.map((ticket) => {
     return (
       <div className="p-2 text-stone-700 border-b-2 border-slate-200">
-        <p className="font-bold text-2xl">{tickets.name}</p>
+        <p className="font-bold text-2xl">{ticket.name}</p>
         <div className="flex gap-2">
-          <p className="text-xl">{tickets.start_date}</p>
-          <p className=" text-xl">{tickets.location}</p>
+          <p className="text-xl">{ticket.start_date}</p>
+          <p className=" text-xl">"event_location"</p>
         </div>
 
         <div className="flex justify-between">
@@ -35,8 +44,8 @@ export default function TicketToBuy() {
             {/* <Image src="/" width={30} height={30} alt="The picture of the seller"> */}
             {/* Img
           </Image> */}
-            <p className=" text-xl">{tickets.currency}</p>
-            <p className=" text-xl">{tickets.price}</p>
+            <p className=" text-xl">{ticket.currency}</p>
+            <p className=" text-xl">{ticket.price}</p>
             <p className=" text-xl">/ ticket</p>
           </div>
           <button>
