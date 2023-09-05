@@ -1,5 +1,5 @@
 import Image from "next/image";
-import trash from "@/public/trash-can.svg";
+import trash from "@/public/delete-ticket.svg";
 import getBackendUrl from "./utils/environment";
 import useTicketStore from "@/store/store";
 
@@ -32,24 +32,20 @@ const TicketsToBuy = [
 export default function TicketToBuy() {
   return TicketsToBuy.map((ticket) => {
     return (
-      <div className="p-2 text-stone-700 border-b-2 border-slate-200">
+      <div key={ticket.id} className="p-2 text-stone-600 border-b-2 border-stone-200">
         <p className="font-bold text-2xl">{ticket.name}</p>
         <div className="flex gap-2">
           <p className="text-xl">{ticket.start_date}</p>
           <p className=" text-xl">"event_location"</p>
         </div>
-
         <div className="flex justify-between">
           <div className="flex gap-2">
-            {/* <Image src="/" width={30} height={30} alt="The picture of the seller"> */}
-            {/* Img
-          </Image> */}
             <p className=" text-xl">{ticket.currency}</p>
             <p className=" text-xl">{ticket.price}</p>
             <p className=" text-xl">/ ticket</p>
           </div>
           <button>
-            <Image src={trash} alt="trash-can"></Image>
+            <Image src={trash} alt="trash-can" className="w-5 h-5"></Image>
           </button>
         </div>
       </div>
