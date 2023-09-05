@@ -36,7 +36,7 @@ export default function TicketToBuy() {
         <p className="font-bold text-2xl">{ticket.name}</p>
         <div className="flex gap-2">
           <p className="text-xl">{ticket.start_date}</p>
-          <p className=" text-xl">"event_location"</p>
+          <p className=" text-xl">{ticket.location}</p>
         </div>
         <div className="flex justify-between">
           <div className="flex gap-2">
