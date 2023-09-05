@@ -49,7 +49,7 @@ export default function Navbar(props) {
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
-      <div className="flex justify-between ">
+      <div className={props.isMain ? "flex justify-between" : "flex justify-between  bg-stone-100"}>
         <div className="mt-2 ml-6">
           <Link href="/">
             <Image priority src={props.isMain ? logoLight : logoDark} height={120} width={300} alt="Nexticket logo" className="h-16" />
@@ -72,7 +72,7 @@ export default function Navbar(props) {
                 Log in
               </button>
             )}
-            <Link className="flex items-center justify-end ml-6" href="/cart">
+            <Link className={props.isBasket ? "invisible flex items-center justify-end ml-6" : "flex items-center justify-end ml-6"} href="/cart">
               <Image priority src={props.isMain ? cartLight : cartDark} alt="Follow us on Twitter" />
             </Link>
           </div>
