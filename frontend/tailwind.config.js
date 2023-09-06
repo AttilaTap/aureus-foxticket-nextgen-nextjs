@@ -12,6 +12,7 @@ module.exports = {
       },
       backgroundColor: {
         'modern-gray': '#E0E2E6',
+        'custom-gray': 'rgb(74, 85, 104)',
       },
     },
   },

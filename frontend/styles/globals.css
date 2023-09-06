@@ -14,7 +14,4 @@
     padding: theme("spacing.4");
     box-shadow: theme("boxShadow.xl");
   }
-  .card:hover {
-    background-color: rgb(120 113 108);
-  }
 }
