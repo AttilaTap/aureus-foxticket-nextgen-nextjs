@@ -8,6 +8,7 @@ import logoDark from "@/public/logo_black_transp.svg";
 import logoLight from "@/public/logo_white_transp.svg";
 import cartLight from "@/public/cart-light.svg";
 import cartDark from "@/public/cart-dark.svg";
+import close from "@/public/close.svg";
 import React, { useEffect } from "react";
 
 import { Gochi_Hand } from "next/font/google";
@@ -20,9 +21,9 @@ const gochi = Gochi_Hand({
   display: "swap",
 });
 
-export default function Navbar(props) {
+export default function Header(props) {
   const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
-  console.log(`Navbar props: ${JSON.stringify(props)}`);
+  console.log(`Header props: ${JSON.stringify(props)}`);
   function isLoggedIn() {
     console.log(props.isMain ? "it is a main page" : "it is not a main page");
     return userEmailFromLocalStorage;
@@ -49,7 +50,7 @@ export default function Navbar(props) {
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
-      <div className="flex justify-between ">
+      <div className={props.isMain ? "flex justify-between" : "flex justify-between  bg-stone-100"}>
         <div className="mt-2 ml-6">
           <Link href="/">
             <Image priority src={props.isMain ? logoLight : logoDark} height={120} width={300} alt="Nexticket logo" className="h-16" />
@@ -72,8 +73,8 @@ export default function Navbar(props) {
                 Log in
               </button>
             )}
-            <Link className="flex items-center justify-end ml-6" href="">
-              <Image priority src={props.isMain ? cartLight : cartDark} alt="Follow us on Twitter" />
+            <Link className={"flex items-center justify-end ml-6"} href={props.isBasket ? "/" : "/cart"}>
+              <Image priority src={props.isBasket ? close : props.isMain ? cartLight : cartDark} alt="Follow us on Twitter" />
             </Link>
           </div>
         </div>
