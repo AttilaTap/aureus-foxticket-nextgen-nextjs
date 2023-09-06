@@ -25,5 +25,3 @@ const portToUse = envPort === undefined ? defaultPort : envPort;
 const server = app.listen(portToUse, () => {
   console.log(`I'm running on : ${portToUse}`);
 });
-
-export { app, server };

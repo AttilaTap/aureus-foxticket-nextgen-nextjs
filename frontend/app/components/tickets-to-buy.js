@@ -5,7 +5,7 @@ import useTicketStore from "@/store/store";
 
 //const [ticketToBuy, setTicketToBuy] = useTicketStore((state) => [state.ticketToBuy, state.setTicketToBuy]);
 const id = "1";
-const res = await fetch(`${getBackendUrl()}tickets/${id}`);
+const res = await fetch(`${getBackendUrl()}ticket/${id}`);
 const ticketById = await res.json();
 console.log(ticketById);
 //setTicketToBuy(ticketById);
