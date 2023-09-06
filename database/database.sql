@@ -96,7 +96,7 @@ INSERT INTO tickets
 (type, name, price, currency, original_price, original_currency, start_time, end_time, available, how_many, seat, section, row_seating, user_id, event_id, category)
 VALUES
 ('entrance', 'Eiffel Tower Jazz Fest 3-Day Pass', 180, 'EUR', 200, 'EUR', '2023-10-13 18:00:00', '2023-10-14 23:59:59', 'YES', 8, 1, 1, 'A', 2, 1, '2-Day Pass'),
-('entrance', 'Eiffel Tower Jazz Fest VIP Experience', 400, 'EUR', 450, 'EUR', '2023-10-13 18:00:00', NULL, 'YES', 3, 1, 1, 'B', 7, 1, 'VIP'),
+('entrance', 'Eiffel Tower Jazz Fest VIP Experience', 400, 'EUR', 450, 'EUR', '2023-10-13 18:00:00', '2023-10-16 23:59:59', 'YES', 3, 1, 1, 'B', 7, 1, 'VIP'),
 ('entrance', 'Eiffel Tower Jazz Fest Single-Day Ticket', 100, 'EUR', 120, 'EUR', '2023-10-16 08:00:00', '2023-10-16 23:59:59', 'YES', 15, 1, 1, 'C', 8, 1, 'Single-Day Ticket'),
 ('entrance', 'Tokyo Tech Summit VIP', 25000, 'HUF', 28000, 'HUF', '2024-06-23 09:00:00', NULL, 'YES', 9, 2, 2, 'A', 3, 2, 'VIP'),
 ('entrance', 'Tokyo Tech Summit Regular', 15000, 'HUF', 18000, 'HUF', '2024-06-23 09:00:00', NULL, 'YES', 19, 2, 2, 'B', 7, 2, 'Regular'),
