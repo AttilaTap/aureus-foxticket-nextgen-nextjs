@@ -11,14 +11,14 @@ const EventCard = ({ event }) => {
       try {
         const response = await fetch(`${getBackendUrl()}tickets/${event.id}`);
         if (!response.ok) {
-          throw new Error("Failed to fetch ticket data");
+          throw new Error("Failed to fetch ticket data 1");
         }
         const data = await response.json();
         setTicketData(data);
         setFetchError(null);
       } catch (error) {
         console.error("Fetch error:", error);
-        setFetchError("Failed to fetch ticket data");
+        setFetchError("Failed to fetch ticket data 2");
       }
     }
 
@@ -65,7 +65,7 @@ const EventCard = ({ event }) => {
       </div>
       <div className="w-48 p-2 flex flex-row justify-end items-center" style={{ marginRight: "0.5cm" }}>
         <span className="pr-4">{ticketData.availableTickets}</span>
-        <Ticket/>
+        <Ticket />
       </div>
     </div>
   );

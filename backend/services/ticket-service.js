@@ -27,9 +27,8 @@ export async function getTickets(connection) {
   }
 }
 
-export async function fetchAvailableTickets(eventId) {
+export async function fetchAvailableTickets(connection, eventId) {
   try {
-    const connection = await getConnection();
     const [results] = await connection.query('SELECT * FROM tickets WHERE event_id = ? AND available = "YES"', [eventId]);
 
     const availableTickets = results.reduce((sum, ticket) => sum + ticket.how_many, 0);
