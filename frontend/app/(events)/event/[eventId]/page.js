@@ -15,8 +15,7 @@ export default function EventPage({ params }) {
     }
 
     async function fetchEvent() {
-      const url = `${getBackendUrl()}events/${params.eventId}`;
-
+      const url = `${getBackendUrl()}event/${params.eventId}`;
       try {
         const response = await fetch(url);
         if (!response.ok) {
