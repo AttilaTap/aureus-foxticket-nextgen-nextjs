@@ -26,3 +26,16 @@ export async function getTickets(connection) {
     return { error };
   }
 }
+
+export async function fetchAvailableTickets(connection, eventId) {
+  try {
+    const [results] = await connection.query('SELECT * FROM tickets WHERE event_id = ? AND available = "YES"', [eventId]);
+
+    const availableTickets = results.reduce((sum, ticket) => sum + ticket.how_many, 0);
+
+    return { availableTickets, tickets: results };
+  } catch (error) {
+    console.error("Error fetching available tickets:", error);
+    return { availableTickets: 0, tickets: [] };
+  }
+}

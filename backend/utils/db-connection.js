@@ -15,10 +15,8 @@ export async function getConnection() {
         database: process.env.DB_NAME,
         password: process.env.DB_PASSWORD,
       });
+      console.log("Successfully connected");
     }
-
-    console.log("Successfully connected");
-
     return connection;
   } catch (error) {
     console.log("Error while connecting to db");

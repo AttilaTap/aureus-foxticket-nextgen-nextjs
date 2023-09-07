@@ -1,7 +1,7 @@
 import * as ticketService from "../services/ticket-service.js";
 import { getConnection } from "../utils/db-connection.js";
 
-export const ticketById = async (req, res) => {
+export async function ticketById(req, res) {
   const { id } = req.params;
   console.log("params", id);
   try {
@@ -13,9 +13,9 @@ export const ticketById = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error });
   }
-};
+}
 
-export const tickets = async (req, res) => {
+export async function tickets(req, res) {
   try {
     const connection = await getConnection();
     const tickets = await ticketService.getTickets(connection);
@@ -25,4 +25,15 @@ export const tickets = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error });
   }
-};
+}
+
+export async function getAvailableTickets(req, res) {
+  const { eventId } = req.params;
+  try {
+    const connection = await getConnection();
+    const { availableTickets, tickets } = await ticketService.fetchAvailableTickets(connection, eventId);
+    res.json({ availableTickets, tickets });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

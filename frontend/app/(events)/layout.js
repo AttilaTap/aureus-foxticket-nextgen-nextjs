@@ -11,7 +11,11 @@ export default function EventLayout({ children }) {
   return (
     <>
       <Header />
-      <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-stone-100">{children}</main>
+      <main className="flex flex-col items-center justify-center pt-24 pb-24 bg-stone-100">
+        <div className="w-full">
+          {children}
+        </div>
+      </main>
       <Footer />
     </>
   );
