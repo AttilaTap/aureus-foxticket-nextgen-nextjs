@@ -7,11 +7,11 @@ const useTicketStore = create((set) => ({
   backendState: false,
   userEmailFromLocalStorage: null,
   ticketToBuy: [{}],
-  setBackendState: (newState) => set((state) => ({ backendState: newState })),
-  setUser: (email) => set({ user: email }),
-  setUserEmailFromLocalStorage: (email) => set({ userEmailFromLocalStorage: email }),
   setShowLog: () => set((state) => ({ showLog: !state.showLog })),
   setShowReg: () => set((state) => ({ showReg: !state.showReg })),
+  setUser: (email) => set({ user: email }),
+  setBackendState: (newState) => set(() => ({ backendState: newState })),
+  setUserEmailFromLocalStorage: (email) => set({ userEmailFromLocalStorage: email }),
   setTicketToBuy: (ticket) => set({ ...ticketToBuy, ticket }),
 }));
 
