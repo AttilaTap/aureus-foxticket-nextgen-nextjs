@@ -3,7 +3,6 @@ import { getConnection } from "../utils/db-connection.js";
 
 export async function ticketById(req, res) {
   const { id } = req.params;
-  console.log("params", id);
   try {
     const connection = await getConnection();
     const ticket = await ticketService.getTicketById(connection, id);

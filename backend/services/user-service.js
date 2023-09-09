@@ -49,6 +49,6 @@ export async function verifyUser(connection, email, password) {
   }
   const user = users[0];
   const match = await bcrypt.compare(password, user.password);
-  console.log(`Does it really match: ${match}`);
+  console.log(`Pass match: ${match}`);
   return match;
 }
