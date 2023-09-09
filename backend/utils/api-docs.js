@@ -1,6 +1,7 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import getServerPort from "./helper.js";
 
 const options = {
   definition: {
@@ -9,6 +10,11 @@ const options = {
       title: "REST API Docs",
       version: "1.0.0",
     },
+    servers: [
+      {
+        url: `http://localhost:${getServerPort()}`,
+      },
+    ],
   },
   apis: ["./routes/*-routes.js"],
 };
