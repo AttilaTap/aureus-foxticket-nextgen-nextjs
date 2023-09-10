@@ -1,8 +1,5 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
 import team1 from "@/public/team/Tomas.jpg";
-import linkedIn from "@/public/linkedIn.svg";
 import { useState } from "react";
 import TeamMember from "./team-member";
 
@@ -18,8 +15,8 @@ export default function Team() {
   });
 
   return (
-    <div className="flex flex-col w-fit h-fit p-1 sm:p-4 mb-2 justify-center items-center grow bg-emerald-200 rounded-3xl border-2 border-solid border-slate-300">
-      <h1 className="font-extrabold text-3xl m-2 text-slate-600">The NexTicket team</h1>
+    <div className="flex flex-col w-fit h-fit p-1 sm:p-4 mb-2 justify-center items-center grow bg-emerald-300 rounded-3xl border-2 border-solid border-slate-300">
+      <h1 className="font-extrabold text-3xl m-2 text-slate-600 drop-shadow-2xl">The NexTicket team</h1>
       <div className="flex flex-col md:flex-row justify-between items-center gap-1 sm:gap-3 sm:m-3 grow">
         <div
           className="aboutUsCard md:origin-top-right md:-rotate-12"
@@ -43,45 +40,65 @@ export default function Team() {
         >
           <TeamMember name="Katalin Tünde Kovács" team={showPicture.team2} link="https://www.linkedin.com/in/katunde/" picture="" />
         </div>
-        <div className="aboutUsCard md:origin-top-left md:rotate-12">
-          <p className="absolute top-1/3 font-bold">Péter Fedorov</p>
-          <Image src="" alt="photo of the team member" className="object-fit: contain hover:invisible z-10"></Image>
-          <Link href="https://www.linkedin.com/in/peter-fedorov-665401199/" className="aboutUsLink">
-            <Image src={linkedIn} alt="LinkedIn icon"></Image>
-          </Link>
+        <div
+          className="aboutUsCard md:origin-top-left md:rotate-12"
+          onMouseOver={() => {
+            setShowPicture({ ...showPicture, team3: false });
+          }}
+          onMouseOut={() => {
+            setShowPicture({ ...showPicture, team3: true });
+          }}
+        >
+          <TeamMember name="Péter Fedorov" team={showPicture.team3} link="https://www.linkedin.com/in/peter-fedorov-665401199/" picture="" />
         </div>
       </div>
       <div className="flex flex-col justify-center items-center">
-        <div className="aboutUsCard">
-          <p className="absolute top-1/3 font-bold">Attila Krüpl</p>
-          <Image src="" alt="photo of the team member" className="object-fit: contain hover:invisible z-10"></Image>
-          <Link href="https://www.linkedin.com/in/attila-krupl-dr/" className="aboutUsLink">
-            <Image src={linkedIn} alt="LinkedIn icon"></Image>
-          </Link>
+        <div
+          className="aboutUsCard"
+          onMouseOver={() => {
+            setShowPicture({ ...showPicture, mentor: false });
+          }}
+          onMouseOut={() => {
+            setShowPicture({ ...showPicture, mentor: true });
+          }}
+        >
+          <TeamMember name="Attila Krüpl" team={showPicture.mentor} link="https://www.linkedin.com/in/attila-krupl-dr/" picture="" />
         </div>
         <p className="font-bold text-xl text-slate-600">GreenFox mentor</p>
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center gap-1 sm:gap-3 sm:m-3 grow">
-        <div className="aboutUsCard md:origin-bottom-right md:rotate-12">
-          <p className="absolute top-1/3 font-bold">Attila Tápai</p>
-          <Image src="" alt="photo of the team member" className="object-fit: contain hover:invisible z-10"></Image>
-          <Link href="https://www.linkedin.com/in/attila-t%C3%A1pai-3a976587/" className="aboutUsLink">
-            <Image src={linkedIn} alt="LinkedIn icon"></Image>
-          </Link>
+        <div
+          className="aboutUsCard md:origin-bottom-right md:rotate-12"
+          onMouseOver={() => {
+            setShowPicture({ ...showPicture, team4: false });
+          }}
+          onMouseOut={() => {
+            setShowPicture({ ...showPicture, team4: true });
+          }}
+        >
+          <TeamMember name="Attila Tápai" team={showPicture.team4} link="https://www.linkedin.com/in/attila-t%C3%A1pai-3a976587/" picture="" />
         </div>
-        <div className="aboutUsCard">
-          <p className="absolute top-1/3 font-bold">Víťa Dolejší</p>
-          <Image src="" alt="photo of the team member" className="object-fit: contain hover:invisible z-10"></Image>
-          <Link href="" className="aboutUsLink">
-            <Image src={linkedIn} alt="LinkedIn icon"></Image>
-          </Link>
+        <div
+          className="aboutUsCard"
+          onMouseOver={() => {
+            setShowPicture({ ...showPicture, team5: false });
+          }}
+          onMouseOut={() => {
+            setShowPicture({ ...showPicture, team5: true });
+          }}
+        >
+          <TeamMember name="Víťa Dolejší" team={showPicture.team5} link="" picture="" />
         </div>
-        <div className="aboutUsCard md:origin-bottom-left md:-rotate-12">
-          <p className="absolute top-1/3 font-bold">Váradi Olivér</p>
-          <Image src="" alt="photo of the team member" className="object-fit: contain hover:invisible z-10"></Image>
-          <Link href="https://www.linkedin.com/in/oliver-varadi-b138a2250/" className="aboutUsLink">
-            <Image src={linkedIn} alt="LinkedIn icon"></Image>
-          </Link>
+        <div
+          className="aboutUsCard md:origin-bottom-left md:-rotate-12"
+          onMouseOver={() => {
+            setShowPicture({ ...showPicture, team6: false });
+          }}
+          onMouseOut={() => {
+            setShowPicture({ ...showPicture, team6: true });
+          }}
+        >
+          <TeamMember name="Váradi Olivér" team={showPicture.team6} link="https://www.linkedin.com/in/oliver-varadi-b138a2250/" picture="" />
         </div>
       </div>
     </div>
