@@ -51,3 +51,14 @@ export async function verifyUser(connection, email, password) {
   console.log(`Pass match: ${match}`);
   return match;
 }
+
+export async function getEmailById(connection, id) {
+  try {
+    const [rows] = await connection.execute('SELECT email FROM users WHERE user_id = ?', [id]);
+    console.log(rows);
+    return rows[0]?.email || null;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
