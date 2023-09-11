@@ -25,3 +25,17 @@ export async function fetchAvailableTickets(connection, eventId) {
   const availableTickets = results.reduce((sum, ticket) => sum + ticket.how_many, 0);
   return { availableTickets, tickets: results };
 }
+
+export async function getTicketsByCategoryAndEventId(connection, eventId, category) {
+
+  try {
+    const [rows] = await connection.execute("SELECT * FROM tickets WHERE event_id = ? AND category = ?", [eventId, category]);
+    if (rows.length === 0) {
+      return null;
+    }
+    return rows;
+  } catch (error) {
+    console.error("Error in getTicketsByCategoryAndEventId:", error);
+    return null;
+  }
+}
