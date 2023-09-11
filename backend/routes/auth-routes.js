@@ -11,6 +11,4 @@ router.post("/securePlace", authController.secureEndpoint, (req, res) => {
   return res.status(200).json({ message: "Secure endpoint accessed successfully" });
 });
 
-router.get("/isAvailable", testController.isAvailable);
-
 export default router;
