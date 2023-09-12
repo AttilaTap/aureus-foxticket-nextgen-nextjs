@@ -36,7 +36,7 @@ const TicketButton = ({ category, eventId }) => {
       onMouseLeave={handleMouseLeave}
       className="hover:bg-gray-400 w-[115px] inline-flex justify-center items-center border border-white px-4 rounded-3xl"
     >
-      <span className="pr-2">Buy</span>
+      <span className="pr-2">View</span>
       <Ticket fillColor={isHovered ? "rgb(255, 191, 0)" : "rgb(255, 255, 255)"} />
     </button>
   );
