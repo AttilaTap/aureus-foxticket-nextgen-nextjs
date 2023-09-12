@@ -23,9 +23,18 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
   const eventStartDate = new Date(eventData.start_time);
   const eventEndDate = new Date(eventData.end_time);
   //functions
+  const availableToBuy = (ticketId) => {
+    if (basket.length === 0) {
+      return true;
+    } else {
+      const ticketAlreadyInBasket = basket.some((basketItem) => basketItem.ticket_id === ticketId);
+      return !ticketAlreadyInBasket;
+    }
+  };
   const findTicketById = (ticketId) => {
     return tickets.find((ticket) => ticket.ticket_id === ticketId);
   };
+
   const openConfirmModal = (ticketId) => {
     setSelectedTicketId(ticketId);
     setShowConfirm(true);
@@ -151,6 +160,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
       <ConfirmModal
         isVisible={showConfirm}
         onClose={closeConfirmModal}
+        ableToBuy={(ticketId) => availableToBuy(ticketId)}
         ticket={selectedTicketId !== null ? findTicketById(selectedTicketId) : null}
         onConfirm={(ticketId) => handleConfirmAction(ticketId)}
       />

@@ -1,6 +1,6 @@
 import React from "react";
 
-const ConfirmModal = ({ isVisible, onClose, ticket, onConfirm }) => {
+const ConfirmModal = ({ isVisible, onClose, ableToBuy, ticket, onConfirm }) => {
   if (!ticket) {
     return null;
   }
@@ -9,11 +9,11 @@ const ConfirmModal = ({ isVisible, onClose, ticket, onConfirm }) => {
     return null;
   }
   function handleClose(e) {
-    console.log("Handle close");
     if (e.target.id === "wrapper" || e.target.id === "close") {
       onClose();
     }
   }
+  console.log(ableToBuy(ticket.ticket_id));
   return (
     <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-10" id="wrapper" onClick={handleClose}>
       <div className="flex flex-col justify-center items-center w-1/3 min-w-min h-auto relative rounded-lg bg-modern-gray">
@@ -34,15 +34,21 @@ const ConfirmModal = ({ isVisible, onClose, ticket, onConfirm }) => {
         {/* <p className="text-stone-700 text-m font-bold mt-4">{details}</p> */}
 
         <div className="flex items-center justify-center gap-6 mt-7 mb-3">
-          <button
-            className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline"
-            onClick={() => {
-              onConfirm(ticket.ticket_id);
-              onClose();
-            }}
-          >
-            Confirm
-          </button>
+          {ableToBuy(ticket.ticket_id) ? (
+            <button
+              className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline"
+              onClick={() => {
+                onConfirm(ticket.ticket_id);
+                onClose();
+              }}
+            >
+              Confirm
+            </button>
+          ) : (
+            <button className="bg-stone-400 text-stone-600 font-bold p-4 rounded-lg md:w-28 md:h-15 cursor-not-allowed" disabled>
+              Already in Basket
+            </button>
+          )}
         </div>
       </div>
     </div>
