@@ -2,7 +2,6 @@ import * as userService from "../services/user-service.js";
 import { getConnection } from "../utils/db-connection.js";
 
 export async function getEmailById(req, res) {
-  console.log("Inside getEmailById");
   const { id } = req.params;
 
   if (!id) {

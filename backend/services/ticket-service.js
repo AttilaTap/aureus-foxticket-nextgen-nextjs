@@ -27,7 +27,6 @@ export async function fetchAvailableTickets(connection, eventId) {
 }
 
 export async function getTicketsByCategoryAndEventId(connection, eventId, category) {
-
   try {
     const [rows] = await connection.execute("SELECT * FROM tickets WHERE event_id = ? AND category = ?", [eventId, category]);
     if (rows.length === 0) {
