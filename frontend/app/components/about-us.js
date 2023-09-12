@@ -1,6 +1,8 @@
 "use client";
 import team1 from "@/public/team/Tomas.jpg";
 import team2 from "@/public/team/kati.jpg";
+import team3 from "@/public/team/Peter.jpg";
+import mentor from "@/public/team/Krupl_Attila.jpeg";
 import team5 from "@/public/team/Vita.jpg";
 import { useState } from "react";
 import TeamMember from "./team-member";
@@ -51,7 +53,7 @@ export default function Team() {
             setShowPicture({ ...showPicture, team3: true });
           }}
         >
-          <TeamMember name="Péter Fedorov" team={showPicture.team3} link="https://www.linkedin.com/in/peter-fedorov-665401199/" picture="" />
+          <TeamMember name="Péter Fedorov" team={showPicture.team3} link="https://www.linkedin.com/in/peter-fedorov-665401199/" picture={team3} />
         </div>
       </div>
       <div className="flex flex-col justify-center items-center">
@@ -64,7 +66,7 @@ export default function Team() {
             setShowPicture({ ...showPicture, mentor: true });
           }}
         >
-          <TeamMember name="Attila Krüpl" team={showPicture.mentor} link="https://www.linkedin.com/in/attila-krupl-dr/" picture="" />
+          <TeamMember name="Attila Krüpl" team={showPicture.mentor} link="https://www.linkedin.com/in/attila-krupl-dr/" picture={mentor} />
         </div>
         <p className="font-bold text-xl text-slate-600">GreenFox mentor</p>
       </div>
@@ -89,7 +91,7 @@ export default function Team() {
             setShowPicture({ ...showPicture, team5: true });
           }}
         >
-          <TeamMember name="Víťa Dolejší" team={showPicture.team5} link="" picture={team5} />
+          <TeamMember name="Víťa Dolejší" team={showPicture.team5} link="https://www.linkedin.com/in/v%C3%ADt-dolej%C5%A1%C3%AD-965242291/" picture={team5} />
         </div>
         <div
           className="aboutUsCard md:origin-bottom-left md:-rotate-12"
