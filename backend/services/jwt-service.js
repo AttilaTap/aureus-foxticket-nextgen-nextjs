@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { getConnection } from "../utils/db-connection.js";
 import { findUserId } from "./user-service.js";
 
 export async function createToken(connection, payload) {
