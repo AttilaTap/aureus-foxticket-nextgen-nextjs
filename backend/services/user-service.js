@@ -1,4 +1,3 @@
-import { getConnection } from "../utils/db-connection.js";
 import bcrypt from "bcrypt";
 import sgMail from "@sendgrid/mail";
 import { emailTemplate } from "../utils/templates/email-templates.js";
