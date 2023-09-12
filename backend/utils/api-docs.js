@@ -1,7 +1,7 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import getServerPort from "./helper.js";
+import { getSwaggerAddress } from "./helper.js";
 
 const options = {
   definition: {
@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${getServerPort()}`,
+        url: `${getSwaggerAddress()}`,
       },
     ],
   },
@@ -20,7 +20,7 @@ const options = {
 };
 const swaggerSpec = swaggerJSDoc(options);
 
-export default function swaggerDocs(app, port) {
+export default function swaggerDocs(app) {
   //swagger page
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.get("api-docs.json", (req, res) => {
@@ -28,5 +28,5 @@ export default function swaggerDocs(app, port) {
     res.send(swaggerSpec);
   });
 
-  console.log(`Docs available at http://localhost:${port}/api-docs`);
+  console.log(`Docs available at ${getSwaggerAddress()}/api-docs`);
 }

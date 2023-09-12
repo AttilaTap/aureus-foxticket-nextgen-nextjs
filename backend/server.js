@@ -5,7 +5,7 @@ import testRoutes from "./routes/test-routes.js";
 import eventRoutes from "./routes/event-routes.js";
 import ticketRoutes from "./routes/ticket-routes.js";
 import swaggerDocs from "./utils/api-docs.js";
-import getServerPort from "./utils/helper.js";
+import * as serverHelper from "./utils/helper.js";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use("/", eventRoutes);
 app.use("/", ticketRoutes);
 app.use("/", testRoutes);
 
-const portToUse = getServerPort();
+const portToUse = serverHelper.getServerPort();
 
 const server = app.listen(portToUse, () => {
   console.log(`I'm running on : ${portToUse}`);
