@@ -9,14 +9,30 @@ import City from "@/app/components/svg/city";
 import IconTextPair from "./utils/icon-text-pair";
 import { formatDate, formatTime } from "./utils/date-utils";
 import UserIcon from "./svg/user";
+import ConfirmModal from "./buyConfirmationModal";
 
 const TicketView = ({ ticketCategory, eventData, ticketData }) => {
   const [tickets, setTickets] = useState(ticketData || []);
   const [userEmails, setUserEmails] = useState({});
-
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
   const eventStartDate = new Date(eventData.start_time);
   const eventEndDate = new Date(eventData.end_time);
+  const openConfirmModal = (index) => {
+    console.log(index);
+    setSelectedTicketIndex(index);
+    setShowConfirm(true);
+  };
 
+  const closeConfirmModal = () => {
+    setSelectedTicketIndex(null);
+    setShowConfirm(false);
+  };
+
+  const handleConfirmAction = () => {
+    //logic for buy button here
+    closeConfirmModal();
+  };
   useEffect(() => {
     if (!eventData.id || !ticketCategory) {
       return;
@@ -94,7 +110,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
             const currencyFormatter = new Intl.NumberFormat("en-US", currencyOptions);
 
             return (
-              <div key={index} className="card bg-gray-800 min-w-[590px] flex justify-between mb-4">
+              <div key={index} onClick={() => openConfirmModal(index)} className="card bg-gray-800 min-w-[850px] flex justify-between mb-4">
                 <div className="min-w-[160px] flex flex-col justify-center items-center pl-4">
                   <UserIcon className="w-6 h-6 mr-2" />
                   <span className="text-black-500 text-sm">{userEmails[ticket.user_id] || "Unknown"}</span>
@@ -107,7 +123,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
                       <span className="block text-black-500 text-sm">Start Time: {[formatDate(eventStartDate), " - ", formatTime(eventStartDate)]}</span>
                       <span className="block text-black-500 text-sm">End Time: {eventEndDate !== null ? [formatDate(eventEndDate), " - ", formatTime(eventEndDate)] : " - "}</span>
                     </div>
-                    <div className="mt-4 w-full min-w-[160px] pl-8 flex flex-col">
+                    <div className="mt-4 w-full min-w-[200px] pl-8 flex flex-col">
                       <span className="block text-black-500 text-sm">Seat: {ticket.seat !== null ? ticket.seat : " - "}</span>
                       <span className="block text-black-500 text-sm">Section: {ticket.section !== null ? ticket.section : " - "} </span>
                       <span className="block text-black-500 text-sm">Row Seating: {ticket.row_seating !== null ? ticket.row_seating : " - "}</span>
@@ -123,6 +139,12 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
           })}
         </div>
       </div>
+      <ConfirmModal
+        isVisible={showConfirm}
+        onClose={closeConfirmModal}
+        ticket={selectedTicketIndex !== null ? tickets[selectedTicketIndex] : null}
+        onConfirm={handleConfirmAction}
+      />
     </div>
   );
 };
