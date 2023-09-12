@@ -1,5 +1,7 @@
 "use client";
 import team1 from "@/public/team/Tomas.jpg";
+import team2 from "@/public/team/kati.jpg";
+import team5 from "@/public/team/Vita.jpg";
 import { useState } from "react";
 import TeamMember from "./team-member";
 
@@ -38,7 +40,7 @@ export default function Team() {
             setShowPicture({ ...showPicture, team2: true });
           }}
         >
-          <TeamMember name="Katalin Tünde Kovács" team={showPicture.team2} link="https://www.linkedin.com/in/katunde/" picture="" />
+          <TeamMember name="Katalin Tünde Kovács" team={showPicture.team2} link="https://www.linkedin.com/in/katunde/" picture={team2} />
         </div>
         <div
           className="aboutUsCard md:origin-top-left md:rotate-12"
@@ -87,7 +89,7 @@ export default function Team() {
             setShowPicture({ ...showPicture, team5: true });
           }}
         >
-          <TeamMember name="Víťa Dolejší" team={showPicture.team5} link="" picture="" />
+          <TeamMember name="Víťa Dolejší" team={showPicture.team5} link="" picture={team5} />
         </div>
         <div
           className="aboutUsCard md:origin-bottom-left md:-rotate-12"
