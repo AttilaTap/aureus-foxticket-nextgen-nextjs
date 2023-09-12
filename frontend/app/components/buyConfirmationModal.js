@@ -1,24 +1,4 @@
 import React from "react";
-import { useState } from "react";
-
-// {
-//     "ticket": {
-//         "ticket_id": 26,
-//         "name": "Tropical Canvas Regular - Complete",
-//         "price": "155000.00",
-//         "currency": "HUF",
-//         "start_time": "2024-01-22T09:00:00.000Z",
-//         "end_time": "2024-01-25T18:00:00.000Z",
-//         "available": "YES",
-//         "how_many": 1,
-//         "seat": null,
-//         "section": null,
-//         "row_seating": null,
-//         "user_id": 8,
-//         "event_id": 4,
-//         "category": "Regular - Complete"
-//     }
-// }
 
 const ConfirmModal = ({ isVisible, onClose, ticket, onConfirm }) => {
   if (!ticket) {
@@ -57,7 +37,7 @@ const ConfirmModal = ({ isVisible, onClose, ticket, onConfirm }) => {
           <button
             className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline"
             onClick={() => {
-              onConfirm();
+              onConfirm(ticket.ticket_id);
               onClose();
             }}
           >

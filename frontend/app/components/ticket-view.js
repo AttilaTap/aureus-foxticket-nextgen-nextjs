@@ -10,27 +10,36 @@ import IconTextPair from "./utils/icon-text-pair";
 import { formatDate, formatTime } from "./utils/date-utils";
 import UserIcon from "./svg/user";
 import ConfirmModal from "./buyConfirmationModal";
+import useTicketStore from "@/store/store";
 
 const TicketView = ({ ticketCategory, eventData, ticketData }) => {
+  //states
   const [tickets, setTickets] = useState(ticketData || []);
   const [userEmails, setUserEmails] = useState({});
   const [showConfirm, setShowConfirm] = useState(false);
-  const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
+  const [selectedTicketId, setSelectedTicketId] = useState(null);
+  const [basket, addToBasket] = useTicketStore((state) => [state.basket, state.addToBasket]);
+  //variables
   const eventStartDate = new Date(eventData.start_time);
   const eventEndDate = new Date(eventData.end_time);
-  const openConfirmModal = (index) => {
-    console.log(index);
-    setSelectedTicketIndex(index);
+  //functions
+  const findTicketById = (ticketId) => {
+    return tickets.find((ticket) => ticket.ticket_id === ticketId);
+  };
+  const openConfirmModal = (ticketId) => {
+    setSelectedTicketId(ticketId);
     setShowConfirm(true);
   };
 
   const closeConfirmModal = () => {
-    setSelectedTicketIndex(null);
+    setSelectedTicketId(null);
     setShowConfirm(false);
   };
 
-  const handleConfirmAction = () => {
-    //logic for buy button here
+  const handleConfirmAction = (ticketId) => {
+    const boughtTicket = findTicketById(ticketId);
+    addToBasket(boughtTicket);
+    console.log(basket);
     closeConfirmModal();
   };
   useEffect(() => {
@@ -110,7 +119,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
             const currencyFormatter = new Intl.NumberFormat("en-US", currencyOptions);
 
             return (
-              <div key={index} onClick={() => openConfirmModal(index)} className="card bg-gray-800 min-w-[850px] flex justify-between mb-4">
+              <div key={index} onClick={() => openConfirmModal(ticket.ticket_id)} className="card bg-gray-800 min-w-[850px] flex justify-between mb-4">
                 <div className="min-w-[160px] flex flex-col justify-center items-center pl-4">
                   <UserIcon className="w-6 h-6 mr-2" />
                   <span className="text-black-500 text-sm">{userEmails[ticket.user_id] || "Unknown"}</span>
@@ -142,8 +151,8 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
       <ConfirmModal
         isVisible={showConfirm}
         onClose={closeConfirmModal}
-        ticket={selectedTicketIndex !== null ? tickets[selectedTicketIndex] : null}
-        onConfirm={handleConfirmAction}
+        ticket={selectedTicketId !== null ? findTicketById(selectedTicketId) : null}
+        onConfirm={(ticketId) => handleConfirmAction(ticketId)}
       />
     </div>
   );
