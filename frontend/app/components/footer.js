@@ -16,10 +16,10 @@ export default function Footer() {
   return (
     <div className="justify-between h-20 bg-stone-100 border-t">
       <div className="float-left flex flex-col">
-        <Link href="" className="ml-3 mt-3 font-medium">
+        <Link href="/aboutus" className="ml-3 mt-3 font-medium">
           About us
         </Link>
-        <Link href="" className="ml-3 mt-1 mb-3 font-medium">
+        <Link href="https://github.com/green-fox-academy/aureus-foxticket-nextgen-nextjs#nextticket-ticket" className="ml-3 mt-1 mb-3 font-medium">
           How it works
         </Link>
       </div>

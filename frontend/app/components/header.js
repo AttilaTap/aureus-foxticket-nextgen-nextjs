@@ -8,7 +8,7 @@ import logoDark from "@/public/logo_black_transp.svg";
 import logoLight from "@/public/logo_white_transp.svg";
 import cartLight from "@/public/cart-light.svg";
 import cartDark from "@/public/cart-dark.svg";
-import close from "@/public/close.svg";
+import home from "@/public/home.svg";
 import React, { useEffect } from "react";
 
 import { Gochi_Hand } from "next/font/google";
@@ -23,19 +23,9 @@ const gochi = Gochi_Hand({
 
 export default function Header(props) {
   const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
-  console.log(`Header props: ${JSON.stringify(props)}`);
-  function isLoggedIn() {
-    console.log(props.isMain ? "it is a main page" : "it is not a main page");
-    return userEmailFromLocalStorage;
-  }
-
-  function getUserName() {
-    return userEmailFromLocalStorage;
-  }
-
+  // console.log(`Header props: ${JSON.stringify(props)}`);
   async function logout() {
     if (userEmailFromLocalStorage) {
-      console.log("Erasing shit");
       localStorage.clear();
       setUserEmailFromLocalStorage(null);
     }
@@ -58,11 +48,11 @@ export default function Header(props) {
         </div>
         <div className="flex justify-center mr-6 mt-6">
           <div className="flex items-center pr-3 mb-8 mr-2">
-            {isLoggedIn() ? (
+            {userEmailFromLocalStorage ? (
               <div className="flex items-center">
                 <div className="text-emerald-400 font-bold mr-5">
                   <span className={props.isMain ? "text-stone-100" : "text-stone-600"}>Welcome back </span>
-                  {getUserName()}
+                  {userEmailFromLocalStorage}
                 </div>
                 <button onClick={logout} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
                   Log out
@@ -74,7 +64,7 @@ export default function Header(props) {
               </button>
             )}
             <Link className={"flex items-center justify-end ml-6"} href={props.isBasket ? "/" : "/cart"}>
-              <Image priority src={props.isBasket ? close : props.isMain ? cartLight : cartDark} alt="Follow us on Twitter" />
+              <Image priority src={props.isBasket ? home : props.isMain ? cartLight : cartDark} alt="Basket or home icon" />
             </Link>
           </div>
         </div>

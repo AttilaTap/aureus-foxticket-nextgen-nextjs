@@ -14,4 +14,10 @@
     padding: theme("spacing.4");
     box-shadow: theme("boxShadow.xl");
   }
+  .aboutUsCard {
+    @apply flex flex-col justify-center items-center w-52 h-52 md:w-36 md:h-36 lg:w-44 lg:h-44 m-2 sm:m-4 bg-slate-600 overflow-hidden rounded-md drop-shadow-2xl text-slate-100 border border-slate-400 relative hover:border-emerald-100;
+  }
+  .aboutUsLink {
+    @apply flex absolute top-2/3 w-8 h-8 bg-emerald-200 justify-center items-center rounded-md animate-pulse;
+  }
 }

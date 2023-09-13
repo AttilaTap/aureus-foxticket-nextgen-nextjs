@@ -9,7 +9,7 @@ export default function Welcome() {
     let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
     let parsedToken = parseJwt(token);
     setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
-  }, [setUserEmailFromLocalStorage]);
+  }, [userEmailFromLocalStorage]);
 
   if (typeof window === "undefined") {
     return null;
