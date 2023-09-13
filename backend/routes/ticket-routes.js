@@ -75,5 +75,6 @@ router.get("/tickets", ticketController.tickets);
  *         description: request error
  */
 router.get("/tickets/:eventId", ticketController.getAvailableTickets);
+router.get("/tickets/:eventId/:category", ticketController.ticketsByCategory);
 
 export default router;

@@ -11,9 +11,10 @@ import NumberTextPair from "./utils/number-text-pair";
 import { getDayOfWeek, formatDate, formatTime } from "./utils/date-utils";
 import Ticket from "./svg/ticket";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-
-const TicketButton = ({ ticket }) => {
+const TicketButton = ({ category, eventId }) => {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -25,28 +26,47 @@ const TicketButton = ({ ticket }) => {
   };
 
   const handleClick = () => {
-    // OnClick goes here!
+    router.push(`/tickets/${eventId}/${category}`);
   };
 
   return (
     <button
+      onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="hover:bg-gray-400 w-[115px] inline-flex justify-center items-center border border-white px-4 rounded-3xl"
     >
-      <span className="pr-2">{ticket.how_many}</span>
+      <span className="pr-2">View</span>
       <Ticket fillColor={isHovered ? "rgb(255, 191, 0)" : "rgb(255, 255, 255)"} />
     </button>
   );
 };
 
 const EventView = ({ eventData, ticketData, availableTicketData }) => {
-  
   if (!eventData || !ticketData) {
     return <div>Loading...</div>;
   }
 
   const eventStartDate = new Date(eventData.start_time);
+
+  const groupedTickets = ticketData.reduce((acc, ticket) => {
+    const perTicketPrice = ticket.price / ticket.how_many;
+
+    if (!acc[ticket.category]) {
+      acc[ticket.category] = {
+        how_many: 0,
+        min_price: Infinity,
+        max_price: -Infinity,
+        currency: ticket.currency,
+      };
+    }
+
+    acc[ticket.category].how_many += ticket.how_many;
+    acc[ticket.category].min_price = Math.min(acc[ticket.category].min_price, perTicketPrice);
+    acc[ticket.category].max_price = Math.max(acc[ticket.category].max_price, perTicketPrice);
+
+    return acc;
+  }, {});
 
   return (
     <div className="w-full mx-auto">
@@ -89,29 +109,30 @@ const EventView = ({ eventData, ticketData, availableTicketData }) => {
       <div className="flex justify-center pb-12">
         <div className="w-3/5">
           <h1 className="text-xl font-bold pb-2">Available</h1>
-          {ticketData.map((ticket, index) => {
-            const ticketStartDate = new Date(ticket.start_time);
-            const ticketEndDate = new Date(ticket.end_time);
+
+          {Object.keys(groupedTickets).map((category, index) => {
+            const currency = groupedTickets[category].currency;
+            const options = {
+              style: "currency",
+              currency: currency,
+              minimumFractionDigits: currency === "HUF" ? 0 : 2,
+              maximumFractionDigits: currency === "HUF" ? 0 : 2,
+            };
+
+            const currencyFormatter = new Intl.NumberFormat("en-US", options);
 
             return (
-              <div key={index} className="card bg-gray-800 min-w-[590px]">
-                <div className="min-w-[115px] w-44 flex flex-col justify-center items-center">
-                  <span className="font-bold">{formatDate(ticketStartDate)}</span>
-                  <span className="font-bold">{eventData.is_festival ? formatDate(ticketEndDate) : ""}</span>
+              <div key={index} className="card bg-gray-800 min-w-[590px] flex justify-between mb-4">
+                <div className="m-4 w-full min-w-[160px] pl-8">
+                  <span className="font-bold text-lg">{category}</span>
+                  <span className="block text-black-500 text-sm">Total available: {groupedTickets[category].how_many.toLocaleString()}</span>
                 </div>
-                <div className="m-4 w-full min-w-[260px]">
-                  <span className="font-bold text-lg">{ticket.category}</span>
-                  <span className="block text-black-500 text-sm">{ticket.name}</span>
-                  <span className="font-italic block text-black-500 text-sm mt-2">
-                    <span className="mr-4">Section: {ticket.section}</span> /
-                    <i className="ml-4">
-                      <span className="mr-4">Row: {ticket.row_seating}</span>-<span className="ml-4">Seat: {ticket.seat}</span>
-                    </i>
-                  </span>
+                <div className="m-4 flex flex-grow justify-center items-center pr-16">
+                  <span className="mr-4">{currencyFormatter.format(groupedTickets[category].min_price)}</span>
+                  {" - "}
+                  <span className="ml-4">{currencyFormatter.format(groupedTickets[category].max_price)}</span>
                 </div>
-                <div className="w-48 p-2 flex flex-row justify-end items-center" style={{ marginRight: "0.5cm" }}>
-                  <TicketButton ticket={ticket} />
-                </div>
+                <div className="w-48 flex flex-row justify-end items-center pr-8">{<TicketButton category={category} eventId={eventData.id} />}</div>
               </div>
             );
           })}
