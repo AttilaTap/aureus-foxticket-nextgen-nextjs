@@ -1,11 +1,11 @@
 "use client";
-import attila_img from "@/public/team/attilat.jpg";
-import attilam_img from "@/public/team/attilak.jpeg";
-import kati_img from "@/public/team/kati.jpg";
-import oliver_img from "@/public/team/oliver.jpg";
-import peter_img from "@/public/team/peter.jpg";
-import tomas_img from "@/public/team/tomas.jpg";
-import vita_img from "@/public/team/vita.jpg";
+import attila_img from "@/public/team/at.jpg";
+import attilam_img from "@/public/team/ak.jpeg";
+import kati_img from "@/public/team/kk.jpg";
+import oliver_img from "@/public/team/ov.jpg";
+import peter_img from "@/public/team/pf.jpg";
+import tomas_img from "@/public/team/ts.jpg";
+import vita_img from "@/public/team/vd.jpg";
 
 import Person from "./person";
 
