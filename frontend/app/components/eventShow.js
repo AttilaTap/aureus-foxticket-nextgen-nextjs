@@ -15,8 +15,9 @@ export default function EventShow() {
         const res = await fetch(fetchUrl);
         if (res.ok) {
           const data = await res.json();
+          data.sort((a, b) => a.name.localeCompare(b.name));
           setError(null);
-          setEvents(data);
+          setEvents(data.slice(0, 4));
         } else {
           setError("Failed to fetch events");
         }

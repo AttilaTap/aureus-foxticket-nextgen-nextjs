@@ -9,16 +9,17 @@ const EventCard = ({ event }) => {
   useEffect(() => {
     async function fetchTicketData() {
       try {
+        // console.log(`Event ID to fetch: ${event.id}`);
         const response = await fetch(`${getBackendUrl()}tickets/${event.id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch ticket data 1");
         }
         const data = await response.json();
         setTicketData(data);
-        setFetchError(null);
+        // setFetchError(null);
       } catch (error) {
         console.error("Fetch error:", error);
-        setFetchError("Failed to fetch ticket data 2");
+        // setFetchError("Failed to fetch ticket data 2");
       }
     }
 
