@@ -15,6 +15,7 @@ export default function HomePage() {
   const [events, setEvents] = useState([]);
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [noResults, setNoResults] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -76,7 +77,7 @@ export default function HomePage() {
         {inputValue.length > 0 ? (
           <div>
             {noResults ? (
-              <p className="text-emerald-400 font-semibold text-lg mt-10 text-center">We couldn't find any results for that - try searching again.</p>
+              <p className="text-emerald-400 font-semibold text-lg mt-10 text-center">{`We couldn't find any results for that - try searching again.`}</p>
             ) : (
               filteredList.map((event) => (
                 <Link key={event.id} href={`/event/${event.id}`} passHref>
