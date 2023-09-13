@@ -23,7 +23,7 @@ const gochi = Gochi_Hand({
 
 export default function Header(props) {
   const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
-  console.log(`Header props: ${JSON.stringify(props)}`);
+  // console.log(`Header props: ${JSON.stringify(props)}`);
   async function logout() {
     if (userEmailFromLocalStorage) {
       localStorage.clear();

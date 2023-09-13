@@ -1,8 +1,8 @@
 "use client";
-import attila_img from "@/public/team/unknown.jpg";
-import attilam_img from "@/public/team/Krupl_Attila.jpeg";
-import kati_img from "@/public/team/kati.jpg";
-import oliver_img from "@/public/team/unknown.jpg";
+import attila_img from "@/public/team/AttilaT.jpg";
+import attilam_img from "@/public/team/AttilaK.jpeg";
+import kati_img from "@/public/team/Kati.jpg";
+import oliver_img from "@/public/team/Oliver.jpg";
 import peter_img from "@/public/team/Peter.jpg";
 import tomas_img from "@/public/team/Tomas.jpg";
 import vita_img from "@/public/team/Vita.jpg";
