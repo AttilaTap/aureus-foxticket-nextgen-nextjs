@@ -1,10 +1,33 @@
 import React from "react";
+import { formatDate, formatTime } from "./utils/date-utils";
 
 const ConfirmModal = ({ isVisible, onClose, ableToBuy, ticket, onConfirm }) => {
   if (!ticket) {
     return null;
   }
-  const message = `Are you sure you want to buy ${ticket.name} for ${ticket.how_many} person(s) for ${ticket.price} ${ticket.currency}?`;
+  //variables
+  const ticketStartDate = new Date(ticket.start_time);
+  const ticketEndDate = new Date(ticket.end_time);
+  const title = "Add the following ticket to the Basket?";
+  const message = (
+    <div className="flex flex-col px-7 min-w-[500px]">
+      <span className="block text-black-500 text-xl self-center font-bold mb-4">{ticket.name}</span>
+      <div className="flex justify-between flex-row">
+        <div className="min-w-[300px] flex flex-col">
+          <span className="block text-stone-700 text-m font-bold ">Start Time: {[formatDate(ticketStartDate), " - ", formatTime(ticketStartDate)]}</span>
+          <span className="block text-stone-700 text-m font-bold ">End Time: {ticketEndDate !== null ? [formatDate(ticketEndDate), " - ", formatTime(ticketEndDate)] : " - "}</span>
+          <span className="block text-stone-700 text-m font-bold ">
+            Price: {ticket.price} {ticket.currency}
+          </span>
+        </div>
+        <div className="w-full min-w-[200px] pl-8 flex flex-col">
+          <span className="block text-stone-700 text-m font-bold ">Seat: {ticket.seat !== null ? ticket.seat : " - "}</span>
+          <span className="block text-stone-700 text-m font-bold ">Section: {ticket.section !== null ? ticket.section : " - "} </span>
+          <span className="block text-stone-700 text-m font-bold ">Row Seating: {ticket.row_seating !== null ? ticket.row_seating : " - "}</span>
+        </div>
+      </div>
+    </div>
+  );
   if (!isVisible) {
     return null;
   }
@@ -28,10 +51,9 @@ const ConfirmModal = ({ isVisible, onClose, ableToBuy, ticket, onConfirm }) => {
           </svg>
         </button>
 
-        <h2 className="px-2 text-2xl font-bold text-center mt-4 text-stone-950">Add the following ticket to the Basket?</h2>
+        <h2 className="px-2 text-2xl font-bold text-center my-4  text-stone-950">{title}</h2>
 
-        <h5 className="text-stone-700 text-m font-bold mt-4">{message}</h5>
-        {/* <p className="text-stone-700 text-m font-bold mt-4">{details}</p> */}
+        {message}
 
         <div className="flex items-center justify-center gap-6 mt-7 mb-3">
           {ableToBuy(ticket.ticket_id) ? (

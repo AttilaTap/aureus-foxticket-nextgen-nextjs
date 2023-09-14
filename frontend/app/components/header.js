@@ -22,6 +22,8 @@ const gochi = Gochi_Hand({
 });
 
 export default function Header(props) {
+  const [basket] = useTicketStore((state) => [state.basket, state.addToBasket]);
+
   const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
   //console.log(`Header props: ${JSON.stringify(props)}`);
   function isLoggedIn() {
@@ -73,7 +75,10 @@ export default function Header(props) {
               </button>
             )}
             <Link className={"flex items-center justify-end ml-6"} href={props.isBasket ? "/" : "/cart"}>
-              <Image priority src={props.isBasket ? home : props.isMain ? cartLight : cartDark} alt="Basket or home icon" />
+              <div className="cart-icon relative">
+                <Image priority src={props.isBasket ? close : props.isMain ? cartLight : cartDark} alt="basket" />
+                {!props.isBasket && basket.length > 0 && <span className="cart-badge">{basket.length}</span>}
+              </div>
             </Link>
           </div>
         </div>

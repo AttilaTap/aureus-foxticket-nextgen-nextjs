@@ -128,7 +128,11 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
             const currencyFormatter = new Intl.NumberFormat("en-US", currencyOptions);
 
             return (
-              <div key={ticket.ticket_id} onClick={() => openConfirmModal(ticket.ticket_id)} className="card bg-gray-800 min-w-[850px] flex justify-between mb-4">
+              <div
+                key={ticket.ticket_id}
+                onClick={() => openConfirmModal(ticket.ticket_id)}
+                className="card bg-gray-800 min-w-[850px] flex justify-between hover:bg-custom-gray mt-4 mb-4"
+              >
                 <div className="min-w-[160px] flex flex-col justify-center items-center pl-4">
                   <UserIcon className="w-6 h-6 mr-2" />
                   <span className="text-black-500 text-sm">{userEmails[ticket.user_id] || "Unknown"}</span>
