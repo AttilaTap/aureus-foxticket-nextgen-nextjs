@@ -81,7 +81,6 @@ export async function ticketsByCategory(req, res) {
 }
 // controller for buying tickets
 export async function buyTickets(req, res) {
-  console.log("buyTicket controller");
   const { ticket_Ids } = req.body;
   if (!ticket_Ids || !Array.isArray(ticket_Ids)) {
     return res.status(400).json({ error: "Ticket IDs are required" });

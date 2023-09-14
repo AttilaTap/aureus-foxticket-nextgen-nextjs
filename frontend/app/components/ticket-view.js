@@ -38,10 +38,10 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
   };
 
   const openConfirmModal = (ticketId) => {
-    if (!userEmailFromLocalStorage) {
-      alert("please login in order to buy!");
-      return;
-    }
+    //if (!userEmailFromLocalStorage) {
+    //  alert("please login in order to buy!");
+    //  return;
+    //}
     setSelectedTicketId(ticketId);
     setShowConfirm(true);
   };
