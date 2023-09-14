@@ -23,11 +23,9 @@ const gochi = Gochi_Hand({
 
 export default function Header(props) {
   const [basket] = useTicketStore((state) => [state.basket, state.addToBasket]);
-
   const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
-  //console.log(`Header props: ${JSON.stringify(props)}`);
+
   function isLoggedIn() {
-    //console.log(props.isMain ? "it is a main page" : "it is not a main page");
     return userEmailFromLocalStorage;
   }
 
