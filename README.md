@@ -9,7 +9,9 @@
   - [User Features](#user-features)
   - [Developer Features](#developer-features)
 - [Technologies](#technologies)
-- [Prerequisites](#prerequisites)
+- [Development Setup](#development)
+  - [Tools](#tools)
+  - [Setup](#setup)
 - [Deployment](#deployment)
 - [Contributors](#contributors)
 
@@ -40,31 +42,59 @@ Welcome to **NextTicket**, your one-stop solution for ticketing needs. This proj
 
 - **Backend:** Node.js, Express.js, MySQL
 - **Frontend:** Next.js (React.js), Tailwind CSS, Zustand
-- **Common:** Bycript, Jest
+- **Cryptography:** Bcrypt
+- **Testing:** Jest
+- **Deployment:** GitHub Actions, Docker, Railway
 
-## Prerequisites
+## Development
 
-### Backend
-
-- Node.js (v14.x or above recommended)
-- npm (v6.x or above recommended)
-- MySQL database
-
-### Frontend
-
-- Next.js (v13.x or above recommended)
-- npm (v6.x or above recommended)
+### Tools
+- Visual Studio Code
+- MySQL Workbench
+  
+### Setup
+- clone the repository
+- run `npm install` in both `/frontend/` and `/backend/` directories
+- run the `/database/database.sql` schema to setup database
+- set the corresponding environment variables for both `/frontend/` and `/backend/`
+- environment variable keys for backend:
+  ```
+  DB_HOST
+  DB_PORT
+  DB_USER
+  DB_NAME
+  DB_PASSWORD
+  NEXTICKET_COMPANY_EMAIL
+  MAIL_PASSWORD
+  SENDGRID_API_KEY
+  SECRET_KEY
+  TOKEN_AGE
+  ```
+- environment variable keys for frontend:
+  ```
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID
+  NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+  NEXT_PUBLIC_NEXTAUTH_SECRET
+  NEXT_PUBLIC_NEXTAUTH_URL
+  NEXT_PUBLIC_COOKIE_NAME
+  NEXT_PUBLIC_BACKEND_URL
+  ```
+- run both applications by running `npm run dev` in both `/frontend/` and `/backend/` directories
+- frontend application runs on `localhost:8080` and backend application runs on `localhost:9000` by default
 
 ## Deployment
 
 - Application deployed to Railway.app
+- The url of the deployed application: https://nexticket.up.railway.app/
+- The url of the Swagger API documentation: https://nexticketserver.up.railway.app/api-docs/
 
 ## Contributors
 
-- [[attilakrupl]](https://github.com/attilakrupl) - Mentor
 - [[katigirl]](https://github.com/katigirl)
 - [[tomsam26]](https://github.com/tomsam26)
 - [[PanFiluta7]](https://github.com/PanFiluta7)
 - [[peterfdrv]](https://github.com/peterfdrv)
 - [[VRDLVR]](https://github.com/VRDLVR)
 - [[AttilaTap]](https://github.com/AttilaTap)
+  
+- [[attilakrupl]](https://github.com/attilakrupl) - Mentor
