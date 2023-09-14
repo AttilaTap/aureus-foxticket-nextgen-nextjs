@@ -21,7 +21,6 @@ app.use("/user", authRoutes);
 app.use("/users", userRoutes);
 app.use("/", eventRoutes);
 app.use("/", ticketRoutes);
-
 app.use("/", testRoutes);
 
 const portToUse = serverHelper.getServerPort();
