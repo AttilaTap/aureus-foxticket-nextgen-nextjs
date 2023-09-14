@@ -3,7 +3,7 @@ export async function getAllEvents(connection) {
     const [events] = await connection.query("SELECT * FROM events");
     return events;
   } catch (error) {
-    console.log("Error while selecting all events from db");
+    console.log(`Error while selecting all events from db: ${error.message}`);
     return [];
   }
 }
