@@ -23,18 +23,25 @@ export const register = async (req, res, next) => {
   }
 };
 //authentication for Secure Endpoints
-export const secureEndpoint = async (req, res, next) => {
+export const authorizeAcess = async (req, res, next) => {
   const token = req.header("Authorization");
-  if (!token) {
+  if (!token || token === "" || token === undefined || token === null) {
     return res.status(401).json({ message: "No token provided" });
   }
-  if (!checkExpirationOnToken(token)) {
-    return res.status(401).json({ message: "Token expired" });
+  const decodedToken = jwtService.verifyToken(token);
+  console.log(decodedToken);
+
+  if (!decodedToken.email) {
+    return res.status(401).json({ message: decodedToken });
   }
-  const connection = getConnection();
-  if (await tokenInDatabase(connection, token)) {
-    return res.status(401).json({ message: "Not the latest version of the Token" });
-  }
+  // if (checkExpirationOnToken(token)) {
+  //   return res.status(401).json({ message: "Token expired" });
+  // }
+  // const connection = getConnection();
+  // if (await tokenInDatabase(connection, token)) {
+  //   return res.status(401).json({ message: "Not the latest version of the Token" });
+  // }
+  req.userEmail = decodedToken.email;
   next();
 };
 

@@ -7,11 +7,14 @@ export async function createToken(connection, payload) {
   const decodedToken = verifyToken(token);
   const expiryDate = new Date(decodedToken.exp * 1000);
   await connection.execute("UPDATE users SET authToken = ?, tokenExpiry = ? Where user_id = ?", [token, expiryDate, user_id]);
-
   return token;
 }
 export function verifyToken(token) {
-  return jwt.verify(token, process.env.SECRET_KEY);
+  try {
+    return jwt.verify(token, process.env.SECRET_KEY);
+  } catch (err) {
+    return err.message;
+  }
 }
 // Function for finding if there is a token in the db
 export async function tokenInDatabase(connection, token) {

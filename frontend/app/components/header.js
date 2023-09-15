@@ -32,11 +32,14 @@ export default function Header(props) {
   function getUserName() {
     return userEmailFromLocalStorage;
   }
-
+  function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
   async function logout() {
     if (userEmailFromLocalStorage) {
       localStorage.clear();
       setUserEmailFromLocalStorage(null);
+      deleteCookie(process.env.NEXT_PUBLIC_COOKIE_NAME);
     }
   }
 

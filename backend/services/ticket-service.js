@@ -38,10 +38,10 @@ export async function getTicketsByCategoryAndEventId(connection, eventId, catego
     return null;
   }
 }
-export async function updateTicketAvailability(connection, ticketId, available) {
+export async function updateTicketAvailability(connection, ticketId, buyer_id, available) {
   try {
-    const query = "UPDATE tickets SET available = ? WHERE ticket_id = ?";
-    await connection.query(query, [available, ticketId]);
+    const query = "UPDATE tickets SET available = ? , buyer_id = ? WHERE ticket_id = ?";
+    await connection.query(query, [available, buyer_id, ticketId]);
   } catch (error) {
     throw error;
   }

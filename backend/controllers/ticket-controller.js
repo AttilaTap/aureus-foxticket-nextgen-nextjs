@@ -1,4 +1,5 @@
 import * as ticketService from "../services/ticket-service.js";
+import * as userService from "../services/user-service.js";
 import { getConnection } from "../utils/db-connection.js";
 
 export async function ticketById(req, res) {
@@ -85,11 +86,12 @@ export async function buyTickets(req, res) {
   if (!ticket_Ids || !Array.isArray(ticket_Ids)) {
     return res.status(400).json({ error: "Ticket IDs are required" });
   }
-
+  const userEmail = req.userEmail;
   try {
     const connection = await getConnection();
     const successMessages = [];
     const errorMessages = [];
+    const buyer_id = await userService.findUserId(connection, [userEmail]);
 
     for (const ticket_Id of ticket_Ids) {
       const ticket = await ticketService.getTicketById(connection, ticket_Id);
@@ -102,7 +104,7 @@ export async function buyTickets(req, res) {
         continue;
       }
 
-      await ticketService.updateTicketAvailability(connection, ticket_Id, "SOLD");
+      await ticketService.updateTicketAvailability(connection, ticket_Id, buyer_id, "SOLD");
       successMessages.push(`Ticket with ID ${ticket_Id} purchased successfully`);
     }
     const responseMessage = {

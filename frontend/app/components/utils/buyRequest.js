@@ -7,6 +7,7 @@ export async function sendBuyRequest(basket, userId, token) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token}`,
       },
       body: JSON.stringify(data),
     });

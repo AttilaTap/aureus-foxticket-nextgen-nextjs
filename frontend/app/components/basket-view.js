@@ -6,10 +6,12 @@ import { sendBuyRequest } from "./utils/buyRequest";
 
 export default function BasketView() {
   const [buyStatus, setBuyStatus] = useState(null);
+  const [userEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage]);
   const [basket, clearBasket] = useTicketStore((state) => [state.basket, state.clearBasket]);
+  let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
   async function requestToBuy() {
     try {
-      const buyResult = await sendBuyRequest(basket, "userId", "token");
+      const buyResult = await sendBuyRequest(basket, userEmailFromLocalStorage, token);
       setBuyStatus(buyResult);
       if (buyResult === "success") {
         clearBasket();

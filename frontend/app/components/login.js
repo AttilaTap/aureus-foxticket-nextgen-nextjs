@@ -46,6 +46,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
 
       if (response.ok) {
         const token = responseData.token;
+        document.cookie = `${process.env.NEXT_PUBLIC_COOKIE_NAME}=${token}; path=/;`;
         localStorage.setItem(process.env.NEXT_PUBLIC_COOKIE_NAME, token);
         let parsedToken = parseJwt(token);
         setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);

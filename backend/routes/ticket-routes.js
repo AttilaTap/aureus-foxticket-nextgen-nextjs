@@ -1,5 +1,6 @@
 import express from "express";
 import * as ticketController from "../controllers/ticket-controller.js";
+import * as authController from "../controllers/auth-controller.js";
 
 const router = express.Router();
 
@@ -76,6 +77,6 @@ router.get("/tickets", ticketController.tickets);
  */
 router.get("/tickets/:eventId", ticketController.getAvailableTickets);
 router.get("/tickets/:eventId/:category", ticketController.ticketsByCategory);
-router.post("/buy", ticketController.buyTickets);
+router.post("/buy", authController.authorizeAcess, ticketController.buyTickets);
 
 export default router;
