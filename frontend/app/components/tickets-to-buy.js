@@ -13,7 +13,7 @@ export default function TicketToBuy() {
   };
 
   return basket.length === 0 ? (
-    <div>The cart is empty</div>
+    <p>The cart is empty</p>
   ) : (
     basket.map((ticket) => {
       return (

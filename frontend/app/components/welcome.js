@@ -11,11 +11,19 @@ export default function Welcome() {
     setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
   }, [setUserEmailFromLocalStorage]);
 
+  const parseEmailtoName = (email) => {
+    return email ? email.split("@")[0] : null;
+  };
+
   if (typeof window === "undefined") {
     return null;
   } else {
     return (
-      <>{userEmailFromLocalStorage && <h1 className="text-2xl font-semibold text-indigo-600 bg-white p-4 rounded-lg shadow-md mb-4">Hello, {userEmailFromLocalStorage}!👋</h1>}</>
+      <>
+        {userEmailFromLocalStorage && (
+          <h1 className="text-2xl font-semibold text-indigo-600 bg-white p-4 rounded-lg shadow-md mb-4">Hello, {parseEmailtoName(userEmailFromLocalStorage)}!👋</h1>
+        )}
+      </>
     );
   }
 }

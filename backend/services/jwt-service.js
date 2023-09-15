@@ -13,7 +13,7 @@ export function verifyToken(token) {
   try {
     return jwt.verify(token, process.env.SECRET_KEY);
   } catch (err) {
-    return err.message;
+    return false;
   }
 }
 // Function for finding if there is a token in the db

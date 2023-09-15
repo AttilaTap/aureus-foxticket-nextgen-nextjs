@@ -39,7 +39,6 @@ export default function Header(props) {
     if (userEmailFromLocalStorage) {
       localStorage.clear();
       setUserEmailFromLocalStorage(null);
-      deleteCookie(process.env.NEXT_PUBLIC_COOKIE_NAME);
     }
   }
 
@@ -49,6 +48,9 @@ export default function Header(props) {
     setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
   }, [setUserEmailFromLocalStorage]);
 
+  const parseEmailtoName = (email) => {
+    return email ? email.split("@")[0] : null;
+  };
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
@@ -64,7 +66,7 @@ export default function Header(props) {
               <div className="flex items-center">
                 <div className="text-emerald-400 font-bold mr-5">
                   <span className={props.isMain ? "text-stone-100" : "text-stone-600"}>Welcome back </span>
-                  {userEmailFromLocalStorage}
+                  {parseEmailtoName(userEmailFromLocalStorage)}
                 </div>
                 <button onClick={logout} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
                   Log out

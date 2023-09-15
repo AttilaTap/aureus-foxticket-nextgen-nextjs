@@ -41,14 +41,14 @@ export default function BasketView() {
 
       {buyStatus === "error" && <p className="text-red-500 font-semibold">Purchase failed. Please try again later.</p>}
       <p className="text-xl text-stone-600 mb-2">Your tickets are reserved for 10 minutes.</p>
-      <div className="h-fit w-full border-1 self-center rounded bg-stone-100  mb-2">
+      <div className="h-fit w-full border-1 self-center rounded bg-stone-100 min min-h-[60px] mb-2">
         <TicketToBuy />
       </div>
       <div className="flex justify-between mt-2">
-        <p className="font-bold text-xl text-stone-600 mb-2">
+        <p className="font-bold text-2xl text-stone-600 mb-2">
           Total: {totalPrice} {currency}
         </p>
-        <button onClick={async () => requestToBuy()} type="submit" className="w-32 h-30 bg-stone-600 rounded-full font-bold text-xl text-stone-100">
+        <button onClick={async () => requestToBuy()} type="submit" className="w-36 h-30 bg-stone-600 rounded-full font-bold text-xl text-stone-100">
           Buy ticket(s)
         </button>
       </div>

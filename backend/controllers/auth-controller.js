@@ -1,6 +1,6 @@
 import * as jwtService from "../services/jwt-service.js";
 import * as userService from "../services/user-service.js";
-import { checkExpirationOnToken, tokenInDatabase } from "../services/jwt-service.js";
+import jwt from "jsonwebtoken";
 import { getConnection } from "../utils/db-connection.js";
 
 export const register = async (req, res, next) => {
@@ -24,23 +24,21 @@ export const register = async (req, res, next) => {
 };
 //authentication for Secure Endpoints
 export const authorizeAcess = async (req, res, next) => {
-  const token = req.header("Authorization");
+  const { token } = req.header("Authorization");
   if (!token || token === "" || token === undefined || token === null) {
     return res.status(401).json({ message: "No token provided" });
   }
-  const decodedToken = jwtService.verifyToken(token);
+  try {
+    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+  } catch (error) {
+    return res.status(401).json({ message: `failed to verify ${error.message}` });
+  }
+
   console.log(decodedToken);
 
   if (!decodedToken.email) {
     return res.status(401).json({ message: decodedToken });
   }
-  // if (checkExpirationOnToken(token)) {
-  //   return res.status(401).json({ message: "Token expired" });
-  // }
-  // const connection = getConnection();
-  // if (await tokenInDatabase(connection, token)) {
-  //   return res.status(401).json({ message: "Not the latest version of the Token" });
-  // }
   req.userEmail = decodedToken.email;
   next();
 };
