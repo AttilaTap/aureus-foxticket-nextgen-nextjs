@@ -1,7 +1,7 @@
 export const TICKET_NOT_FOUND = "Ticket not found";
 
 export async function getTicketById(connection, id) {
-  const [rows] = await connection.execute("SELECT * FROM tickets WHERE ticket_id = ?", [id]);
+  const [rows] = await connection.execute('SELECT * FROM tickets WHERE ticket_id = ? AND available = "YES"', [id]);
   if (rows.length === 0) {
     return null;
   }
