@@ -1,7 +1,7 @@
 export const TICKET_NOT_FOUND = "Ticket not found";
 
 export async function getTicketById(connection, id) {
-  const [rows] = await connection.execute("SELECT * FROM tickets WHERE ticket_id = ?", [id]);
+  const [rows] = await connection.execute('SELECT * FROM tickets WHERE ticket_id = ? AND available = "YES"', [id]);
   if (rows.length === 0) {
     return null;
   }
@@ -28,7 +28,7 @@ export async function fetchAvailableTickets(connection, eventId) {
 
 export async function getTicketsByCategoryAndEventId(connection, eventId, category) {
   try {
-    const [rows] = await connection.execute("SELECT * FROM tickets WHERE event_id = ? AND category = ?", [eventId, category]);
+    const [rows] = await connection.execute('SELECT * FROM tickets WHERE event_id = ? AND category = ? AND available = "YES"', [eventId, category]);
     if (rows.length === 0) {
       return null;
     }
@@ -36,5 +36,13 @@ export async function getTicketsByCategoryAndEventId(connection, eventId, catego
   } catch (error) {
     console.error("Error in getTicketsByCategoryAndEventId:", error);
     return null;
+  }
+}
+export async function updateTicketAvailability(connection, ticketId, buyer_id, available) {
+  try {
+    const query = "UPDATE tickets SET available = ? , buyer_id = ? WHERE ticket_id = ?";
+    await connection.query(query, [available, buyer_id, ticketId]);
+  } catch (error) {
+    throw error;
   }
 }

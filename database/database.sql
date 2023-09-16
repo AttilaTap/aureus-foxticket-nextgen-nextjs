@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS tickets (
     currency ENUM('HUF', 'EUR', 'USD') NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME,
-    available ENUM('YES', 'NO') NOT NULL,
+    available ENUM('YES', 'NO', 'SOLD') NOT NULL,
     how_many INT NOT NULL,
     seat VARCHAR(20),
     section VARCHAR(20),
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS tickets (
     user_id INT NOT NULL,
     event_id INT NOT NULL,
     category VARCHAR(50) NOT NULL,
+    buyer_id INT NOT NULL DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

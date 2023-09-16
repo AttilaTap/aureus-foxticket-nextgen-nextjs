@@ -1,4 +1,5 @@
 import * as ticketService from "../services/ticket-service.js";
+import * as userService from "../services/user-service.js";
 import { getConnection } from "../utils/db-connection.js";
 
 export async function ticketById(req, res) {
@@ -77,5 +78,43 @@ export async function ticketsByCategory(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
+  }
+}
+// controller for buying tickets
+export async function buyTickets(req, res) {
+  const { ticket_Ids } = req.body;
+  if (!ticket_Ids || !Array.isArray(ticket_Ids)) {
+    return res.status(400).json({ error: "Ticket IDs are required" });
+  }
+  const userEmail = req.userEmail;
+  try {
+    const connection = await getConnection();
+    const successMessages = [];
+    const errorMessages = [];
+    const buyer_id = await userService.findUserId(connection, [userEmail]);
+
+    for (const ticket_Id of ticket_Ids) {
+      const ticket = await ticketService.getTicketById(connection, ticket_Id);
+      if (!ticket) {
+        errorMessages.push(`Ticket with ID ${ticket_Id} not found`);
+        continue;
+      }
+      if (ticket.available !== "YES") {
+        errorMessages.push(`Ticket with ID ${ticket_Id} is not available for purchase`);
+        continue;
+      }
+
+      await ticketService.updateTicketAvailability(connection, ticket_Id, buyer_id, "SOLD");
+      successMessages.push(`Ticket with ID ${ticket_Id} purchased successfully`);
+    }
+    const responseMessage = {
+      success: successMessages,
+      error: errorMessages,
+    };
+
+    res.status(200).json(responseMessage);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error1" });
   }
 }

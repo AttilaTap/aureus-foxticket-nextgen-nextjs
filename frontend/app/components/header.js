@@ -22,8 +22,19 @@ const gochi = Gochi_Hand({
 });
 
 export default function Header(props) {
+  const [basket] = useTicketStore((state) => [state.basket, state.addToBasket]);
   const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
-  // console.log(`Header props: ${JSON.stringify(props)}`);
+
+  function isLoggedIn() {
+    return userEmailFromLocalStorage;
+  }
+
+  function getUserName() {
+    return userEmailFromLocalStorage;
+  }
+  function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
   async function logout() {
     if (userEmailFromLocalStorage) {
       localStorage.clear();
@@ -37,6 +48,9 @@ export default function Header(props) {
     setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
   }, [setUserEmailFromLocalStorage]);
 
+  const parseEmailtoName = (email) => {
+    return email ? email.split("@")[0] : null;
+  };
   const [showLogin, setShowLogin, showRegistration, setShowRegistration] = useTicketStore((state) => [state.showLog, state.setShowLog, state.showReg, state.setShowReg]);
   return (
     <>
@@ -52,7 +66,7 @@ export default function Header(props) {
               <div className="flex items-center">
                 <div className="text-emerald-400 font-bold mr-5">
                   <span className={props.isMain ? "text-stone-100" : "text-stone-600"}>Welcome back </span>
-                  {userEmailFromLocalStorage}
+                  {parseEmailtoName(userEmailFromLocalStorage)}
                 </div>
                 <button onClick={logout} className="bg-stone-600 w-20 h-8 p-1 rounded-full font-semibold text-stone-100" type="submit">
                   Log out
@@ -64,7 +78,10 @@ export default function Header(props) {
               </button>
             )}
             <Link className={"flex items-center justify-end ml-6"} href={props.isBasket ? "/" : "/cart"}>
-              <Image priority src={props.isBasket ? home : props.isMain ? cartLight : cartDark} alt="Basket or home icon" />
+              <div className="cart-icon relative">
+                <Image priority src={props.isBasket ? home : props.isMain ? cartLight : cartDark} alt="basket" />
+                {!props.isBasket && basket.length > 0 && <span className="cart-badge">{basket.length}</span>}
+              </div>
             </Link>
           </div>
         </div>

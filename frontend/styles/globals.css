@@ -20,4 +20,23 @@
   .aboutUsLink {
     @apply flex absolute top-2/3 w-8 h-8 bg-emerald-200 justify-center items-center rounded-md animate-pulse;
   }
+  .cart-icon {
+    position: relative;
+    display: inline-block;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: 9px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    min-width: 12px;
+    min-height: 10px;
+    font-size: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

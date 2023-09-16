@@ -9,14 +9,54 @@ import City from "@/app/components/svg/city";
 import IconTextPair from "./utils/icon-text-pair";
 import { formatDate, formatTime } from "./utils/date-utils";
 import UserIcon from "./svg/user";
+import ConfirmModal from "./buyConfirmationModal";
+import useTicketStore from "@/store/store";
 
 const TicketView = ({ ticketCategory, eventData, ticketData }) => {
+  //states
   const [tickets, setTickets] = useState(ticketData || []);
   const [userEmails, setUserEmails] = useState({});
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedTicketId, setSelectedTicketId] = useState(null);
+  const [basket, addToBasket] = useTicketStore((state) => [state.basket, state.addToBasket]);
+  const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
 
+  //variables
   const eventStartDate = new Date(eventData.start_time);
   const eventEndDate = new Date(eventData.end_time);
+  //functions
+  const availableToBuy = (ticketId) => {
+    if (basket.length === 0) {
+      return true;
+    } else {
+      const ticketAlreadyInBasket = basket.some((basketItem) => basketItem.ticket_id === ticketId);
+      return !ticketAlreadyInBasket;
+    }
+  };
+  const findTicketById = (ticketId) => {
+    return tickets.find((ticket) => ticket.ticket_id === ticketId);
+  };
 
+  const openConfirmModal = (ticketId) => {
+    //if (!userEmailFromLocalStorage) {
+    //  alert("please login in order to buy!");
+    //  return;
+    //}
+    setSelectedTicketId(ticketId);
+    setShowConfirm(true);
+  };
+
+  const closeConfirmModal = () => {
+    setSelectedTicketId(null);
+    setShowConfirm(false);
+  };
+
+  const handleConfirmAction = (ticketId) => {
+    const boughtTicket = findTicketById(ticketId);
+    addToBasket(boughtTicket);
+    console.log(basket);
+    closeConfirmModal();
+  };
   useEffect(() => {
     if (!eventData.id || !ticketCategory) {
       return;
@@ -83,7 +123,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
       <div className="flex justify-center pb-12">
         <div className="w-3/5">
           <h1 className="text-xl font-bold pb-2">Available</h1>
-          {tickets.map((ticket, index) => {
+          {tickets.map((ticket) => {
             const currencyOptions = {
               style: "currency",
               currency: ticket.currency,
@@ -94,7 +134,11 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
             const currencyFormatter = new Intl.NumberFormat("en-US", currencyOptions);
 
             return (
-              <div key={index} className="card bg-gray-800 min-w-[590px] flex justify-between mb-4">
+              <div
+                key={ticket.ticket_id}
+                onClick={() => openConfirmModal(ticket.ticket_id)}
+                className="card bg-gray-800 min-w-[850px] flex justify-between hover:bg-custom-gray mt-4 mb-4"
+              >
                 <div className="min-w-[160px] flex flex-col justify-center items-center pl-4">
                   <UserIcon className="w-6 h-6 mr-2" />
                   <span className="text-black-500 text-sm">{userEmails[ticket.user_id] || "Unknown"}</span>
@@ -107,7 +151,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
                       <span className="block text-black-500 text-sm">Start Time: {[formatDate(eventStartDate), " - ", formatTime(eventStartDate)]}</span>
                       <span className="block text-black-500 text-sm">End Time: {eventEndDate !== null ? [formatDate(eventEndDate), " - ", formatTime(eventEndDate)] : " - "}</span>
                     </div>
-                    <div className="mt-4 w-full min-w-[160px] pl-8 flex flex-col">
+                    <div className="mt-4 w-full min-w-[200px] pl-8 flex flex-col">
                       <span className="block text-black-500 text-sm">Seat: {ticket.seat !== null ? ticket.seat : " - "}</span>
                       <span className="block text-black-500 text-sm">Section: {ticket.section !== null ? ticket.section : " - "} </span>
                       <span className="block text-black-500 text-sm">Row Seating: {ticket.row_seating !== null ? ticket.row_seating : " - "}</span>
@@ -123,6 +167,13 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
           })}
         </div>
       </div>
+      <ConfirmModal
+        isVisible={showConfirm}
+        onClose={closeConfirmModal}
+        ableToBuy={(ticketId) => availableToBuy(ticketId)}
+        ticket={selectedTicketId !== null ? findTicketById(selectedTicketId) : null}
+        onConfirm={(ticketId) => handleConfirmAction(ticketId)}
+      />
     </div>
   );
 };
