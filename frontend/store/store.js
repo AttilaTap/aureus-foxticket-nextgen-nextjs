@@ -8,7 +8,6 @@ const useTicketStore = create((set) => ({
   userEmailFromLocalStorage: null,
   ticketToBuy: [{}],
   basket: [],
-  token: null,
   setBackendState: (newState) => set((state) => ({ backendState: newState })),
   setUser: (email) => set({ user: email }),
   setUserEmailFromLocalStorage: (email) => set({ userEmailFromLocalStorage: email }),
@@ -21,7 +20,6 @@ const useTicketStore = create((set) => ({
   addToBasket: (ticket) => set((state) => ({ basket: [...state.basket, ticket] })),
   removeFromBasket: (ticketId) => set((state) => ({ basket: state.basket.filter((item) => item.ticket_id !== ticketId) })),
   clearBasket: () => set({ basket: [] }),
-  setToken: (newToken) => set({ token: newToken }),
 }));
 
 export default useTicketStore;
