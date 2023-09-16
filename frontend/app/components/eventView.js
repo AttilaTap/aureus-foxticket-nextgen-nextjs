@@ -43,9 +43,44 @@ const TicketButton = ({ category, eventId }) => {
 };
 
 const EventView = ({ eventData, ticketData, availableTicketData }) => {
-  if (!eventData || !ticketData) {
-    return <div>Loading...</div>;
+  if (!eventData || !ticketData || Object.keys(ticketData).length === 0 || availableTicketData == 0) {
+    return (
+      <>
+        <div className="w-full mx-auto">
+          <div>
+            <div className="flex justify-center">
+              <div className="w-3/5">
+                <div className="flex justify-center -mt-20">
+                  <Image src="/background-img/bg-image-event-one.jpg" width={600} height={600} className="rounded-md" alt="Picture of the event" />
+                </div>
+                <div className="flex justify-center mt-20">No tickets available at the moment</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="flex justify-center">
+            <div className="w-3/5">
+              <div className="flex justify-between items-center pt-12">
+                <h1 className="text-3xl font-bold">Tickets</h1>
+                <button type="submit" className="bg-stone-600 w-28 h-8 rounded-full font-semibold text-stone-100 mt-6">
+                  Sell tickets
+                </button>
+              </div>
+              <div className="flex flex-row space-x-2 pb-10">
+                <NumberTextPair number={availableTicketData} text="available" />
+                <Arrow />
+                <NumberTextPair number={Math.floor(Math.random() * 1000) + 1} text="sold" />
+                <Arrow />
+                <NumberTextPair number={Math.floor(Math.random() * 1000) + 1} text="wanted" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
   }
+  console.log(ticketData);
 
   const eventStartDate = new Date(eventData.start_time);
 

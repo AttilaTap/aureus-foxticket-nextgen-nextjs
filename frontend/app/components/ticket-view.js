@@ -65,10 +65,11 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
 
     const fetchTickets = async () => {
       try {
-        const res = await fetch(`${getBackendUrl}tickets/${eventData.id}/${ticketCategory}`);
+        const res = await fetch(`${getBackendUrl()}tickets/${eventData.id}/${ticketCategory}`);
         const data = await res.json();
         setTickets(data.tickets);
       } catch (error) {
+        setTickets([]);
         console.error("Failed to fetch tickets:", error);
       }
     };
