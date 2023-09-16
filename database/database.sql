@@ -61,7 +61,7 @@ ALTER TABLE tickets
   ADD CONSTRAINT tickets_ibfk_2 FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE;
 
 INSERT INTO users (email, password) VALUES
-('admin@nextgen-nexticket.com', '$2a$10$LZ4vq6ApY0NXwM47C.0JYOOTYdY8NyVG4JmjO/Y8w.55TEBLcrnUS'), -- password: admin123
+('admin@nexticket.com', '$2a$10$LZ4vq6ApY0NXwM47C.0JYOOTYdY8NyVG4JmjO/Y8w.55TEBLcrnUS'), -- password: admin123
 ('johndoe1234@notrealmail.com', '$2a$10$QAKp5JETPqFO/YPmvHNOzu8xMinTY4.tq/uhQQJ7Jzid0qo9os48e'), -- password: johndoe1234pass
 ('janedoe5678@fakeinbox.com', '$2a$10$p8J7WqT.oGdBHl8zvH1nhOPomBJgEXwFR8R8.peIK5SgS290vuDD.'), -- password: janedoe5678pass
 ('bobbytables@noemailhere.com', '$2a$10$pNNNKy3E9OIwObrLx00JQ.emiXxLpCnbkH7VzNwvcqXCZFu9xY5ta'), -- password: bobbytablespass

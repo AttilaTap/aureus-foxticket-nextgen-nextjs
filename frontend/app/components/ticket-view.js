@@ -11,6 +11,7 @@ import { formatDate, formatTime } from "./utils/date-utils";
 import UserIcon from "./svg/user";
 import ConfirmModal from "./buyConfirmationModal";
 import useTicketStore from "@/store/store";
+import getBackendUrl from "./utils/environment";
 
 const TicketView = ({ ticketCategory, eventData, ticketData }) => {
   //states
@@ -64,7 +65,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
 
     const fetchTickets = async () => {
       try {
-        const res = await fetch(`http://localhost:9000/tickets/${eventData.id}/${ticketCategory}`);
+        const res = await fetch(`${getBackendUrl}tickets/${eventData.id}/${ticketCategory}`);
         const data = await res.json();
         setTickets(data.tickets);
       } catch (error) {
@@ -80,7 +81,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
       try {
         const userIds = [...new Set(tickets.map((ticket) => ticket.user_id))];
         for (const userId of userIds) {
-          const res = await fetch(`http://localhost:9000/users/${userId}/email`);
+          const res = await fetch(`${getBackendUrl()}users/${userId}/email`);
           const data = await res.json();
           if (data.email) {
             const emailBeforeAt = data.email.split("@")[0];
