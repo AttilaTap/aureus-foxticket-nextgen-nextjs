@@ -22,8 +22,7 @@ export async function getEventById(req, res) {
     if (!event) {
       return res.status(404).json({ error: "Event not found" });
     }
-
-    res.json(event);
+    res.status(200).json(event);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

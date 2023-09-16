@@ -61,7 +61,6 @@ export async function getAvailableTickets(req, res) {
 
 export async function ticketsByCategory(req, res) {
   const { eventId, category } = req.params;
-
   if (!eventId || !category) {
     return res.status(400).json({ error: "Event ID and Category parameters are required" });
   }
@@ -69,15 +68,13 @@ export async function ticketsByCategory(req, res) {
   try {
     const connection = await getConnection();
     const tickets = await ticketService.getTicketsByCategoryAndEventId(connection, eventId, category);
-
     if (!tickets || tickets.length === 0) {
       return res.status(404).json({ error: "No tickets found for this category and event ID" });
     }
-
-    res.status(200).json({ tickets });
+    return res.status(200).json({ tickets: tickets });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 }
 // controller for buying tickets
