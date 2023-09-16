@@ -1,17 +1,23 @@
 "use client";
 import TicketToBuy from "./tickets-to-buy";
 import useTicketStore from "@/store/store";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendBuyRequest } from "./utils/buyRequest";
 
 export default function BasketView() {
   const [buyStatus, setBuyStatus] = useState(null);
   const [userEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage]);
   const [basket, clearBasket] = useTicketStore((state) => [state.basket, state.clearBasket]);
-  let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
+  const [tokenFromStore, setToken] = useTicketStore((state) => [state.token, state.setToken]);
+
+  useEffect(() => {
+    let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
+    setToken(token);
+  }, [setToken]);
+
   async function requestToBuy() {
     try {
-      const buyResult = await sendBuyRequest(basket, userEmailFromLocalStorage, token);
+      const buyResult = await sendBuyRequest(basket, userEmailFromLocalStorage, tokenFromStore);
       setBuyStatus(buyResult);
       if (buyResult === "success") {
         clearBasket();
