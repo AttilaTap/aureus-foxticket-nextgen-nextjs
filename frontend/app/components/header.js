@@ -79,7 +79,7 @@ export default function Header(props) {
             )}
             <Link className={"flex items-center justify-end ml-6"} href={props.isBasket ? "/" : "/cart"}>
               <div className="cart-icon relative">
-                <Image priority src={props.isBasket ? close : props.isMain ? cartLight : cartDark} alt="basket" />
+                <Image priority src={props.isBasket ? home : props.isMain ? cartLight : cartDark} alt="basket" />
                 {!props.isBasket && basket.length > 0 && <span className="cart-badge">{basket.length}</span>}
               </div>
             </Link>
