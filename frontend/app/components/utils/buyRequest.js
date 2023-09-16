@@ -1,9 +1,11 @@
+import getBackendUrl from "@/app/components/utils/environment";
+
 export async function sendBuyRequest(basket, userId, token) {
   try {
     const ticket_Ids = basket.map((ticket) => ticket.ticket_id);
     console.log(ticket_Ids);
     const data = { ticket_Ids: ticket_Ids };
-    const response = await fetch("http://localhost:9000/buy", {
+    const response = await fetch(`${getBackendUrl()}buy`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

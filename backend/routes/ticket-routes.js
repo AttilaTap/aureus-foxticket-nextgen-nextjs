@@ -50,7 +50,7 @@ router.get("/ticket/:id", ticketController.ticketById);
  *         description: request error
  */
 router.get("/tickets", ticketController.tickets);
-// endpoint for buying tickets
+
 /**
  * @openapi
  * /tickets/{eventId}:
@@ -77,6 +77,7 @@ router.get("/tickets", ticketController.tickets);
  */
 router.get("/tickets/:eventId", ticketController.getAvailableTickets);
 router.get("/tickets/:eventId/:category", ticketController.ticketsByCategory);
+
 router.post("/buy", authController.authorizeAcess, ticketController.buyTickets);
 
 export default router;

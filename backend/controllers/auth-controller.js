@@ -22,24 +22,24 @@ export const register = async (req, res, next) => {
     return res.status(402).json({ message: `Unexpected registration error: ${error.message}` });
   }
 };
-//authentication for Secure Endpoints
+
 export const authorizeAcess = async (req, res, next) => {
-  const { token } = req.header("Authorization");
+  const token = req.get("Authorization");
+  console.log(token);
   if (!token || token === "" || token === undefined || token === null) {
     return res.status(401).json({ message: "No token provided" });
   }
+
   try {
-    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+    const decodedToken = jwtService.verifyToken(token);
+    console.log(decodedToken);
+    if (!decodedToken.email) {
+      return res.status(401).json({ message: "Can not authorize user" });
+    }
+    req.userEmail = decodedToken.email;
   } catch (error) {
     return res.status(401).json({ message: `failed to verify ${error.message}` });
   }
-
-  console.log(decodedToken);
-
-  if (!decodedToken.email) {
-    return res.status(401).json({ message: decodedToken });
-  }
-  req.userEmail = decodedToken.email;
   next();
 };
 
