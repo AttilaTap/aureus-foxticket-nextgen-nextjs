@@ -6,6 +6,7 @@ const ticket = {
   name: "Concert",
 };
 const EVENT_ID = "3";
+const CATEGORY = "Regular";
 
 describe("get ticket by id", () => {
   describe("given ticket exists", () => {
@@ -55,6 +56,32 @@ describe("get ticket by event id", () => {
       };
 
       expect(await ticketService.fetchAvailableTickets(mockConnection, EVENT_ID)).toEqual({ availableTickets: 0, tickets: {} });
+    });
+  });
+});
+
+describe("get ticket by category and event id", () => {
+  describe("given tickets exist", () => {
+    it("should return an array of tickets", async () => {
+      let mockConnection = {
+        execute: jest.fn((formatString, eventId, category) => {
+          return [[{ ticket1: "ticket1" }, { ticket2: "ticket2" }]];
+        }),
+      };
+
+      expect(await ticketService.getTicketsByCategoryAndEventId(mockConnection, EVENT_ID, CATEGORY)).toEqual([{ ticket1: "ticket1" }, { ticket2: "ticket2" }]);
+    });
+  });
+
+  describe("given tickets not exist", () => {
+    it("should return 0 available tickets and an empty object", async () => {
+      let mockConnection = {
+        execute: jest.fn((formatString, eventId, category) => {
+          return [[]];
+        }),
+      };
+
+      expect(await ticketService.getTicketsByCategoryAndEventId(mockConnection, EVENT_ID, CATEGORY)).toBe(null);
     });
   });
 });
