@@ -2,6 +2,7 @@ import * as userService from "../services/user-service";
 
 const USER_EMAIL = "littlejohn@gmail.com";
 const USER_ID = "123456";
+const USER_PASSWORD = "$2a$04$bndG28M4SctvpZ4J2dgsZeynekhXNaonzGijetJrGVRZQ0kOWzJdu";
 
 describe("check email exists", () => {
   describe("given user email exists", () => {
@@ -52,6 +53,66 @@ describe("find user id", () => {
       }
 
       await expect(runFindUserId).rejects.toThrow(userService.USER_NOT_FOUND);
+    });
+  });
+});
+
+describe("verify if user exists and match with stored", () => {
+  // describe("given user exists", () => {
+  //   it("should return true", async () => {
+  //     let mockConnection = {
+  //       query: jest.fn((emailAddress, arr) => {
+  //         return [[{ password: USER_PASSWORD, email: "mockUser@emailAddress.com" }]];
+  //       }),
+  //     };
+  //     // let mockBCrypt = {
+  //     //   comnpare: jest.fn((userpass, string) => {
+  //     //     return true;
+  //     //   }),
+  //     // };
+  //     expect(await userService.verifyUser(mockConnection, USER_EMAIL, USER_PASSWORD)).toBe(true);
+  //   });
+  // });
+
+  describe("given user not exists", () => {
+    it("should return null", async () => {
+      let mockConnection = {
+        query: jest.fn((emailAddress, arr) => {
+          return [[]];
+        }),
+      };
+      // let mockBCrypt = {
+      //   comnpare: jest.fn((userpass, string) => {
+      //     return true;
+      //   }),
+      // };
+      expect(await userService.verifyUser(mockConnection, USER_EMAIL, USER_PASSWORD)).toBe(null);
+    });
+  });
+});
+
+describe("get email by id", () => {
+  describe("given email exists", () => {
+    it("should return the email", async () => {
+      let mockConnection = {
+        execute: jest.fn((formatString, id) => {
+          return [[{ email: USER_EMAIL }]];
+        }),
+      };
+
+      expect(await userService.getEmailById(mockConnection, USER_ID)).toBe(USER_EMAIL);
+    });
+  });
+
+  describe("given email not exists", () => {
+    it("should return null", async () => {
+      let mockConnection = {
+        execute: jest.fn((formatString, id) => {
+          return [[]];
+        }),
+      };
+
+      expect(await userService.getEmailById(mockConnection, USER_ID)).toBe(null);
     });
   });
 });
