@@ -1,14 +1,14 @@
 import * as ticketService from "../services/ticket-service";
 
-const USER_EMAIL = "littlejohn@gmail.com";
 const TICKET_ID = "123456";
 const ticket = {
   id: TICKET_ID,
   name: "Concert",
 };
+const EVENT_ID = "3";
 
 describe("get ticket by id", () => {
-  describe("should return ticket if exists", () => {
+  describe("given ticket exists", () => {
     it("should return a ticket object", async () => {
       let mockConnection = {
         execute: jest.fn((formatString, id) => {
@@ -20,7 +20,7 @@ describe("get ticket by id", () => {
     });
   });
 
-  describe("should return ticket if exists", () => {
+  describe("given ticket not exits", () => {
     it("should return null", async () => {
       let mockConnection = {
         execute: jest.fn((formatString, id) => {
@@ -29,6 +29,32 @@ describe("get ticket by id", () => {
       };
 
       expect(await ticketService.getTicketById(mockConnection, TICKET_ID)).toBe(null);
+    });
+  });
+});
+
+describe("get ticket by event id", () => {
+  describe("given tickets exist", () => {
+    it("should return the number of available tickets and the tickets", async () => {
+      let mockConnection = {
+        query: jest.fn((eventId, arr) => {
+          return [[{ how_many: 2 }, { how_many: 3 }]];
+        }),
+      };
+
+      expect(await ticketService.fetchAvailableTickets(mockConnection, EVENT_ID)).toEqual({ availableTickets: 5, tickets: [{ how_many: 2 }, { how_many: 3 }] });
+    });
+  });
+
+  describe("given tickets not exist", () => {
+    it("should return 0 available tickets and an empty object", async () => {
+      let mockConnection = {
+        query: jest.fn((eventId, arr) => {
+          return [[]];
+        }),
+      };
+
+      expect(await ticketService.fetchAvailableTickets(mockConnection, EVENT_ID)).toEqual({ availableTickets: 0, tickets: {} });
     });
   });
 });
