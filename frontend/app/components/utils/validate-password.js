@@ -13,8 +13,8 @@ export function validatePassword(password) {
   if (!/[a-z]/.test(password)) {
     errors.push("Password must contain at least one lowercase letter.");
   }
-  if (!/[^A-Za-z0-9]/.test(password)) {
-    errors.push("Password must contain at least one special character.");
+  if (!/[~`!@#$%^&*()\-\_+={}[\]|\\;:"<>,./?]/.test(password)) {
+    errors.push('Password must contain at least one special character: ( ~ ` ! @ # $ % ^ & * ( ) - _ + = { } [ ] | \\ ; : " < > , . / ?)');
   }
 
   return errors;
