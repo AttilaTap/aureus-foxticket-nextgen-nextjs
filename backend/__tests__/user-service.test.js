@@ -58,22 +58,6 @@ describe("find user id", () => {
 });
 
 describe("verify if user exists and match with stored", () => {
-  // describe("given user exists", () => {
-  //   it("should return true", async () => {
-  //     let mockConnection = {
-  //       query: jest.fn((emailAddress, arr) => {
-  //         return [[{ password: USER_PASSWORD, email: "mockUser@emailAddress.com" }]];
-  //       }),
-  //     };
-  //     // let mockBCrypt = {
-  //     //   comnpare: jest.fn((userpass, string) => {
-  //     //     return true;
-  //     //   }),
-  //     // };
-  //     expect(await userService.verifyUser(mockConnection, USER_EMAIL, USER_PASSWORD)).toBe(true);
-  //   });
-  // });
-
   describe("given user not exists", () => {
     it("should return null", async () => {
       let mockConnection = {
@@ -81,11 +65,6 @@ describe("verify if user exists and match with stored", () => {
           return [[]];
         }),
       };
-      // let mockBCrypt = {
-      //   comnpare: jest.fn((userpass, string) => {
-      //     return true;
-      //   }),
-      // };
       expect(await userService.verifyUser(mockConnection, USER_EMAIL, USER_PASSWORD)).toBe(null);
     });
   });
