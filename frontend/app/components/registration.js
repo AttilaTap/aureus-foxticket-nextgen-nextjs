@@ -95,7 +95,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             Password
           </label>
           <input
-            className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
+            className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline`}
             id="password"
             type="password"
             name="password"
