@@ -10,6 +10,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [error, setError] = useState("");
 
   if (!isVisible) {
     return null;
@@ -23,6 +24,18 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (password !== passwordConfirm) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    const passwordErrors = validatePassword(password);
+
+    if (passwordErrors.length > 0) {
+      setError(passwordErrors.join(" "));
+      return;
+    }
 
     try {
       const hashedPassword = hashPassword(password);
@@ -40,13 +53,17 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         body: JSON.stringify(user),
       });
 
+      const responseData = await response.json();
+
       if (response.ok) {
+        setError("");
         onCloseReg();
         openLog();
+      } else {
+        setError(responseData.error || "Registration failed");
       }
     } catch (error) {
-      // Handle any unexpected errors here if needed, or simply log them.
-      console.error("An unexpected error occurred:", error);
+      setError(error.message || "An unexpected error occurred.");
     }
   }
 
@@ -62,6 +79,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         <h2 className="px-2 text-2xl font-bold text-center mt-4 text-stone-950">Registration</h2>
 
         <form className="px-8 pt-6" onSubmit={handleSubmit}>
+          {error && <div className="text-red-500 mb-4 font-bold">{error}</div>}
           <label className="text-stone-700 text-m font-bold" htmlFor="username">
             E-mail
           </label>
@@ -78,7 +96,7 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             Password
           </label>
           <input
-            className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline`}
+            className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
             id="password"
             type="password"
             name="password"
@@ -86,13 +104,11 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          {validatePassword(password).map((error, index) => (
-            <p key={index} className="text-red-500 text-xs mt-1">
-              {error}
-            </p>
-          ))}
-
+          {password.length < 8 && <p className="text-red-500 text-xs mt-1">Password must be at least 8 characters long.</p>}
+          {!/[0-9]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one number.</p>}
+          {!/[A-Z]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one uppercase letter.</p>}
+          {!/[a-z]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one lowercase letter.</p>}
+          {!/[^A-Za-z0-9]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one special character.</p>}
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Confirm password
           </label>
