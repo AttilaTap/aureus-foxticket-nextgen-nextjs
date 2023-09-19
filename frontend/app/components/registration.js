@@ -10,7 +10,6 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [error, setError] = useState("");
 
   if (!isVisible) {
     return null;
@@ -24,18 +23,6 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    if (password !== passwordConfirm) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    const passwordErrors = validatePassword(password);
-
-    if (passwordErrors.length > 0) {
-      setError(passwordErrors.join(" "));
-      return;
-    }
 
     try {
       const hashedPassword = hashPassword(password);
@@ -53,17 +40,13 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
         body: JSON.stringify(user),
       });
 
-      const responseData = await response.json();
-
       if (response.ok) {
-        setError("");
         onCloseReg();
         openLog();
-      } else {
-        setError(responseData.error || "Registration failed");
       }
     } catch (error) {
-      setError(error.message || "An unexpected error occurred.");
+      // Handle any unexpected errors here if needed, or simply log them.
+      console.error("An unexpected error occurred:", error);
     }
   }
 
