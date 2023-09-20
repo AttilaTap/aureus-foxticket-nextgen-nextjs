@@ -7,6 +7,7 @@ import { parseJwt } from "./utils/auth-token-handling";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
   const setUserEmailFromLocalStorage = useTicketStore((state) => state.setUserEmailFromLocalStorage);
+  const { showPassword, togglePasswordVisibility } = useTicketStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -89,18 +90,23 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
             onChange={handleChange}
             placeholder="example@gmail.com"
           />
-          <label className=" text-stone-700 text-m font-bold" htmlFor="password">
+          <label className="text-stone-700 text-m font-bold" htmlFor="password">
             Password
           </label>
-          <input
-            className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="******************"
-          />
+          <div className="relative">
+            <input
+              className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline`}
+              id="password"
+              type={showPassword ? "text" : "password"} // Toggle between "text" and "password" to show/hide password
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="******************"
+            />
+            <span className="absolute top-4 right-4 cursor-pointer" onClick={togglePasswordVisibility}>
+              {showPassword ? "Hide" : "Show"} Password
+            </span>
+          </div>
 
           <div className="flex items-center justify-between gap-2 mt-4 ">
             <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-24 md:h-15 focus:outline-none focus:shadow-outline" type="submit">
