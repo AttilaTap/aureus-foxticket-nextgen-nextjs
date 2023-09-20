@@ -5,12 +5,14 @@ import { hashPassword } from "./utils/hashing";
 import { useState } from "react";
 import getBackendUrl from "./utils/environment";
 import { validatePassword } from "./utils/validate-password";
+import useTicketStore from "@/store/store";
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
+  const { showPassword, togglePasswordVisibility } = useTicketStore();
 
   if (!isVisible) {
     return null;
@@ -95,15 +97,20 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Password
           </label>
-          <input
-            className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
-            id="password"
-            type="password"
-            name="password"
-            placeholder="******************"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
+              id="password"
+              type={showPassword ? "text" : "password"} // Toggle between "text" and "password" to show/hide password
+              name="password"
+              placeholder="******************"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span className="absolute top-4 right-4 cursor-pointer" onClick={togglePasswordVisibility}>
+              {showPassword ? "Hide" : "Show"} Password
+            </span>
+          </div>
           {password.length < 8 && <p className="text-red-500 text-xs mt-1">Password must be at least 8 characters long.</p>}
           {!/[0-9]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one number.</p>}
           {!/[A-Z]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one uppercase letter.</p>}
@@ -112,15 +119,18 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Confirm password
           </label>
-          <input
-            className="rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline"
-            id="password-confirm"
-            type="password"
-            name="password"
-            placeholder="******************"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
+              id="password-confirm"
+              type={showPassword ? "text" : "password"} // Toggle between "text" and "password" to show/hide password
+              name="password"
+              placeholder="******************"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+            />
+            <span className="absolute top-4 right-4 cursor-pointer" onClick={togglePasswordVisibility}></span>
+          </div>
           {password !== passwordConfirm && <p className="text-red-500 text-xs mt-1">Passwords do not match.</p>}
           <div className="flex items-center justify-between gap-6 mt-7 mb-3">
             <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline" type="submit">
