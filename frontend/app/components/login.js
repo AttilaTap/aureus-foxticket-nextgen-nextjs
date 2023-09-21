@@ -94,14 +94,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
           <label className="text-stone-700 text-m font-bold" htmlFor="password">
             Password
           </label>
-          <PasswordInput
-            id="password"
-            value={formData.password}
-            onChange={handleChange}
-            showPassword={showPassword}
-            togglePasswordVisibility={togglePasswordVisibility}
-            placeholder="******************"
-          />
+          <PasswordInput id="password" value={formData.password} onChange={handleChange} />
 
           <div className="flex items-center justify-between gap-2 mt-4 ">
             <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-24 md:h-15 focus:outline-none focus:shadow-outline" type="submit">
