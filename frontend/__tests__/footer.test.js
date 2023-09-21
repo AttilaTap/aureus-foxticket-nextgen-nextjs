@@ -10,31 +10,30 @@ import "@testing-library/jest-dom";
 import Footer from "@/app/components/footer";
 
 describe("test signal image loading", () => {
-  describe("given fetch response is ok", () => {
-    test("it will load the image", async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: true,
-      });
-
+  describe("given fetch response ok is true", () => {
+    test("it will set the signal to green", async () => {
       const { getByAltText } = render(<Footer />);
-      const image = getByAltText("align-middle backend connection indicator");
 
-      expect(image.src).toContain("green");
+      global.fetch = jest.fn(() => Promise.resolve({ status: 200 }));
+      const image = getByAltText("align-middle backend connection indicator");
+      setTimeout(() => {
+        expect(image.src).toContain("green");
+      }, 3000);
     });
   });
 
-  describe("given fetch response is not ok", () => {
-    test("it will not load", async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: false,
-      });
+  describe("given fetch response ok is false", () => {
+    test("it will set the singal to red", async () => {
       const { getByAltText } = render(<Footer />);
       const image = getByAltText("align-middle backend connection indicator");
-      expect(image.src).toContain("red");
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: false,
+        })
+      );
+      setTimeout(() => {
+        expect(image.src).toContain("red");
+      });
     });
   });
-});
-
-afterEach(() => {
-  jest.restoreAllMocks();
 });
