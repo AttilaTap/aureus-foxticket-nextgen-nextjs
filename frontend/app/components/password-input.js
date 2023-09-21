@@ -1,15 +1,17 @@
-// PasswordInput.js
 import React from "react";
+import useTicketStore from "@/store/store";
 
-const PasswordInput = ({ id, value, onChange, showPassword, togglePasswordVisibility, placeholder }) => {
+const PasswordInput = ({ id, value, onChange }) => {
+  const { showPassword, togglePasswordVisibility } = useTicketStore();
+
   return (
     <div className="relative">
       <input
-        className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline ${value.length >= 8 ? "text-green-500" : "text-red-500"}`}
+        className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline `}
         id={id}
         type={showPassword ? "text" : "password"}
         name="password"
-        placeholder={placeholder}
+        placeholder="******************"
         value={value}
         onChange={onChange}
       />
