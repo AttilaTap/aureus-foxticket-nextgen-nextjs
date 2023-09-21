@@ -6,6 +6,7 @@ import { useState } from "react";
 import getBackendUrl from "./utils/environment";
 import { validatePassword } from "./utils/validate-password";
 import useTicketStore from "@/store/store";
+import PasswordInput from "./password-input";
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
   const [email, setEmail] = useState("");
@@ -119,18 +120,14 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Confirm password
           </label>
-          <div className="relative">
-            <input
-              className={`rounded w-full p-2 mt-2 mb-4 text-stone-700 focus:outline-sky-600 focus:shadow-outline ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
-              id="password-confirm"
-              type={showPassword ? "text" : "password"} // Toggle between "text" and "password" to show/hide password
-              name="password"
-              placeholder="******************"
-              value={passwordConfirm}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
-            />
-            <span className="absolute top-4 right-4 cursor-pointer" onClick={togglePasswordVisibility}></span>
-          </div>
+          <PasswordInput
+            id="password-confirm"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            showPassword={showPassword}
+            togglePasswordVisibility={togglePasswordVisibility}
+            placeholder="******************"
+          />
           {password !== passwordConfirm && <p className="text-red-500 text-xs mt-1">Passwords do not match.</p>}
           <div className="flex items-center justify-between gap-6 mt-7 mb-3">
             <button className="bg-sky-700 hover:bg-sky-800 text-stone-100 font-bold p-4 rounded-lg md:w-28 md:h-15 focus:outline-none focus:shadow-outline" type="submit">
