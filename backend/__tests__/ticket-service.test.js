@@ -16,7 +16,6 @@ describe("get ticket by id", () => {
           return [[{ ticket }]];
         }),
       };
-
       expect(await ticketService.getTicketById(mockConnection, TICKET_ID)).toEqual({ ticket });
     });
   });
@@ -28,7 +27,6 @@ describe("get ticket by id", () => {
           return [[]];
         }),
       };
-
       expect(await ticketService.getTicketById(mockConnection, TICKET_ID)).toBe(null);
     });
   });
@@ -42,7 +40,6 @@ describe("get ticket by event id", () => {
           return [[{ how_many: 2 }, { how_many: 3 }]];
         }),
       };
-
       expect(await ticketService.fetchAvailableTickets(mockConnection, EVENT_ID)).toEqual({ availableTickets: 5, tickets: [{ how_many: 2 }, { how_many: 3 }] });
     });
   });
@@ -54,7 +51,6 @@ describe("get ticket by event id", () => {
           return [[]];
         }),
       };
-
       expect(await ticketService.fetchAvailableTickets(mockConnection, EVENT_ID)).toEqual({ availableTickets: 0, tickets: {} });
     });
   });
@@ -68,7 +64,6 @@ describe("get ticket by category and event id", () => {
           return [[{ ticket1: "ticket1" }, { ticket2: "ticket2" }]];
         }),
       };
-
       expect(await ticketService.getTicketsByCategoryAndEventId(mockConnection, EVENT_ID, CATEGORY)).toEqual([{ ticket1: "ticket1" }, { ticket2: "ticket2" }]);
     });
   });
@@ -80,8 +75,20 @@ describe("get ticket by category and event id", () => {
           return [[]];
         }),
       };
-
       expect(await ticketService.getTicketsByCategoryAndEventId(mockConnection, EVENT_ID, CATEGORY)).toBe(null);
+    });
+  });
+
+  describe("given an error will throw an error", () => {
+    it("will have an error", async () => {
+      let mockConnection = {
+        execute: jest.fn((formatString, eventId, category) => {
+          throw new Error();
+        }),
+      };
+      let errorSpy = jest.spyOn(global.console, "error");
+      expect(await ticketService.getTicketsByCategoryAndEventId(mockConnection, EVENT_ID, CATEGORY)).toBe(null);
+      expect(errorSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
