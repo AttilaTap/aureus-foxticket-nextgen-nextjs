@@ -7,6 +7,7 @@ const ticket = {
 };
 const EVENT_ID = "3";
 const CATEGORY = "Regular";
+const BUYER_ID = "2";
 
 describe("get ticket by id", () => {
   describe("given ticket exists", () => {
@@ -90,5 +91,19 @@ describe("get ticket by category and event id", () => {
       expect(await ticketService.getTicketsByCategoryAndEventId(mockConnection, EVENT_ID, CATEGORY)).toBe(null);
       expect(errorSpy).toHaveBeenCalledTimes(1);
     });
+  });
+});
+
+describe("update ticket awailability", () => {
+  it("will check for error handling", async () => {
+    let mockConnection = {
+      query: jest.fn((formatString, arr) => {
+        throw new Error();
+      }),
+    };
+    async function updateTicket() {
+      await ticketService.updateTicketAvailability(mockConnection, TICKET_ID, BUYER_ID, "SOLD");
+    }
+    expect(updateTicket).rejects.toThrowError();
   });
 });
