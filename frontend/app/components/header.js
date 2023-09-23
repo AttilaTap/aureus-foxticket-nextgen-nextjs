@@ -43,9 +43,12 @@ export default function Header(props) {
   }
 
   useEffect(() => {
-    let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
-    let parsedToken = parseJwt(token);
-    setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
+    async function fetchState() {
+      let token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
+      let parsedToken = parseJwt(token);
+      setUserEmailFromLocalStorage(parsedToken ? parsedToken.email : null);
+    }
+    fetchState();
   }, [setUserEmailFromLocalStorage]);
 
   const parseEmailtoName = (email) => {

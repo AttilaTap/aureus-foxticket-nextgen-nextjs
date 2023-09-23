@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
+    "coverage": "jest --coverage",
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
@@ -12,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@jest-mock/express": "^2.0.2",
     "@sendgrid/mail": "^7.7.0",
     "autoprefixer": "^10.4.14",
     "bcrypt": "^5.1.0",
