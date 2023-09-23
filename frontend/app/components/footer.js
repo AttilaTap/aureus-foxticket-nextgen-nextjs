@@ -4,14 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import useTicketStore from "@/store/store";
 import getBackendUrl from "./utils/environment";
+import { useEffect } from "react";
 
 export default function Footer() {
   const backendState = useTicketStore((state) => state.backendState);
   const setBackendState = useTicketStore((state) => state.setBackendState);
-  async function getBackendState() {
-    const response = await fetch(`${getBackendUrl()}isAvailable`);
-    response.ok ? setBackendState(true) : setBackendState(false);
-  }
+
+  useEffect(() => {
+    async function fetchState() {
+      const response = await fetch(`${getBackendUrl()}isAvailable`);
+      response.ok ? setBackendState(true) : setBackendState(false);
+    }
+    fetchState();
+  }, [setBackendState]);
 
   return (
     <div className="justify-between h-20 bg-stone-100 border-t">
@@ -24,7 +29,7 @@ export default function Footer() {
         </Link>
       </div>
       <div className="flex flex-row float-right min-h-full justify-center items-center">
-        <Image onLoad={getBackendState} src={`/img/${backendState ? "green" : "red"}.avif`} width={50} height={50} alt="align-middle backend connection indicator" />
+        <Image src={`/img/${backendState ? "green" : "red"}.avif`} width={50} height={50} alt="align-middle backend connection indicator" />
       </div>
     </div>
   );
