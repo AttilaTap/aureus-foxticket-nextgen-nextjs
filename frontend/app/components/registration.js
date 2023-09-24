@@ -98,12 +98,8 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Password
           </label>
-          <PasswordInput id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          {password.length < 8 && <p className="text-red-500 text-xs mt-1">Password must be at least 8 characters long.</p>}
-          {!/[0-9]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one number.</p>}
-          {!/[A-Z]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one uppercase letter.</p>}
-          {!/[a-z]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one lowercase letter.</p>}
-          {!/[^A-Za-z0-9]/.test(password) && <p className="text-red-500 text-xs mt-1">Password must contain at least one special character.</p>}
+          <PasswordInput id="password" value={password} onChange={(e) => setPassword(e.target.value)} showValidation={true} />
+
           <label className=" text-stone-700 text-m font-bold" htmlFor="password">
             Confirm password
           </label>
