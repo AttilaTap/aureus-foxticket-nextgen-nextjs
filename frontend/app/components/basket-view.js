@@ -8,12 +8,18 @@ export default function BasketView() {
   const [buyStatus, setBuyStatus] = useState(null);
   const [userEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage]);
   const [basket, clearBasket] = useTicketStore((state) => [state.basket, state.clearBasket]);
+  const [showNoTicketsError, setShowNoTicketsError] = useState(false);
 
   async function requestToBuy() {
     try {
       let token = null;
       if (window) {
         token = localStorage.getItem(process.env.NEXT_PUBLIC_COOKIE_NAME) || null;
+      }
+      if (basket.length === 0) {
+        // Show the "No tickets selected" error message
+        setShowNoTicketsError(true);
+        return;
       }
       const buyResult = await sendBuyRequest(basket, userEmailFromLocalStorage, token);
       setBuyStatus(buyResult);
@@ -44,6 +50,7 @@ export default function BasketView() {
       {buyStatus === "success" && <p className="text-green-500 font-semibold">Purchase successful!</p>}
 
       {buyStatus === "error" && <p className="text-red-500 font-semibold">Purchase failed. Have you logged in?</p>}
+      {showNoTicketsError && <p className="text-red-500 font-semibold">No tickets selected.</p>}
       <p className="text-xl text-stone-600 mb-2">Your tickets are reserved for 10 minutes.</p>
       <div className="h-fit w-full border-1 self-center rounded bg-stone-100 min min-h-[60px] mb-2">
         <TicketToBuy />

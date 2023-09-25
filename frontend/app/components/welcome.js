@@ -21,7 +21,7 @@ export default function Welcome() {
     return (
       <>
         {userEmailFromLocalStorage && (
-          <h1 className="text-2xl font-semibold text-indigo-600 bg-white p-4 rounded-lg shadow-md mb-4">Hello, {parseEmailtoName(userEmailFromLocalStorage)}!👋</h1>
+          <h1 className="text-2xl text-center font-semibold text-indigo-600 bg-white p-4 rounded-lg shadow-md mb-4">Hello, {parseEmailtoName(userEmailFromLocalStorage)}!👋</h1>
         )}
       </>
     );
