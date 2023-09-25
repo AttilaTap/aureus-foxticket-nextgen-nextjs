@@ -1,4 +1,3 @@
-import { ControllerBase } from "./controller-base";
 import * as ticketService from "../services/ticket-service.js";
 import * as userService from "../services/user-service.js";
 import DB from "../utils/db-connection.js";
