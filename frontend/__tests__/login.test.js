@@ -73,7 +73,7 @@ describe("Login Component", () => {
     });
 
     // Ensure fetch was called with the correct parameters
-    expect(global.fetch).toHaveBeenCalledWith("http://localhost:9000/user/login", {
+    expect(global.fetch).toHaveBeenCalledWith(`${getBackendUrl()}user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

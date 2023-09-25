@@ -3,7 +3,16 @@ export function parseJwt(token) {
     return null;
   }
 
-  const base64Url = token.split(".")[1];
+  const tokenSplitList = token.split(".");
+  if (tokenSplitList.length < 2) {
+    return null;
+  }
+
+  const base64Url = tokenSplitList[1];
+  if (base64Url === null || base64Url === undefined) {
+    return null;
+  }
+
   const base64 = base64Url.replace("-", "+").replace("_", "/");
 
   try {
