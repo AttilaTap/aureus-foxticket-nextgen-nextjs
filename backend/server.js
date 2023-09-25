@@ -7,6 +7,7 @@ import ticketRoutes from "./routes/ticket-routes.js";
 import swaggerDocs from "./utils/api-docs.js";
 import * as serverHelper from "./utils/helper.js";
 import userRoutes from "./routes/user-routes.js";
+import purchaseRoutes from "./routes/purchase-routes.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use("/user", authRoutes);
 app.use("/users", userRoutes);
 app.use("/", eventRoutes);
 app.use("/", ticketRoutes);
+app.use("/", purchaseRoutes);
 app.use("/", testRoutes);
 
 const portToUse = serverHelper.getServerPort();
