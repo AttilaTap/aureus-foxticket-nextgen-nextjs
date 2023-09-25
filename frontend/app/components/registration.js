@@ -13,7 +13,6 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
-  const { showPassword, togglePasswordVisibility } = useTicketStore();
 
   if (!isVisible) {
     return null;

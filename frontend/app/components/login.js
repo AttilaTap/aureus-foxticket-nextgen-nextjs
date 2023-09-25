@@ -8,7 +8,6 @@ import PasswordInput from "./password-input";
 
 const Login = ({ isVisible, onCloseLog, openReg }) => {
   const setUserEmailFromLocalStorage = useTicketStore((state) => state.setUserEmailFromLocalStorage);
-  const { showPassword, togglePasswordVisibility } = useTicketStore();
 
   const [formData, setFormData] = useState({
     email: "",
