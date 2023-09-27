@@ -55,7 +55,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         setError(responseData.error || "Login failed");
       }
     } catch (error) {
-      console.error(`Error in Login: ${error.message}`);
+      console.log(`Error in Login: ${error.message}`);
       setError(error.message || "An unexpected error occurred.");
     }
   }

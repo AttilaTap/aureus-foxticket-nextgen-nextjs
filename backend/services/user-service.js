@@ -37,7 +37,7 @@ export async function sendSuccessEmail(toEmail) {
     await sgMail.send(msg);
     console.log("Email sent successfully!");
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.log("Error sending email:", error);
   }
 }
 
@@ -57,7 +57,7 @@ export async function getEmailById(connection, id) {
     const [rows] = await connection.execute("SELECT email FROM users WHERE user_id = ?", [id]);
     return rows[0]?.email || null;
   } catch (error) {
-    console.error("Error:", error);
+    console.log("Error:", error);
     throw error;
   }
 }

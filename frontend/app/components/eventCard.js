@@ -17,7 +17,7 @@ const EventCard = ({ event }) => {
         setTicketData(data);
         // setFetchError(null);
       } catch (error) {
-        console.error("Fetch error:", error);
+        console.log("Fetch error:", error);
         // setFetchError("Failed to fetch ticket data 2");
       }
     }

@@ -34,7 +34,7 @@ export async function getTicketsByCategoryAndEventId(connection, eventId, catego
     }
     return rows;
   } catch (error) {
-    console.error("Error in getTicketsByCategoryAndEventId:", error);
+    console.log("Error in getTicketsByCategoryAndEventId:", error.message);
     return null;
   }
 }

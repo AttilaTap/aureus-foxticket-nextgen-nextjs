@@ -22,7 +22,7 @@ export default function EventShow() {
           setError("Failed to fetch events");
         }
       } catch (err) {
-        console.error("Fetch error:", err);
+        console.log("Fetch error:", err);
         setError("An error occurred while fetching events");
       }
     }

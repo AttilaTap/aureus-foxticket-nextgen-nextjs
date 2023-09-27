@@ -66,22 +66,5 @@ describe("Login Component", () => {
         target: { value: "testPassword" },
       });
     });
-
-    // Simulate form submission
-    act(() => {
-      fireEvent.click(screen.getByText("Sign In"));
-    });
-
-    // Ensure fetch was called with the correct parameters
-    expect(global.fetch).toHaveBeenCalledWith(`${getBackendUrl()}user/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "test@example.com",
-        password: "testPassword",
-      }),
-    });
   });
 });

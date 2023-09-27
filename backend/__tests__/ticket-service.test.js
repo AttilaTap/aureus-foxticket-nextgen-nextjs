@@ -84,10 +84,10 @@ describe("get ticket by category and event id", () => {
     it("will have an error", async () => {
       let mockConnection = {
         execute: jest.fn((formatString, eventId, category) => {
-          throw new Error();
+          throw new Error("Error from test");
         }),
       };
-      let errorSpy = jest.spyOn(global.console, "error");
+      let errorSpy = jest.spyOn(global.console, "log");
       expect(await ticketService.getTicketsByCategoryAndEventId(mockConnection, EVENT_ID, CATEGORY)).toBe(null);
       expect(errorSpy).toHaveBeenCalledTimes(1);
     });

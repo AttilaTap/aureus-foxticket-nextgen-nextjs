@@ -31,3 +31,5 @@ const server = app.listen(portToUse, () => {
   console.log(`I'm running on : ${portToUse}`);
   swaggerDocs(app, portToUse);
 });
+
+export default server;
