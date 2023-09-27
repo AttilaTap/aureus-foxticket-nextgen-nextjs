@@ -28,10 +28,10 @@ export default function HomePage() {
           data.sort((a, b) => a.name.localeCompare(b.name));
           setEvents(data);
         } else {
-          console.error("Failed to fetch events");
+          console.log("Failed to fetch events");
         }
       } catch (error) {
-        console.error("Fetch error:", error);
+        console.log("Fetch error:", error);
         setError("An error occurred while fetching events");
       }
     }

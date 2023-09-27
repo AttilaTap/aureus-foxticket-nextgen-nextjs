@@ -75,7 +75,7 @@ export class TicketController {
       }
       return res.status(200).json({ tickets: tickets });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return res.status(500).json({ error: "Internal server error" });
     } finally {
       db.close();

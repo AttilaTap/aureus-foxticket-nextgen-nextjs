@@ -10,7 +10,7 @@ export default function EventPage({ params }) {
 
   useEffect(() => {
     if (!params.eventId) {
-      console.error("Missing params or eventId");
+      console.log("Missing params or eventId");
       return;
     }
 
@@ -24,7 +24,7 @@ export default function EventPage({ params }) {
         const eData = await response.json();
         setEventData(eData);
       } catch (error) {
-        console.error("Fetch event error:", error);
+        console.log("Fetch event error:", error);
       }
     }
 
@@ -40,7 +40,7 @@ export default function EventPage({ params }) {
         setTicketData(tData);
         setAvailableTicketData(tData);
       } catch (error) {
-        console.error("Fetch tickets error:", error);
+        console.log("Fetch tickets error:", error);
       }
     }
 

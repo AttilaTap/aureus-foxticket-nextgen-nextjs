@@ -70,7 +70,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
         setTickets(data.tickets);
       } catch (error) {
         setTickets([]);
-        console.error("Failed to fetch tickets:", error);
+        console.log("Failed to fetch tickets:", error);
       }
     };
 
@@ -90,7 +90,7 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
           }
         }
       } catch (error) {
-        console.error("Failed to fetch emails:", error);
+        console.log("Failed to fetch emails:", error);
       }
     };
     fetchEmails();

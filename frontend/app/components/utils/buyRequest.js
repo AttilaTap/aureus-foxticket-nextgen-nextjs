@@ -17,11 +17,11 @@ export async function sendBuyRequest(basket, userId, token) {
       return "success";
     } else {
       const errorData = await response.json();
-      console.error(`Error: ${response.status} - ${errorData.message}`);
+      console.log(`Error: ${response.status} - ${errorData.message}`);
       return "error";
     }
   } catch (error) {
-    console.error("An error occurred:", error);
+    console.log("An error occurred:", error);
     return "error";
   }
 }

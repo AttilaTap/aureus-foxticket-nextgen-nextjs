@@ -28,7 +28,6 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
     e.preventDefault();
 
     const { email, password } = formData;
-
     try {
       const user = {
         email,
@@ -56,6 +55,7 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
         setError(responseData.error || "Login failed");
       }
     } catch (error) {
+      console.log(`Error in Login: ${error.message}`);
       setError(error.message || "An unexpected error occurred.");
     }
   }
