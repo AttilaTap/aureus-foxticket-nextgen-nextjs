@@ -5,7 +5,6 @@ import { hashPassword } from "./utils/hashing";
 import { useState } from "react";
 import getBackendUrl from "./utils/environment";
 import { validatePassword } from "./utils/validate-password";
-import useTicketStore from "@/store/store";
 import PasswordInput from "./password-input";
 
 const Registration = ({ isVisible, onCloseReg, openLog }) => {
@@ -82,12 +81,12 @@ const Registration = ({ isVisible, onCloseReg, openLog }) => {
 
         <form className="px-8 pt-6" onSubmit={handleSubmit}>
           {error && <div className="text-red-500 mb-4 font-bold">{error}</div>}
-          <label className="text-stone-700 text-m font-bold" htmlFor="username">
+          <label className="text-stone-700 text-m font-bold" htmlFor="useremail">
             E-mail
           </label>
           <input
             className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
-            id="username"
+            id="useremail"
             type="email"
             name="email"
             placeholder="example@gmail.com"
