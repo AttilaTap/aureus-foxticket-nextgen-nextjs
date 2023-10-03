@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import trash from "@/public/delete-ticket.svg";
-import getBackendUrl from "./utils/environment";
 import useTicketStore from "@/store/store";
 
 export default function TicketToBuy() {
