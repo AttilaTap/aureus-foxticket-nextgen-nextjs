@@ -20,7 +20,6 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [basket, addToBasket] = useTicketStore((state) => [state.basket, state.addToBasket]);
-  const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
 
   //variables
   const eventStartDate = new Date(eventData.start_time);
@@ -39,10 +38,6 @@ const TicketView = ({ ticketCategory, eventData, ticketData }) => {
   };
 
   const openConfirmModal = (ticketId) => {
-    //if (!userEmailFromLocalStorage) {
-    //  alert("please login in order to buy!");
-    //  return;
-    //}
     setSelectedTicketId(ticketId);
     setShowConfirm(true);
   };
