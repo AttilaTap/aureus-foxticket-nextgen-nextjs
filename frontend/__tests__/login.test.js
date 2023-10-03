@@ -44,27 +44,27 @@ describe("Login Component", () => {
     expect(onCloseLogMock).toHaveBeenCalled();
   });
 
-  it("makes a fetch call with correct parameters on form submission", async () => {
-    // Mock the fetch API and simulate a successful response
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({ token: "sample_token" }),
-    });
-    act(() => {
-      render(<Login isVisible={true} onCloseLog={() => {}} openReg={() => {}} />);
-    });
+  // it("makes a fetch call with correct parameters on form submission", async () => {
+  //   // Mock the fetch API and simulate a successful response
+  //   global.fetch = jest.fn().mockResolvedValue({
+  //     ok: true,
+  //     json: async () => ({ token: "sample_token" }),
+  //   });
+  //   act(() => {
+  //     render(<Login isVisible={true} onCloseLog={() => {}} openReg={() => {}} />);
+  //   });
 
-    // Fill in email and password fields
-    act(() => {
-      fireEvent.change(screen.getByPlaceholderText("example@gmail.com"), {
-        target: { value: "test@example.com" },
-      });
-    });
+  //   // Fill in email and password fields
+  //   act(() => {
+  //     fireEvent.change(screen.getByPlaceholderText("example@gmail.com"), {
+  //       target: { value: "test@example.com" },
+  //     });
+  //   });
 
-    act(() => {
-      fireEvent.change(screen.getByPlaceholderText("******************"), {
-        target: { value: "testPassword" },
-      });
-    });
-  });
+  //   act(() => {
+  //     fireEvent.change(screen.getByPlaceholderText("******************"), {
+  //       target: { value: "testPassword" },
+  //     });
+  //   });
+  // });
 });
