@@ -3,7 +3,7 @@ import * as userService from "../services/user-service.js";
 import DB from "../utils/db-connection.js";
 
 export class AuthController {
-  async register(req, res, next) {
+  async register(req, res) {
     let db = new DB();
     try {
       await db.init();
@@ -46,7 +46,7 @@ export class AuthController {
     next();
   }
 
-  async login(req, res, next) {
+  async login(req, res) {
     let db = new DB();
     try {
       await db.init();
