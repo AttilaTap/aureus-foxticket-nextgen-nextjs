@@ -47,7 +47,7 @@ const EventCard = ({ event }) => {
     return <div className="error-message">{fetchError}</div>;
   }
   return (
-    <div className="card bg-gray-800 hover:bg-custom-gray mt-4">
+    <div className="card hover:bg-custom-gray mt-4">
       <div className="min-w-[100px] w-44 flex flex-col justify-center items-center">
         <span className="font-bold">{getDayOfWeek()}</span>
         <span className="font-bold">{formatDate()}</span>
