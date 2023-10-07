@@ -25,17 +25,6 @@ export default function Header(props) {
   const [basket] = useTicketStore((state) => [state.basket, state.addToBasket]);
   const [userEmailFromLocalStorage, setUserEmailFromLocalStorage] = useTicketStore((state) => [state.userEmailFromLocalStorage, state.setUserEmailFromLocalStorage]);
 
-  // function isLoggedIn() {
-  //   return userEmailFromLocalStorage;
-  // }
-
-  // function getUserName() {
-  //   return userEmailFromLocalStorage;
-  // }
-  // function deleteCookie(name) {
-  //   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  // }
-
   async function logout() {
     if (userEmailFromLocalStorage) {
       localStorage.clear();
