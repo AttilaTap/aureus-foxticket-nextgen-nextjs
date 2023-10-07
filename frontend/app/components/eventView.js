@@ -157,7 +157,7 @@ const EventView = ({ eventData, ticketData, availableTicketData }) => {
             const currencyFormatter = new Intl.NumberFormat("en-US", options);
 
             return (
-              <div key={index} className="card bg-gray-800 min-w-[590px] flex justify-between mb-4">
+              <div key={index} className="card min-w-[590px] flex justify-between mb-4">
                 <div className="m-4 w-full min-w-[160px] pl-8">
                   <span className="font-bold text-lg">{category}</span>
                   <span className="block text-black-500 text-sm">Total available: {groupedTickets[category].how_many.toLocaleString()}</span>

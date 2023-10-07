@@ -78,12 +78,12 @@ const Login = ({ isVisible, onCloseLog, openReg }) => {
 
         <form className="px-8 pt-6" onSubmit={handleSubmit}>
           {error && <div className="text-red-500 mb-4 font-bold">{error}</div>}
-          <label className="text-stone-700 text-m font-bold" htmlFor="username">
+          <label className="text-stone-700 text-m font-bold" htmlFor="useremail">
             E-mail
           </label>
           <input
             className="rounded w-full p-2 mt-2 mb-4 text-stone-700  focus:outline-sky-600 focus:shadow-outline"
-            id="username"
+            id="useremail"
             type="email"
             name="email"
             value={formData.email}

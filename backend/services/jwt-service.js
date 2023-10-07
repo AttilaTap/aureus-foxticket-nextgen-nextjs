@@ -21,6 +21,7 @@ export async function tokenInDatabase(connection, token) {
 }
 
 // checking whether the token is expired and valid withou contacting the db
+// we not implemented yet this service
 export function checkExpirationOnToken(token) {
   try {
     const decodedToken = verifyToken(token);
